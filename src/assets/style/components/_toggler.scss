@@ -1,0 +1,55 @@
+.menu-toggler {
+	$size: 32px;
+
+	display: flex;
+	width: $size;
+	height: $size;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
+
+	span {
+		margin: 4px 0;
+		font-size: 0;
+	}
+
+	&::before,
+	&::after,
+	span {
+		$size-inner: 20px;
+
+		content: '';
+		display: block;
+		width: $size-inner;
+		height: 4px;
+		border-radius: 4px;
+		background-color: $color-main-dark;
+		transition: transform .5s, opacity .5s, background-color .5s;
+		transform: translateX(4px);
+
+		@media (min-width: $bp-width-xs) {
+			// $size-inner: 32px;
+			width: 32px;
+			background-color: $color-main-light;
+		}
+
+		@media (min-width: $bp-width-md) {
+			// $size-inner: 24px;
+			width: 24px;
+		}
+	}
+
+	&::before {
+		transform-origin: top left;
+	}
+
+	&::after {
+		transform-origin: bottom left;
+	}
+
+	@media (min-width: $bp-width-xs) and (max-width: calc($bp-width-md - 1px)) {
+		$width: 42px;
+
+		width: 42px;
+	}
+}

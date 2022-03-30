@@ -1,0 +1,250 @@
+.slider {
+	display: none;
+
+	@media (min-width: $bp-width-md) {
+		display: block;
+		position: relative;
+		width: 40%;
+		min-width: 410px;
+		flex-shrink: 0;
+	}
+
+	@media (min-width: $bp-width-lg) {
+		flex-grow: unset;
+		flex-shrink: unset;
+		width: 50%;
+	}
+
+	&__item {
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		margin-top: 28vh;
+	}
+
+	&__heading {
+		font-weight: 500;
+		font-size: 32px;
+		margin-bottom: 8px;
+	}
+
+	&__description {
+		font-weight: 300;
+		font-size: 22px;
+		margin-bottom: 32px;
+	}
+
+	.VueCarousel {
+
+		&-wrapper,
+		&-inner {
+			height: 100% !important;
+		}
+
+		&-inner {
+			align-items: stretch;
+		}
+
+		&-slide {
+			position: relative;
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			padding: 64px;
+			color: $color-main-light;
+			background-color: $color-bg-dark;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center center;
+
+			&::before {
+				$size: 100%;
+
+				content: '';
+				position: absolute;
+				z-index: 0;
+				top: 0;
+				left: 0;
+				width: $size;
+				height: $size;
+				background-image: $gradient-slide;
+			}
+
+			@media screen and (min-width: $bp-width-lg) {
+				padding: 64px 96px;
+			}
+
+		}
+
+		&-navigation {
+			&-button {
+				position: absolute;
+				font-size: 0;
+				top: 50%;
+				width: 32px;
+				height: 100%;
+				margin: 0 !important;
+				padding: 0 !important;
+				background-color: transparent;
+				overflow: hidden;
+				transition: background-color .5s, opacity .5s;
+
+				&:hover {
+					background-color: transparentize($color-main-accent, 0.8);
+				}
+
+				&:focus {
+					outline: none;
+				}
+
+				&::after {
+					$size: 32px;
+
+					content: '';
+					position: absolute;
+					top: calc(50% - ($size / 2));
+					left: calc(50% - ($size / 2));
+					width: $size;
+					height: $size;
+					background-image: url('~@/assets/img/btn-arrow.svg');
+					background-repeat: no-repeat;
+					background-size: 20px;
+					background-position: center center;
+
+					@media screen and (min-width: $bp-width-lg) {
+						$size: 64px;
+					}
+				}
+
+				@media screen and (min-width: $bp-width-lg) {
+					width: 64px;
+				}
+			}
+
+			&-prev {
+				left: 32px;
+
+				&::after {
+					transform: rotateZ(-90deg)
+				}
+
+				@media screen and (min-width: $bp-width-lg) {
+					left: 64px;
+				}
+			}
+
+			&-next {
+				right: 32px;
+
+				&::after {
+					transform: rotateZ(90deg)
+				}
+
+				@media screen and (min-width: $bp-width-lg) {
+					right: 64px;
+				}
+			}
+
+
+		}
+
+		&-pagination {
+			position: absolute;
+			margin: 0 !important;
+			bottom: 0;
+		}
+
+		&-dot-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-top: 0 !important;
+			margin-bottom: 36px;
+		}
+
+		&-dot {
+			$size: 8px;
+
+			width: $size !important;
+			height: $size !important;
+			margin: 0 $size / 2;
+			padding: 0 !important;
+			background-color: $color-gray-light !important;
+			transition: background-color .5s;
+
+			&--active {
+				background-color: $color-main-accent !important;
+			}
+		}
+	}
+}
+
+.slide {
+	&_parking {
+		background-image: url('~@/assets/img/slides/slide-1.png');
+
+		.slider__btn {
+			background-image: $gradient-slider-btn-parking;
+
+			&:hover,
+			&:focus {
+				background-image: $gradient-slider-btn-parking-hover;
+			}
+
+			&:active {
+				background-image: $gradient-slider-btn-parking-active;
+			}
+		}
+	}
+
+	&_insurance {
+		background-image: url('~@/assets/img/slides/slide-2.png');
+
+		.slider__btn {
+			background-image: $gradient-slider-btn-insurance;
+			
+			&:hover,
+			&:focus {
+				background-image: $gradient-slider-btn-insurance-hover;
+			}
+
+			&:active {
+				background-image: $gradient-slider-btn-insurance-active;
+			}
+		}
+	}
+
+	&_petrol {
+		background-image: url('~@/assets/img/slides/slide-3.png');
+
+		.slider__btn {
+			background-image: $gradient-slider-btn-petrol;
+			
+			&:hover,
+			&:focus {
+				background-image: $gradient-slider-btn-petrol-hover;
+			}
+
+			&:active {
+				background-image: $gradient-slider-btn-petrol-active;
+			}
+		}
+	}
+
+	&_service {
+		background-image: url('~@/assets/img/slides/slide-4.png');
+
+		.slider__btn {
+			background-image: $gradient-slider-btn-service;
+			
+			&:hover,
+			&:focus {
+				background-image: $gradient-slider-btn-service-hover;
+			}
+
+			&:active {
+				background-image: $gradient-slider-btn-service-active;
+			}
+		}
+	}
+}

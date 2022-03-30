@@ -1,0 +1,13 @@
+.main-heading {
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 1.2;
+
+	@media screen and (min-width: $bp-width-xs) {
+		font-size: 60px;
+	}
+
+	@media screen and (min-width: $bp-width-sm) {
+		font-size: 70px;
+	}
+}

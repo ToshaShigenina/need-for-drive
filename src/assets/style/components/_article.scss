@@ -1,0 +1,39 @@
+.main-article {
+	padding-bottom: 64px;
+
+	&__heading {
+		margin-bottom: 16px;
+
+		@media screen and (min-width: $bp-width-xs) {
+			margin-bottom: 34px;
+		}
+	}
+
+	&__lead {
+		margin-bottom: 32px;
+
+		@media screen and (min-width: $bp-width-xs) {
+			margin-bottom: 60px;
+		}
+	}
+
+	&__btn.btn {
+		@media screen and (max-width: calc($bp-width-xs - 1px)) {
+			width: calc(100% + 32px);
+			margin-left: -16px;
+			margin-right: -16px;
+		}
+	}
+
+	@media (max-aspect-ratio: 1/2) and (max-width: calc($bp-width-xs - 1px)) {
+		padding-top: 16vh;
+	}
+
+	@media (min-width: $bp-width-xs) {
+		padding-top: 8vh;
+	}
+
+	@media (min-width: $bp-width-sm) {
+		padding-top: 14vh;
+	}
+}

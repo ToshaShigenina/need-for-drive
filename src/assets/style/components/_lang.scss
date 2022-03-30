@@ -1,0 +1,40 @@
+.lang-toggler {
+	$size: 48px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: $size;
+	height: $size;
+	border: 1px solid transparent;
+	border-radius: 50%;
+	font-size: 13px;
+	font-weight: 700;
+	color: $color-main-accent;
+	background-color: $color-bg-dark;
+	transition: background-color .5s, border-color .5s, color .5s, transform .5s, opacity .5s;
+
+	&:hover,
+	&:focus,
+	&:active {
+		border-color: $color-main-light;
+	}
+
+	&:hover {
+		color: $color-main-light;
+	}
+
+	&:active,
+	&:focus {
+		color: $color-main-accent;
+	}
+
+	span {
+		display: block;
+	}
+
+	span._active {
+		display: none;
+	}
+}

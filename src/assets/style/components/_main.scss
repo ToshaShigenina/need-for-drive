@@ -1,0 +1,40 @@
+.main-content {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	width: 100%;
+	padding-top: 16px;
+
+	&__header,
+	&__footer {
+		flex-shrink: 0;
+	}
+
+	&__header {
+		margin-bottom: 32px;
+	}
+
+	&__article {
+		flex-grow: 1;
+	}
+
+	&__footer {
+		margin-top: auto;
+	}
+
+	@media screen and (min-width: $bp-width-xs) {
+		padding-top: 32px;
+	}
+
+	@media (min-width: $bp-width-md) {
+		flex-grow: 1;
+		width: 58%;
+	}
+
+	@media (min-width: $bp-width-lg) {
+		flex-grow: unset;
+		flex-shrink: unset;
+		width: 50%;
+	}
+}

@@ -1,0 +1,30 @@
+.btn {
+	display: inline-block;
+	width: 100%;
+	padding: 16px 20px 12px;
+	text-align: center;
+	color: $color-main-light;
+	background-image: $linear-gradient-base;
+	
+	&:hover,
+	&:focus {
+		color: $color-main-light;
+		background-image: $linear-gradient-hover;
+	}
+
+	&:active {
+		color: $color-main-light;
+		background-image: $linear-gradient-active;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		background-image: none;
+		background-color: $color-gray-light;
+	}
+
+	@media screen and (min-width: $bp-width-xs) {
+		max-width: 250px;
+		border-radius: 8px;
+	}
+}

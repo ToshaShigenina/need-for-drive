@@ -1,0 +1,9 @@
+.brand-name {
+	color: $color-main-accent;
+	font-weight: 700;
+	font-size: 32px;
+	
+	@media screen and (min-width: $bp-width-xs) {
+		font-size: 30px;
+	}
+}
