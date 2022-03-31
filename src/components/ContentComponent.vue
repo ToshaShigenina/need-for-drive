@@ -30,7 +30,7 @@ export default {
         phone: "8 (495) 234-22-44",
         copyright: "© 2016-2019 «Need for drive»",
         link: {
-          url: "#",
+          url: "/order",
           text: "Забронировать",
         },
       }

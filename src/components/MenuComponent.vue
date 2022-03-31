@@ -5,9 +5,8 @@
         class="main-menu__item"
         v-for="(link, i) in links"
         :key="'main-menu' + i"
-        :class="{ _active: link.active }"
       >
-        <a :href="link.url" class="main-menu__link">{{ link.text }}</a>
+        <router-link :to="link.url" class="main-menu__link">{{ link.text }}</router-link>
       </li>
     </ul>
   </nav>

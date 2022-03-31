@@ -20,20 +20,16 @@
 <script>
 export default {
   name: "footer-component",
-  props: {
-    name: {
-      type: String,
-      require: true,
-    },
-    phone: {
-      type: String,
-      require: true,
-    },
-  },
   computed: {
     phoneLink() {
       return `tel://${this.phone}`;
     },
+    name() {
+      return this.$store.getters.getName;
+    },
+    phone() {
+      return this.$store.getters.getPhone;
+    }
   },
 };
 </script>
