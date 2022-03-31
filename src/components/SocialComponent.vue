@@ -1,15 +1,13 @@
 <template>
-  <nav class="main-sidebar__social">
-    <ul class="social-list">
-      <li
-        class="social-list__item"
-        v-for="(link, i) in links"
-        :key="'social' + i"
-      >
-        <a :href="link.url" class="social-list__link social-link" :class="link.class"></a>
-      </li>
-    </ul>
-  </nav>
+  <ul class="main-sidebar__social social-list">
+    <li
+      class="social-list__item"
+      v-for="(link, i) in links"
+      :key="'social' + i"
+    >
+      <a :href="link.url" class="social-list__link social-link" :class="link.class"></a>
+    </li>
+  </ul>
 </template>
 
 <script>

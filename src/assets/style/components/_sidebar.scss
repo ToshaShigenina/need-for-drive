@@ -45,7 +45,7 @@
 		}
 
 		@media (min-width: $bp-width-lg) {
-			width: calc(50% + 64px);
+			width: calc(48% + 64px);
 		}
 
 	}
@@ -121,10 +121,6 @@
 
 					@media (min-width: $bp-width-md) {
 						transform: translateY(2px) translateX(8px) rotateZ(-45deg);
-					}
-
-					@media screen and (min-width: $bp-width-lg) {
-						transform: translateY(1px) translateX(8px) rotateZ(-45deg);
 					}
 				}
 

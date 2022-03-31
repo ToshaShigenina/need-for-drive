@@ -3,7 +3,9 @@
     <div class="container">
       <div class="row justify-content-sm-between justify-content-end">
         <div class="col-sm-auto col-12 main-footer__copyright">
-          <p class="copyright">{{ copyright }}</p>
+          <p class="copyright">
+            © 2016-2019 «{{ name }}»
+          </p>
         </div>
         <div class="col-sm-auto col-12 main-footer__contact">
           <address class="main-contact">
@@ -19,8 +21,9 @@
 export default {
   name: "footer-component",
   props: {
-    copyright: {
+    name: {
       type: String,
+      require: true,
     },
     phone: {
       type: String,

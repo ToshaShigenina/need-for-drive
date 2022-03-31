@@ -1,8 +1,8 @@
 .slider {
-	display: none;
+	display: none !important;
 
 	@media (min-width: $bp-width-md) {
-		display: block;
+		display: flex !important;
 		position: relative;
 		width: 40%;
 		min-width: 410px;
@@ -94,7 +94,7 @@
 				}
 
 				&:focus {
-					outline: none;
+					outline: none !important;
 				}
 
 				&::after {
@@ -206,7 +206,7 @@
 
 		.slider__btn {
 			background-image: $gradient-slider-btn-insurance;
-			
+
 			&:hover,
 			&:focus {
 				background-image: $gradient-slider-btn-insurance-hover;
@@ -223,7 +223,7 @@
 
 		.slider__btn {
 			background-image: $gradient-slider-btn-petrol;
-			
+
 			&:hover,
 			&:focus {
 				background-image: $gradient-slider-btn-petrol-hover;
@@ -240,7 +240,7 @@
 
 		.slider__btn {
 			background-image: $gradient-slider-btn-service;
-			
+
 			&:hover,
 			&:focus {
 				background-image: $gradient-slider-btn-service-hover;
