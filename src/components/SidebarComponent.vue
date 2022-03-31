@@ -5,7 +5,7 @@
       class="main-sidebar__toggler menu-toggler"
       @click="isOpen"
     >
-      <span>Меню</span>
+      <span></span>
     </button>
     <div class="main-sidebar__content">
       <menu-component :links="menu" />
@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import Lang from "./LangComponent.vue";
-import Menu from "./MenuComponent.vue";
-import Social from "./SocialComponent.vue";
+import LangComponent from "./LangComponent.vue";
+import MenuComponent from "./MenuComponent.vue";
+import SocialComponent from "./SocialComponent.vue";
 
 export default {
   name: "sidebar-component",
@@ -27,16 +27,16 @@ export default {
     social: {
       type: Array,
       require: true,
-    },    
+    },
     menu: {
       type: Array,
       require: true,
     },
   },
   components: {
-    "lang-component": Lang,
-    "menu-component": Menu,
-    "social-component": Social,
+    LangComponent,
+    MenuComponent,
+    SocialComponent,
   },
   data() {
     return {

@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <sidebar-component :menu="menu" :social="social" />
+      <sidebar-component
+        :menu="menu"
+        :social="social"
+      />
       <main class="main-content">
-        <header-component :title="content.name" />
-        <content-component :content="content" />
+        <header-component :title="name" />
+        <content-component :name="name" />
         <footer-component
-          :copyright="content.copyright"
-          :phone="content.phone"
+          :name="name"
+          :phone="phone"
         />
       </main>
       <slider-component :slides="slides" />
@@ -16,34 +19,25 @@
 </template>
 
 <script>
-import Slider from "./components/SliderComponent.vue";
-import Sidebar from "./components/SidebarComponent.vue";
-import Header from "./components/HeaderComponent.vue";
-import Content from "./components/ContentComponent.vue";
-import Footer from "./components/FooterComponent.vue";
+import SliderComponent from "./components/SliderComponent.vue";
+import SidebarComponent from "./components/SidebarComponent.vue";
+import HeaderComponent from "./components/HeaderComponent.vue";
+import ContentComponent from "./components/ContentComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 
 export default {
   name: "App",
   components: {
-    "slider-component": Slider,
-    "sidebar-component": Sidebar,
-    "header-component": Header,
-    "content-component": Content,
-    "footer-component": Footer,
+    SliderComponent,
+    SidebarComponent,
+    HeaderComponent,
+    ContentComponent,
+    FooterComponent,
   },
   data() {
     return {
-      content: {
-        title: "Каршеринг",
-        name: "Need for drive",
-        lead: "Поминутная аренда авто твоего города",
-        phone: "8 (495) 234-22-44",
-        copyright: "© 2016-2019 «Need for drive»",
-        link: {
-          url: "#",
-          text: "Забронировать",
-        },
-      },
+      name: "Need for drive",
+      phone: "8 (495) 234-22-44",
       menu: [
         {
           url: "#",

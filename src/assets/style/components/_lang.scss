@@ -29,12 +29,4 @@
 	&:focus {
 		color: $color-main-accent;
 	}
-
-	span {
-		display: block;
-	}
-
-	span._active {
-		display: none;
-	}
 }

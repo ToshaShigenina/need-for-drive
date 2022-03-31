@@ -11,14 +11,14 @@
 </template>
 <script>
 import { Carousel, Slide } from "vue-carousel";
-import SlideCustom from "./SlideComponent.vue";
+import SlideComponent from "./SlideComponent.vue";
 
 export default {
   name: "slider-component",
   components: {
     Carousel,
     Slide,
-    "slide-component": SlideCustom,
+    SlideComponent,
   },
   props: {
     slides: {
