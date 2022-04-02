@@ -1,14 +1,12 @@
 <template>
-  <div class="slider__item">
-    <h2 class="slider__heading">{{ title }}</h2>
-    <p class="slider__description">
-      {{ description }}
-    </p>
-    <a
-      :href="link.url"
-      class="btn slider__btn"
-      >{{ link.text }}</a
-    >
+  <div class="slider__item slide">
+    <div class="slide__content">
+      <h2 class="slide__heading">{{ title }}</h2>
+      <p class="slide__description">
+        {{ description }}
+      </p>
+      <a :href="link.url" class="btn slide__btn">{{ link.text }}</a>
+    </div>
   </div>
 </template>
 <script>

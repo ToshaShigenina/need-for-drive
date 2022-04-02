@@ -1,34 +1,81 @@
 <template>
-  <carousel class="slider" :perPage="1" :navigationEnabled="true">
-    <slide v-for="(slide, i) in slides" :key="'slide' + i" :virtualIndex="i" :class="slide.class">
+  <div class="slider" ref="slider">
+    <div class="slider__wrapper" :style="{ transform: `translateX(${translate})` }">
       <slide-component
-        :description="slide.description"
+        v-for="(slide, i) in slides"
+        :key="'slide' + i"
         :title="slide.title"
+        :description="slide.description"
         :link="slide.link"
-      />
-    </slide>
-  </carousel>
+        :class="[{ _active: active === i }, slide.class]"
+        :style="{ width: `${width}px` }"
+      ></slide-component>
+    </div>
+
+    <pagination-component
+      :active="active"
+      :count="slides.length"
+      @to-slide="toSlide"
+    />
+
+    <button
+      type="button"
+      class="slider__btn slider__prev"
+      :disabled="active === 0"
+      @click="prevSlide"
+    ></button>
+    <button
+      type="button"
+      class="slider__btn slider__next"
+      :disabled="active === slides.length - 1"
+      @click="nextSlide"
+    ></button>
+  </div>
 </template>
 <script>
-import { Carousel, Slide } from "vue-carousel";
+import PaginationComponent from "./PaginationComponent.vue";
 import SlideComponent from "./SlideComponent.vue";
 
 export default {
   name: "slider-component",
   components: {
-    Carousel,
-    Slide,
     SlideComponent,
+    PaginationComponent
   },
   props: {
     slides: {
       type: Array,
+      require: true,
     },
   },
   data() {
     return {
-      options: {},
+      active: 0,
+      width: 0
     };
+  },
+  computed: {
+    translate () {
+      return (this.width * this.active * -1) + 'px';
+    }
+  },
+  methods: {
+    prevSlide() {
+      this.active--;
+    },
+    nextSlide() {
+      this.active++;
+    },
+    toSlide(i) {
+      this.active = i;
+    },
+    getWidth() {
+      this.width = this.$refs.slider.clientWidth;
+    }
+  },
+  mounted() {
+    this.getWidth();
+    window.addEventListener('resize', this.getWidth.bind(this))
   },
 };
 </script>

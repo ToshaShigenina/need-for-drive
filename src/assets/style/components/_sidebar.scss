@@ -20,16 +20,27 @@
 		}
 	}
 
-	&__content {
-		position: fixed;
+	&__backdrop {
+		position: absolute;
 		z-index: 20;
 		top: 0;
 		left: 0;
-		width: 100%;
+		width: 100vw;
+		height: auto;
 		min-height: 100vh;
-		padding: 0 28px;
+		overflow-x: hidden;
+		overflow-y: auto;
 		transform: translateX(-100%);
-		transition: transform .5s;
+		opacity: 0;
+		transition: transform .5s, opacity .5s;
+	}
+
+	&__content {
+		position: relative;
+		width: 100%;
+		height: auto;
+		min-height: 100vh;
+		padding: 1px 28px;
 		background-color: $color-bg-dark;
 
 		@media screen and (min-width: $bp-width-xs) {
@@ -45,7 +56,7 @@
 		}
 
 		@media (min-width: $bp-width-lg) {
-			width: calc(48% + 64px);
+			width: 53%;
 		}
 
 	}
@@ -53,6 +64,10 @@
 	&__menu {
 		margin-top: 80px;
 		margin-bottom: 40px;
+
+		@media (max-aspect-ratio: 1/2) and (max-width: calc($bp-width-xs - 1px)) {
+			margin-top: 29vh;
+		}
 	}
 
 	&__lang {
@@ -76,17 +91,12 @@
 	}
 
 	&__social {
-		margin-bottom: 80px;
+		margin-bottom: 30px;
 
 		@media screen and (min-width: $bp-width-xs) {
 			width: 80%;
 			max-width: 600px;
 		}
-	}
-
-	&__backdrop {
-		transform: translateX(-100%);
-		transition: transform .5s;
 	}
 
 	&._open {
@@ -129,10 +139,6 @@
 				}
 			}
 
-			&__content {
-				transform: translateX(0);
-			}
-
 			&__lang {
 				position: fixed;
 				display: flex !important;
@@ -144,6 +150,7 @@
 
 			&__backdrop {
 				transform: translateX(0);
+				opacity: 1;
 			}
 		}
 	}

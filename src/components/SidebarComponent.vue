@@ -7,12 +7,13 @@
     >
       <span></span>
     </button>
-    <div class="main-sidebar__content">
-      <menu-component :links="menu" />
-      <social-component :links="social" />
+    <div class="backdrop main-sidebar__backdrop">
+      <div class="main-sidebar__content">
+        <menu-component :links="menu" />
+        <social-component :links="social" />
+      </div>
     </div>
     <lang-component />
-    <div class="backdrop main-sidebar__backdrop"></div>
   </aside>
 </template>
 
@@ -46,6 +47,9 @@ export default {
   methods: {
     isOpen() {
       this.open = !this.open;
+      this.open
+        ? document.body.classList.add("_overflow")
+        : document.body.classList.remove("_overflow");
     },
   },
 };
