@@ -1,0 +1,62 @@
+.tabs {
+	&__nav {
+		margin-bottom: 32px;
+	}
+
+	&__item {
+		display: none;
+
+		&._active {
+			display: block;
+		}
+	}
+
+	&-nav {
+		&__list {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		&__item {
+			$size: 8px;
+
+			position: relative;
+
+			&:not(:first-child) {
+				margin-left: 38px;
+
+				&::before {
+					content: '';
+					position: absolute;
+					width: $size;
+					height: $size;
+					top: calc(50% - ($size / 2));
+					left: $size * -2.5;
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center center;
+					background-image: url('~@/assets/img/tabs-arrow.svg');
+				}
+			}
+
+			button {
+				font-size: 14px;
+				font-weight: 700;
+				color: $color-main-text-dark;
+				transition: color .3s;
+
+				&:disabled {
+					color: $color-gray-dark;
+					cursor: not-allowed;
+				}
+			}
+
+			&._active {
+				button {
+					color: $color-main-accent;
+				}
+			}
+		}
+	}
+}

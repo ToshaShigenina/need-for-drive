@@ -7,6 +7,16 @@ export default new Vuex.Store({
   state: {
     name: "Need for drive",
     phone: "8 (495) 234-22-44",
+    content: {
+      title: "Каршеринг",
+      lead: "Поминутная аренда авто твоего города",
+      phone: "8 (495) 234-22-44",
+      copyright: "© 2016-2019 «Need for drive»",
+      link: {
+        url: "/order",
+        text: "Забронировать",
+      },
+    },
     menu: [{
         url: "#",
         text: "ПАРКОВКА",
@@ -78,6 +88,9 @@ export default new Vuex.Store({
     getName(state) {
       return state.name;
     },    
+    getContent(state) {
+      return state.content;
+    },
     getPhone(state) {
       return state.phone;
     },
