@@ -28,14 +28,16 @@
 		transform: translateX(4px);
 
 		@media (min-width: $bp-width-xs) {
-			// $size-inner: 32px;
-			width: 32px;
+			$size-inner: 32px;
+
+			width: $size-inner;
 			background-color: $color-main-light;
 		}
 
 		@media (min-width: $bp-width-md) {
-			// $size-inner: 24px;
-			width: 24px;
+			$size-inner: 24px;
+
+			width: $size-inner;
 		}
 	}
 
