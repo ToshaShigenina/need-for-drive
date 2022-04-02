@@ -30,6 +30,20 @@ body {
 	align-items: stretch;
 	flex-grow: 1;
 	width: 100%;
+
+	&_inner {
+		@media (min-width: $bp-width-xs) {
+			width: calc(100% - 86px);
+		}
+
+		@media (min-width: $bp-width-md) {
+			width: calc(100% - 66px);
+		}
+
+		@media screen and (min-width: $bp-width-lg) {
+			width: calc(100% - 64px);
+		}
+	}
 }
 
 .container {

@@ -1,19 +1,15 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <sidebar-component
-        :menu="menu"
-        :social="social"
-      />
-      <main class="main-content">
-        <header-component :title="name" />
-        <content-component :name="name" />
-        <footer-component
-          :name="name"
-          :phone="phone"
-        />
-      </main>
-      <slider-component :slides="slides" />
+      <sidebar-component :menu="menu" :social="social" />
+      <div class="wrapper_inner wrapper">
+        <main class="main-content">
+          <header-component :title="name" />
+          <content-component :name="name" />
+          <footer-component :name="name" :phone="phone" />
+        </main>
+        <slider-component :slides="slides" />
+      </div>
     </div>
   </div>
 </template>
