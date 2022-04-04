@@ -11,3 +11,30 @@
 		font-size: 70px;
 	}
 }
+
+.heading-bordered {
+	position: relative;
+	min-height: 32px;
+	font-size: 14px;
+	line-height: 2.2;
+	font-weight: 700;
+	color: $color-main-text-dark;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		left: -64px;
+		width: 100vw;
+		height: 1px;
+		background-color: $color-gray-light;
+	}
+
+	&::before {
+		top: 0;
+	}
+
+	&::after {
+		bottom: 0;
+	}
+}

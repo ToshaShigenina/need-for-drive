@@ -1,8 +1,4 @@
 .tabs {
-	&__nav {
-		margin-bottom: 32px;
-	}
-
 	&__item {
 		display: none;
 
@@ -12,11 +8,9 @@
 	}
 
 	&-nav {
-		&__list {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-		}
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
 
 		&__item {
 			$size: 8px;
@@ -41,9 +35,7 @@
 			}
 
 			button {
-				font-size: 14px;
-				font-weight: 700;
-				color: $color-main-text-dark;
+				font-weight: inherit;
 				transition: color .3s;
 
 				&:disabled {

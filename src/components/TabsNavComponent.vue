@@ -1,18 +1,20 @@
 <template>
-  <nav class="tabs__nav tabs-nav">
-    <ul class="tabs-nav__list">
-      <li
-        class="tabs-nav__item"
-        v-for="(item, i) in list"
-        :key="'nav-tabs-' + i"
-        :class="{ _active: active === i }"
+  <ul class="heading-bordered tabs-nav">
+    <li
+      class="tabs-nav__item"
+      v-for="(item, i) in list"
+      :key="'nav-tabs-' + i"
+      :class="{ _active: active === i }"
+    >
+      <button
+        type="button"
+        :disabled="active !== i && item.disabled"
+        @click="toTab(i)"
       >
-        <button type="button" :disabled="active !== i && item.disabled" @click="toTab(i)">
-          {{ item.text }}
-        </button>
-      </li>
-    </ul>
-  </nav>
+        {{ item.text }}
+      </button>
+    </li>
+  </ul>
 </template>
 <script>
 export default {
