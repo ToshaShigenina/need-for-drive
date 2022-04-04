@@ -1,0 +1,53 @@
+.input {
+	position: relative;
+	max-width: 224px;
+
+	input {
+		padding-right: 24px;
+	}
+
+	&__close {
+		$size: 8px;
+
+		position: absolute;
+		z-index: 5;
+		top: 9px;
+		right: 10px;
+		width: $size;
+		height: $size;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center center;
+		background-image: url('~@/assets/img/input-cross.svg');
+	}
+
+	&__result {
+		position: absolute;
+		z-index: 10;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		max-height: 106px;
+		padding: 8px;
+		color: $color-gray-dark;
+		font-size: 100%;
+		font-weight: 300;
+		background-color: $color-main-light;
+		border: 1px solid $color-gray-light;
+		overflow-y: auto;
+
+		li {
+			&:hover {
+				cursor: pointer;
+				color: $color-main-accent;
+			}
+
+			&:not(:first-child) {
+				margin-top: 6px;
+			}
+		}
+
+
+
+	}
+}

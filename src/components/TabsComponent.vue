@@ -26,15 +26,14 @@ export default {
       type: Array,
       require: true,
     },
-  },
-  data() {
-    return {
-      active: 0,
-    };
+    active: {
+      type: Number,
+      default: 0,
+    },
   },
   methods: {
     toTab(i) {
-      this.active = i;
+      this.$emit("to-tab", i);
     },
   },
 };

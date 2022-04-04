@@ -5,59 +5,55 @@
         <header-component />
       </div>
 
-      <tabs-component :list="tabList">
+      <tabs-component :list="tabList" :active="active" @to-tab="toTab">
         <template v-slot:tab-0>
           <div class="row justify-content-between">
             <div class="col-70">
               <div class="content point">
                 <div class="point__form form">
                   <div class="form__group">
-                    <label for="city">Город</label>
-                    <div class="input input__search">
-                      <input type="text" id="city" v-model="form.city" />
-                      <button type="button" class="input__close"></button>
-                    </div>
+                    <label for="city" class="text-right" style="width: 94px"
+                      >Город</label
+                    >
+                    <input-component
+                      v-model="city"
+                      type="city"
+                      :data="cityVariant"
+                      placeholder="Начните вводить город..."
+                    />
                   </div>
                   <div class="form__group">
-                    <label for="point">Пункт выдачи</label>
-                    <div class="input input__search">
-                      <input type="text" id="point" v-model="form.point" />
-                      <button type="button" class="input__close"></button>
-                      <ul class="input__result">
-                        <li>Увельский</li>
-                      </ul>
-                    </div>
+                    <label for="point" class="text-right" style="width: 94px"
+                      >Пункт выдачи</label
+                    >
+                    <input-component
+                      v-model="point"
+                      type="point"
+                      :data="pointVariant"
+                      placeholder="Начните вводить пункт..."
+                    />
                   </div>
                 </div>
 
                 <div class="map">
                   <p>Выбрать на карте:</p>
-                  <img src="~@/assets/img/map.png" alt="">
+                  <img src="~@/assets/img/map.png" class="map__frame" alt="" />
                 </div>
               </div>
             </div>
             <div class="col-30">
-              <div class="order">
-                <h2 class="order__heading">Ваш заказ:</h2>
-
-                <ul class="order__list">
-                  <li class="order__item">
-                    <span>Пункт выдачи</span>
-                    <span>
-                      Ульяновск,<br />
-                      Нариманова 42
-                    </span>
-                  </li>
-                </ul>
-
-                <p class="order__result">
-                  <strong>Цена:</strong> от 8 000 до 12 000 ₽
-                </p>
-
-                <button type="button" disabled class="btn mw-100">
-                  Выбрать модель
-                </button>
-              </div>
+              <order-component :order="order">
+                <template v-slot:btn>
+                  <button
+                    type="button"
+                    class="btn mw-100"
+                    :disabled="tabList[1].disabled"
+                    @click="toTab(1)"
+                  >
+                    Выбрать модель
+                  </button>
+                </template>
+              </order-component>
             </div>
           </div>
         </template>
@@ -72,20 +68,48 @@
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import TabsComponent from "@/components/TabsComponent.vue";
+import OrderComponent from "@/components/OrderComponent.vue";
+import InputComponent from "@/components/InputComponent.vue";
 
 export default {
   name: "OrderView",
   components: {
     HeaderComponent,
     TabsComponent,
+    OrderComponent,
+    InputComponent,
   },
   data() {
     return {
-      form: {
-        city: "",
-        point: "",
-        model: "",
-      },
+      order: [
+        {
+          type: "city",
+          label: "Город",
+          value: "Ульяновск",
+        },
+        {
+          type: "point",
+          label: "Пункт выдачи",
+          value: "",
+        },
+      ],
+      cityVariant: [
+        "Екатеринбург",
+        "Ульяновск",
+        "Уфа",
+        "Москва",
+        "Санкт-Петербург",
+        "Казань",
+      ],
+      pointVariant: [
+        "Екатеринбург",
+        "Ульяновск",
+        "Уфа",
+        "Москва",
+        "Санкт-Петербург",
+        "Казань",
+      ],
+      active: 0,
       tabList: [
         {
           text: "Местоположение",
@@ -93,15 +117,15 @@ export default {
         },
         {
           text: "Модель",
-          disabled: false,
+          disabled: true,
         },
         {
           text: "Дополнительно",
-          disabled: false,
+          disabled: true,
         },
         {
           text: "Итого",
-          disabled: false,
+          disabled: true,
         },
       ],
     };
@@ -109,6 +133,27 @@ export default {
   computed: {
     name() {
       return this.$store.getters.getName;
+    },
+    city: {
+      get() {
+        return this.order.find((item) => item.type === "city").value;
+      },
+      set(value) {
+        this.order.find((item) => item.type === "city").value = value;
+      },
+    },
+    point: {
+      get() {
+        return this.order.find((item) => item.type === "point").value;
+      },
+      set(value) {
+        this.order.find((item) => item.type === "point").value = value;
+      },
+    },
+  },
+  methods: {
+    toTab(i) {
+      if (!this.tabList[i].disabled) this.active = i;
     },
   },
 };

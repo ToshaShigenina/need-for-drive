@@ -24,9 +24,10 @@
 	&::after {
 		content: '';
 		position: absolute;
-		left: -64px;
+		left: 50%;
 		width: 100vw;
 		height: 1px;
+		margin-left: -50vw;
 		background-color: $color-gray-light;
 	}
 

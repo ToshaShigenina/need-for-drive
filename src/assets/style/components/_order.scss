@@ -43,13 +43,13 @@
 
 			&:first-child {
 				order: 0;
-				padding-right: 12px;
+				padding-right: 2px;
 			}
 
 			&:last-child {
 				order: 2;
 				text-align: right;
-				padding-left: 12px;
+				padding-left: 2px;
 				color: $color-gray-dark;
 			}
 		}
@@ -59,6 +59,10 @@
 			order: 1;
 			width: 100%;
 			border-bottom: 2px dotted $color-gray-dark;
+		}
+
+		&:not(:first-child) {
+			margin-top: 16px;
 		}
 	}
 

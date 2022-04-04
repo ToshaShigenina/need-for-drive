@@ -40,6 +40,33 @@ img {
 	height: auto;
 }
 
+input {
+	appearance: none;
+	&:not([type="checkbox"]),
+	&:not([type="radio"]) {
+		display: block;
+		width: 100%;
+		padding: 4px 10px;
+		border: none;
+		font-size: 100%;
+		font-weight: 300;
+		line-height: 1;
+		color: $color-main-text-dark;
+		border-bottom: 1px solid $color-gray-dark;
+		background-color: transparent;
+	}
+
+	&::placeholder {
+		color: $color-gray-dark;
+	}
+}
+
+label {
+	font-size: 100%;
+	white-space: nowrap;
+	user-select: none;
+}
+
 .backdrop {
 	position: fixed;
 	z-index: 10;
