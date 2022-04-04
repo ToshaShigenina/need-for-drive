@@ -6,7 +6,7 @@
         <main class="main-content">
           <header-component :title="name" />
           <content-component :name="name" />
-          <footer-component :name="name" :phone="phone" />
+          <footer-component :name="name" />
         </main>
         <slider-component :slides="slides" />
       </div>
@@ -33,7 +33,6 @@ export default {
   data() {
     return {
       name: "Need for drive",
-      phone: "8 (495) 234-22-44",
       menu: [
         {
           url: "#",

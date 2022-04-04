@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-auto col-12 main-footer__contact">
           <address class="main-contact">
-            <a :href="phoneLink" class="main-contact__link">{{ phone }}</a>
+            <a href="tel:84952342244" class="main-contact__link">8 (495) 234-22-44</a>
           </address>
         </div>
       </div>
@@ -24,15 +24,6 @@ export default {
     name: {
       type: String,
       require: true,
-    },
-    phone: {
-      type: String,
-      require: true,
-    },
-  },
-  computed: {
-    phoneLink() {
-      return `tel://${this.phone}`;
     },
   },
 };
