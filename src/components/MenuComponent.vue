@@ -15,11 +15,31 @@
 <script>
 export default {
   name: "menu-component",
-  props: {
-    links: {
-      type: Array,
-      require: true,
-    },
-  },
+  data() {
+    return {
+      links: [
+        {
+          url: "#",
+          active: true,
+          text: "ПАРКОВКА",
+        },
+        {
+          url: "#",
+          active: false,
+          text: "СТРАХОВКА",
+        },
+        {
+          url: "#",
+          active: false,
+          text: "БЕНЗИН",
+        },
+        {
+          url: "#",
+          active: false,
+          text: "ОБСЛУЖИВАНИЕ",
+        },
+      ]
+    }
+  }
 };
 </script>

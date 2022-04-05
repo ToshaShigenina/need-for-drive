@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <sidebar-component :menu="menu" :social="social" />
+      <sidebar-component />
       <router-view />
     </div>
   </div>
@@ -14,14 +14,6 @@ export default {
   name: "App",
   components: {
     SidebarComponent,
-  },
-  computed: {
-    menu() {
-      return this.$store.getters.getMenuLinks;
-    },
-    social() {
-      return this.$store.getters.getSocialLinks;
-    },
   },
 };
 </script>
