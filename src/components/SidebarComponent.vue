@@ -9,8 +9,8 @@
     </button>
     <div class="backdrop main-sidebar__backdrop">
       <div class="main-sidebar__content">
-        <menu-component :links="menu" />
-        <social-component :links="social" />
+        <menu-component />
+        <social-component />
       </div>
     </div>
     <lang-component />
@@ -24,16 +24,6 @@ import SocialComponent from "./SocialComponent.vue";
 
 export default {
   name: "sidebar-component",
-  props: {
-    social: {
-      type: Array,
-      require: true,
-    },
-    menu: {
-      type: Array,
-      require: true,
-    },
-  },
   components: {
     LangComponent,
     MenuComponent,

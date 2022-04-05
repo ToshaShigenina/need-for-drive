@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <div class="wrapper">
-      <sidebar-component :menu="menu" :social="social" />
+      <sidebar-component />
       <div class="wrapper_inner wrapper">
         <main class="main-content">
-          <header-component :title="name" />
-          <content-component :name="name" />
-          <footer-component :name="name" />
+          <header-component />
+          <content-component />
+          <footer-component />
         </main>
         <slider-component :slides="slides" />
       </div>
@@ -32,35 +32,6 @@ export default {
   },
   data() {
     return {
-      name: "Need for drive",
-      menu: [
-        {
-          url: "#",
-          active: true,
-          text: "ПАРКОВКА",
-        },
-        {
-          url: "#",
-          active: false,
-          text: "СТРАХОВКА",
-        },
-        {
-          url: "#",
-          active: false,
-          text: "БЕНЗИН",
-        },
-        {
-          url: "#",
-          active: false,
-          text: "ОБСЛУЖИВАНИЕ",
-        },
-      ],
-      social: [
-        {
-          url: "#",
-          class: "social-link_tg",
-        },
-      ],
       slides: [
         {
           title: "Бесплатная парковка",

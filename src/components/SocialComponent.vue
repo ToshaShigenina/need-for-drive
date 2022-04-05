@@ -13,11 +13,15 @@
 <script>
 export default {
   name: "social-component",
-  props: {
-    links: {
-      type: Array,
-      require: true,
-    },
-  },
+  data() {
+    return {
+      links: [
+        {
+          url: "#",
+          class: "social-link_tg",
+        },
+      ]
+    }
+  }
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="container">
       <h1 class="main-article__heading main-heading">
         Каршеринг<br>
-        <span class="text-accent">{{ name }}</span>
+        <span class="text-accent">Need for drive</span>
         </h1>
       <p class="main-article__lead lead">Поминутная аренда авто твоего города</p>
       <a href="#" class="main-article__btn btn">Забронировать</a>
@@ -14,11 +14,5 @@
 <script>
 export default {
   name: "content-component",
-  props: {
-    name: {
-      type: String,
-      require: true,
-    }
-  },
 };
 </script>
