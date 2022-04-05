@@ -2,7 +2,7 @@
   <div class="wrapper wrapper_inner">
     <main class="main-content">
       <header-component />
-      <content-component :name="name" />
+      <content-component />
       <footer-component />
     </main>
     <slider-component :slides="slides" />
@@ -24,12 +24,6 @@ export default {
     FooterComponent,
   },
   computed: {
-    name() {
-      return this.$store.getters.getName;
-    },    
-    phone() {
-      return this.$store.getters.getPhone;
-    },
     slides() {
       return this.$store.getters.getSlides;
     },

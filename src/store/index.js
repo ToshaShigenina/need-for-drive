@@ -5,39 +5,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    name: "Need for drive",
-    phone: "8 (495) 234-22-44",
-    content: {
-      title: "Каршеринг",
-      lead: "Поминутная аренда авто твоего города",
-      phone: "8 (495) 234-22-44",
-      copyright: "© 2016-2019 «Need for drive»",
-      link: {
-        url: "/order",
-        text: "Забронировать",
-      },
-    },
-    menu: [{
-        url: "#",
-        text: "ПАРКОВКА",
-      },
-      {
-        url: "#",
-        text: "СТРАХОВКА",
-      },
-      {
-        url: "#",
-        text: "БЕНЗИН",
-      },
-      {
-        url: "#",
-        text: "ОБСЛУЖИВАНИЕ",
-      },
-    ],
-    social: [{
-      url: "#",
-      class: "social-link_tg",
-    }, ],
     slides: [{
         title: "Бесплатная парковка",
         description: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
@@ -79,21 +46,6 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   getters: {
-    getMenuLinks(state) {
-      return state.menu;
-    },
-    getSocialLinks(state) {
-      return state.social;
-    },
-    getName(state) {
-      return state.name;
-    },    
-    getContent(state) {
-      return state.content;
-    },
-    getPhone(state) {
-      return state.phone;
-    },
     getSlides(state) {
       return state.slides;
     }
