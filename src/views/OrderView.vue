@@ -8,7 +8,7 @@
       <tabs-component :list="tabList" :active="active" @to-tab="toTab">
         <template v-slot:tab-0>
           <div class="row justify-content-between">
-            <div class="col-70">
+            <div class="col-md-70 col-sm-60 col-100">
               <div class="content point">
                 <div class="point__form form">
                   <div class="form__group">
@@ -41,7 +41,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-30">
+            <div class="col-md-30 col-sm-40 col-100">
               <order-component :order="order">
                 <template v-slot:btn>
                   <button
@@ -57,9 +57,62 @@
             </div>
           </div>
         </template>
-        <template v-slot:tab-1> Content 2 </template>
-        <template v-slot:tab-2> Content 3 </template>
-        <template v-slot:tab-3> Content 4 </template>
+        <template v-slot:tab-1>
+          <div class="row justify-content-between">
+            <div class="col-md-70 col-sm-60 col-100">
+              <div class="content">Content 2</div>
+            </div>
+            <div class="col-md-30 col-sm-40 col-100">
+              <order-component :order="order">
+                <template v-slot:btn>
+                  <button
+                    type="button"
+                    class="btn mw-100"
+                    :disabled="tabList[2].disabled"
+                    @click="toTab(2)"
+                  >
+                    Дополнительно
+                  </button>
+                </template>
+              </order-component>
+            </div>
+          </div>
+        </template>
+        <template v-slot:tab-2>
+          <div class="row justify-content-between">
+            <div class="col-md-70 col-sm-60 col-100">
+              <div class="content">Content 3</div>
+            </div>
+            <div class="col-md-30 col-sm-40 col-100">
+              <order-component :order="order">
+                <template v-slot:btn>
+                  <button
+                    type="button"
+                    class="btn mw-100"
+                    :disabled="tabList[3].disabled"
+                    @click="toTab(3)"
+                  >
+                    Итого
+                  </button>
+                </template>
+              </order-component>
+            </div>
+          </div>
+        </template>
+        <template v-slot:tab-3>
+          <div class="row justify-content-between">
+            <div class="col-md-70 col-sm-60 col-100">
+              <div class="content">Content 4</div>
+            </div>
+            <div class="col-md-30 col-sm-40 col-100">
+              <order-component :order="order">
+                <template v-slot:btn>
+                  <button type="button" class="btn mw-100">Заказать</button>
+                </template>
+              </order-component>
+            </div>
+          </div>
+        </template>
       </tabs-component>
     </div>
   </div>
@@ -117,7 +170,7 @@ export default {
         },
         {
           text: "Модель",
-          disabled: true,
+          disabled: false,
         },
         {
           text: "Дополнительно",

@@ -12,25 +12,33 @@
 		align-items: center;
 		justify-content: flex-start;
 
+		@media (max-width: ($bp-width-xs - 1px)) {
+			flex-direction: column;
+		}
+
 		&__item {
 			$size: 8px;
 
 			position: relative;
 
 			&:not(:first-child) {
-				margin-left: 38px;
+				margin-left: 0;
 
-				&::before {
-					content: '';
-					position: absolute;
-					width: $size;
-					height: $size;
-					top: calc(50% - ($size / 2));
-					left: $size * -2.5;
-					background-repeat: no-repeat;
-					background-size: contain;
-					background-position: center center;
-					background-image: url('~@/assets/img/tabs-arrow.svg');
+				@media (min-width: $bp-width-xs) {
+					margin-left: 38px;
+
+					&::before {
+						content: '';
+						position: absolute;
+						width: $size;
+						height: $size;
+						top: calc(50% - ($size / 2));
+						left: $size * -2.5;
+						background-repeat: no-repeat;
+						background-size: contain;
+						background-position: center center;
+						background-image: url('~@/assets/img/tabs-arrow.svg');
+					}
 				}
 			}
 

@@ -20,6 +20,7 @@
 	&__btn.btn {
 		@media screen and (max-width: calc($bp-width-xs - 1px)) {
 			width: calc(100% + 32px);
+			border-radius: 0px;
 			margin-left: -16px;
 			margin-right: -16px;
 		}

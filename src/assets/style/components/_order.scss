@@ -1,17 +1,23 @@
 .order {
 	position: relative;
-	padding-top: 32px;
+	padding-top: 64px;
 	padding-bottom: 32px;
-	padding-left: 32px;
+	border-top: 1px solid $color-gray-light;
 
-	&::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 1px;
-		height: 100vh;
-		background-color: $color-gray-light;
+	@media screen and (min-width: $bp-width-sm) {
+		padding-left: 32px;
+		padding-top: 32px;
+		border-top: none;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1px;
+			height: 100vh;
+			background-color: $color-gray-light;
+		}
 	}
 
 	&__heading {

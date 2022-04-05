@@ -1,6 +1,9 @@
 <template>
   <div class="slider" ref="slider">
-    <div class="slider__wrapper" :style="{ transform: `translateX(${translate})` }">
+    <div
+      class="slider__wrapper"
+      :style="{ transform: `translateX(${translate})` }"
+    >
       <slide-component
         v-for="(slide, i) in slides"
         :key="'slide' + i"
@@ -40,7 +43,7 @@ export default {
   name: "slider-component",
   components: {
     SlideComponent,
-    PaginationComponent
+    PaginationComponent,
   },
   props: {
     slides: {
@@ -51,13 +54,13 @@ export default {
   data() {
     return {
       active: 0,
-      width: 0
+      width: 0,
     };
   },
   computed: {
-    translate () {
-      return (this.width * this.active * -1) + 'px';
-    }
+    translate() {
+      return this.width * this.active * -1 + "px";
+    },
   },
   methods: {
     prevSlide() {
@@ -70,12 +73,12 @@ export default {
       this.active = i;
     },
     getWidth() {
-      this.width = this.$refs.slider.clientWidth;
-    }
+      if (this.$refs.slider) this.width = this.$refs.slider.clientWidth;
+    },
   },
   mounted() {
     this.getWidth();
-    window.addEventListener('resize', this.getWidth.bind(this))
+    window.addEventListener("resize", this.getWidth.bind(this));
   },
 };
 </script>

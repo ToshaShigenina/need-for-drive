@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row align-items-center justify-content-end justify-content-sm-between">
         <div class="col-sm-auto col-100">
-          <div class="main-header__brand brand-name">{{ name }}</div>
+          <router-link to="/" class="main-header__brand brand-name">{{ name }}</router-link>
         </div>
         <div class="col-sm-auto col-100 text-right">
           <button class="main-header__location location">Ульяновск</button>
