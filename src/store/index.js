@@ -41,13 +41,102 @@ export default new Vuex.Store({
           text: "Подробнее",
         },
       },
-    ]
+    ],
+    order: [{
+        type: "city",
+        label: "Город",
+        value: "Ульяновск",
+      },
+      {
+        type: "point",
+        label: "Пункт выдачи",
+        value: "",
+      },
+      {
+        type: "model",
+        label: "Модель",
+        value: "",
+      },
+      {
+        type: "color",
+        label: "Цвет",
+        value: "",
+      },
+      {
+        type: "period",
+        label: "Длительность аренды",
+        value: "",
+      },
+      {
+        type: "rate",
+        label: "Тариф",
+        value: "",
+      },
+      {
+        type: "fuel",
+        label: "Полный бак",
+        value: "",
+      },
+      {
+        type: "child-seat",
+        label: "Детское кресло",
+        value: "",
+      },
+      {
+        type: "right-hand-drive",
+        label: "Правый руль",
+        value: "",
+      },
+    ],
+    cityVariant: [
+      "Екатеринбург",
+      "Ульяновск",
+      "Уфа",
+      "Москва",
+      "Санкт-Петербург",
+      "Казань",
+    ],
+    pointVariant: [
+      "Екатеринбург",
+      "Ульяновск",
+      "Уфа",
+      "Москва",
+      "Санкт-Петербург",
+      "Казань",
+    ],
   },
-  mutations: {},
+  mutations: {
+    setOrderCityValue(state, value) {
+      state.order.find((item) => item.type === "city").value = value;
+    },
+    setOrderPointValue(state, value) {
+      state.order.find((item) => item.type === "point").value = value;
+    }
+  },
   actions: {},
   getters: {
     getSlides(state) {
       return state.slides;
+    },
+    getOrder(state) {
+      return state.order;
+    },
+    getFilteredOrder (state) {
+      return state.order.filter(
+        (item) => item.value && item.type !== "city" && item.type !== "point"
+      );
+    },
+    getOrderCity(state) {
+      return state.order.find((item) => item.type === "city");
+    },
+    getOrderPoint(state) {
+      return state.order.find((item) => item.type === "point");
+    },
+    getCityVariant(state) {
+      return state.cityVariant;
+    },
+    getPointVariant(state) {
+      return state.pointVariant;
     }
   }
 })

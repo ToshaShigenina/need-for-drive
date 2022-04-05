@@ -5,49 +5,40 @@
         <header-component />
       </div>
 
-      <tabs-component :list="tabList" :active="active" @to-tab="toTab">
+      <tabs-component :list="tabs" :active="active" @to-tab="toTab">
         <template v-slot:tab-0>
           <div class="row justify-content-between">
             <div class="col-md-70 col-sm-60 col-100">
               <div class="content point">
                 <div class="point__form form">
-                  <div class="form__group">
-                    <label for="city" class="text-right" style="width: 94px"
-                      >Город</label
-                    >
-                    <input-component
-                      v-model="city"
-                      type="city"
-                      :data="cityVariant"
-                      placeholder="Начните вводить город..."
-                    />
-                  </div>
-                  <div class="form__group">
-                    <label for="point" class="text-right" style="width: 94px"
-                      >Пункт выдачи</label
-                    >
-                    <input-component
-                      v-model="point"
-                      type="point"
-                      :data="pointVariant"
-                      placeholder="Начните вводить пункт..."
-                    />
-                  </div>
+                  <input-component
+                    v-model="city.value"
+                    type="city"
+                    :data="cityVariant"
+                    :label="city.label"
+                    width="94px"
+                    placeholder="Начните вводить город..."
+                  />
+                  <input-component
+                    v-model="point.value"
+                    type="point"
+                    :data="pointVariant"
+                    :label="point.label"
+                    width="94px"
+                    placeholder="Начните вводить пункт..."
+                  />
                 </div>
 
-                <div class="map">
-                  <p>Выбрать на карте:</p>
-                  <img src="~@/assets/img/map.png" class="map__frame" alt="" />
-                </div>
+                <map-component />
               </div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
-              <order-component :order="order">
+              <order-component>
                 <template v-slot:btn>
                   <button
                     type="button"
                     class="btn mw-100"
-                    :disabled="tabList[1].disabled"
+                    :disabled="tabs[1].disabled"
                     @click="toTab(1)"
                   >
                     Выбрать модель
@@ -60,15 +51,15 @@
         <template v-slot:tab-1>
           <div class="row justify-content-between">
             <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">Content 2</div>
+              <div class="content">{{ tabList[1] }}</div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
-              <order-component :order="order">
+              <order-component>
                 <template v-slot:btn>
                   <button
                     type="button"
                     class="btn mw-100"
-                    :disabled="tabList[2].disabled"
+                    :disabled="tabs[2].disabled"
                     @click="toTab(2)"
                   >
                     Дополнительно
@@ -81,15 +72,15 @@
         <template v-slot:tab-2>
           <div class="row justify-content-between">
             <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">Content 3</div>
+              <div class="content">{{ tabList[2] }}</div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
-              <order-component :order="order">
+              <order-component>
                 <template v-slot:btn>
                   <button
                     type="button"
                     class="btn mw-100"
-                    :disabled="tabList[3].disabled"
+                    :disabled="tabs[3].disabled"
                     @click="toTab(3)"
                   >
                     Итого
@@ -102,10 +93,10 @@
         <template v-slot:tab-3>
           <div class="row justify-content-between">
             <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">Content 4</div>
+              <div class="content">{{ tabList[3] }}</div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
-              <order-component :order="order">
+              <order-component>
                 <template v-slot:btn>
                   <button type="button" class="btn mw-100">Заказать</button>
                 </template>
@@ -123,6 +114,7 @@ import HeaderComponent from "@/components/HeaderComponent.vue";
 import TabsComponent from "@/components/TabsComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
 import InputComponent from "@/components/InputComponent.vue";
+import MapComponent from "@/components/MapComponent.vue";
 
 export default {
   name: "OrderView",
@@ -131,82 +123,54 @@ export default {
     TabsComponent,
     OrderComponent,
     InputComponent,
+    MapComponent,
   },
   data() {
     return {
-      order: [
-        {
-          type: "city",
-          label: "Город",
-          value: "Ульяновск",
-        },
-        {
-          type: "point",
-          label: "Пункт выдачи",
-          value: "",
-        },
-      ],
-      cityVariant: [
-        "Екатеринбург",
-        "Ульяновск",
-        "Уфа",
-        "Москва",
-        "Санкт-Петербург",
-        "Казань",
-      ],
-      pointVariant: [
-        "Екатеринбург",
-        "Ульяновск",
-        "Уфа",
-        "Москва",
-        "Санкт-Петербург",
-        "Казань",
-      ],
       active: 0,
-      tabList: [
-        {
-          text: "Местоположение",
-          disabled: false,
-        },
-        {
-          text: "Модель",
-          disabled: false,
-        },
-        {
-          text: "Дополнительно",
-          disabled: true,
-        },
-        {
-          text: "Итого",
-          disabled: true,
-        },
-      ],
+      tabList: ["Местоположение", "Модель", "Дополнительно", "Итого"],
     };
   },
   computed: {
-    name() {
-      return this.$store.getters.getName;
-    },
     city: {
       get() {
-        return this.order.find((item) => item.type === "city").value;
+        return this.$store.getters.getOrderCity;
       },
       set(value) {
-        this.order.find((item) => item.type === "city").value = value;
+        this.$store.commit("setOrderCityValue", value);
       },
     },
     point: {
       get() {
-        return this.order.find((item) => item.type === "point").value;
+        return this.$store.getters.getOrderPoint;
       },
       set(value) {
-        this.order.find((item) => item.type === "point").value = value;
+        this.$store.commit("setOrderPointValue", value);
       },
+    },
+    cityVariant() {
+      return this.$store.getters.getCityVariant;
+    },
+    pointVariant() {
+      return this.$store.getters.getPointVariant;
+    },
+    tabs() {
+      return this.tabList.map((item, i) => {
+        const result = { text: item };
+        if (this.active === i || i === 0) {
+          result.disabled = false;
+        } else if (i === 1) {
+          result.disabled = !(this.city.value && this.point.value);
+        } else {
+          result.disabled = true;
+        }
+        return result;
+      });
     },
   },
   methods: {
     toTab(i) {
-      if (!this.tabList[i].disabled) this.active = i;
+      if (!this.tabs[i].disabled) this.active = i;
     },
   },
 };

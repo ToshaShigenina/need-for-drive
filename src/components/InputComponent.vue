@@ -1,33 +1,38 @@
 <template>
-  <div class="input">
-    <input
-      type="text"
-      :id="type"
-      :value="value"
-      @input="changeValue($event.target.value)"
-      autocomplete="off"
-      v-bind="$attrs"
-    />
+  <div class="form__group">
+    <label :for="id" class="text-right" :style="{ width: width }">
+      {{ label }}
+    </label>
+    <div class="input">
+      <input
+        type="text"
+        :id="id"
+        :value="value"
+        @input="changeValue($event.target.value)"
+        autocomplete="off"
+        v-bind="$attrs"
+      />
 
-    <button
-      type="button"
-      class="input__close"
-      @click="changeValue('')"
-      v-if="value"
-    ></button>
+      <button
+        type="button"
+        class="input__close"
+        @click="changeValue('')"
+        v-if="value"
+      ></button>
 
-    <ul
-      class="input__result"
-      v-if="value && data && filteredData.length && open"
-    >
-      <li
-        v-for="(item, i) in filteredData"
-        :key="`${type}-${i}`"
-        @click="selectValue(item)"
+      <ul
+        class="input__result"
+        v-if="value && data && filteredData.length && open"
       >
-        {{ item }}
-      </li>
-    </ul>
+        <li
+          v-for="(item, i) in filteredData"
+          :key="`${id}-${i}`"
+          @click="selectValue(item)"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -38,8 +43,15 @@ export default {
       type: String,
       default: "",
     },
-    type: {
+    label: {
       type: String,
+    },
+    id: {
+      type: String,
+    },
+    width: {
+      type: String,
+      default: "auto",
     },
     data: {
       type: Array,
