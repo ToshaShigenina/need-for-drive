@@ -18,7 +18,7 @@ export default {
   name: "menu-component",
   data() {
     return {
-      menu: [
+      links: [
         {
           url: "#",
           active: true,
