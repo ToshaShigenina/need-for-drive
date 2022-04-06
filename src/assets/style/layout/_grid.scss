@@ -1,0 +1,171 @@
+*,
+*:before,
+*:after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: auto;
+	min-height: 100vh;
+}
+
+body {
+	font-size: 18px;
+	font-weight: 400;
+	font-family: $font;
+	color: $color-main-text-dark;
+	background-color: $color-main-light;
+}
+
+._overflow {
+	overflow: hidden;
+}
+
+.wrapper {
+	display: flex;
+	align-items: stretch;
+	flex-grow: 1;
+	width: 100%;
+
+	&_inner {
+		@media (min-width: $bp-width-xs) {
+			width: calc(100% - 86px);
+		}
+
+		@media (min-width: $bp-width-md) {
+			width: calc(100% - 66px);
+		}
+
+		@media screen and (min-width: $bp-width-lg) {
+			width: calc(100% - 64px);
+		}
+	}
+}
+
+.container {
+	padding: 0 16px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.row {
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	margin-left: -16px;
+	margin-right: -16px;
+}
+
+.direction-row-reverse {
+	flex-direction: row-reverse;
+}
+
+.direction-column {
+	flex-direction: column;
+}
+
+.direction-column-reverse {
+	flex-direction: column-reverse;
+}
+
+.align-items-center {
+	align-items: center !important;
+}
+
+.align-items-start {
+	align-items: flex-start !important;
+}
+
+.align-items-end {
+	align-items: flex-end !important;
+}
+
+.align-items-stretch {
+	align-items: stretch !important;
+}
+
+.justify-content-center {
+	justify-content: center !important;
+}
+
+.justify-content-between {
+	justify-content: space-between !important;
+}
+
+.justify-content-end {
+	justify-content: flex-end !important;
+}
+
+.justify-content-start {
+	justify-content: flex-start !important;
+}
+
+[class*="col-"] {
+	flex-shrink: 0;
+	flex-grow: 0;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.col-auto {
+	width: auto;
+	max-width: 100%;
+}
+
+.col-12 {
+	width: 100%;
+}
+
+.backdrop {
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	background-color: transparentize($color-bg-dark, 0.2);
+}
+
+@media screen and (min-width: $bp-width-xs) {
+	.container {
+		padding: 0 32px;
+	}
+
+	.row {
+		margin-left: -32px;
+		margin-right: -32px;
+	}
+
+	.justify-content-sm-between {
+		justify-content: space-between !important;
+	}
+
+	[class*="col-"] {
+		padding-left: 32px;
+		padding-right: 32px;
+	}
+
+	.col-sm-auto {
+		width: auto;
+		max-width: 100%;
+	}
+}
+
+@media screen and (min-width: $bp-width-lg) {
+	.container {
+		padding: 0 64px;
+	}
+
+	.row {
+		margin-left: -64px;
+		margin-right: -64px;
+	}
+
+	[class*="col-"] {
+		padding-left: 64px;
+		padding-right: 64px;
+	}
+}

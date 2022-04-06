@@ -1,0 +1,32 @@
+.main-menu {
+	list-style: none;
+	width: 100%;
+	font-size: 22px;
+	font-weight: 500;
+	color: $color-main-light;
+
+	&__item {
+		&:not(:last-child) {
+			margin-bottom: 1em;
+		}
+
+		&._active {
+			.main-menu__link {
+				color: $color-main-accent;
+			}
+		}
+
+	}
+
+	&__link {
+		display: block;
+		color: $color-main-light;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition: background-color .5s;
+	}
+
+	@media (min-width: $bp-width-sm) {
+		font-size: 28px;
+	}
+}

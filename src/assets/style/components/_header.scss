@@ -1,0 +1,10 @@
+.main-header {
+	&__brand {
+		margin-bottom: 8px;
+		text-align: right;
+
+		@media screen and (min-width: $bp-width-xs) {
+			margin-bottom: 0;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+$color-main-accent: rgb(14, 194, 97);
+$color-main-text-dark: rgb(18, 18, 18);
+$color-main-dark: rgb(0, 0, 0);
+$color-main-light: rgb(255, 255, 255);
+$color-gray-dark: rgb(153, 153, 153);
+$color-gray-light: rgb(238, 238, 238);
+$color-border-light: rgb(245, 246, 248);
+$color-bg-dark: rgb(21, 27, 31);
+
+$gradient-angle: 90deg;
+$gradient-start-color: $color-main-accent;
+$gradient-end-color: rgb(3, 159, 103);
+$linear-gradient-base: linear-gradient(90deg, $gradient-start-color 2.61%, $gradient-end-color 112.6%);
+$linear-gradient-hover: linear-gradient(90deg, darken($gradient-start-color, 10%) 2.61%, darken($gradient-end-color, 10%) 112.6%);
+$linear-gradient-active: linear-gradient(90deg, darken($gradient-start-color, 20%) 2.61%, darken($gradient-end-color, 20%) 112.6%);
+
+$gradient-slide: linear-gradient($gradient-angle * 2, transparentize($color-main-dark, 1) 0%, $color-main-dark 100%);
+
+$gradient-parking-start-color: rgb(19, 73, 63);
+$gradient-parking-end-color: rgb(12, 123, 27);
+$gradient-slider-btn-parking: linear-gradient($gradient-angle, $gradient-parking-start-color 0%, $gradient-parking-end-color 100%);
+$gradient-slider-btn-parking-hover: linear-gradient($gradient-angle, darken($gradient-parking-start-color, 4%) 0%, darken($gradient-parking-end-color, 4%) 100%);
+$gradient-slider-btn-parking-active: linear-gradient($gradient-angle, darken($gradient-parking-start-color, 8%) 0%, darken($gradient-parking-end-color, 8%) 100%);
+
+$gradient-insurance-start-color: rgba(19, 41, 73);
+$gradient-insurance-end-color: rgba(12, 123, 103);
+$gradient-slider-btn-insurance: linear-gradient($gradient-angle, $gradient-insurance-start-color 0%, $gradient-insurance-end-color 100%);
+$gradient-slider-btn-insurance-hover: linear-gradient($gradient-angle, darken($gradient-insurance-start-color, 4%) 0%, darken($gradient-insurance-end-color, 4%) 100%);
+$gradient-slider-btn-insurance-active: linear-gradient($gradient-angle, darken($gradient-insurance-start-color, 8%) 0%, darken($gradient-insurance-end-color, 8%) 100%);
+
+$gradient-petrol-start-color: rgba(73, 48, 19);
+$gradient-petrol-end-color: rgba(123, 12, 59);
+$gradient-slider-btn-petrol: linear-gradient($gradient-angle, $gradient-petrol-start-color 0%, $gradient-petrol-end-color 100%);
+$gradient-slider-btn-petrol-hover: linear-gradient($gradient-angle, darken($gradient-petrol-start-color, 4%) 0%, darken($gradient-petrol-end-color, 4%) 100%);
+$gradient-slider-btn-petrol-active: linear-gradient($gradient-angle, darken($gradient-petrol-start-color, 8%) 0%, darken($gradient-petrol-end-color, 8%) 100%);
+
+$gradient-service-start-color: rgb(40, 19, 73);
+$gradient-service-end-color: rgb(114, 12, 123);
+$gradient-slider-btn-service: linear-gradient($gradient-angle, $gradient-service-start-color 0%, $gradient-service-end-color 100%);
+$gradient-slider-btn-service-hover: linear-gradient($gradient-angle, darken($gradient-service-start-color, 4%) 0%, darken($gradient-service-end-color, 4%) 100%);
+$gradient-slider-btn-service-active: linear-gradient($gradient-angle, darken($gradient-service-start-color, 8%) 0%, darken($gradient-service-end-color, 8%) 100%);
+
+$font: ('Roboto', 'Arial', sans-serif);
+
+$bp-width-xs: 600px;
+$bp-width-sm: 768px;
+$bp-width-md: 992px;
+$bp-width-lg: 1200px;
