@@ -11,7 +11,7 @@
             <div class="col-md-70 col-sm-60 col-100">
               <div class="content point">
                 <div class="point__form form">
-                  <input-component
+                  <input-text-component
                     v-model="city.value"
                     type="city"
                     :data="cityVariant"
@@ -19,7 +19,7 @@
                     width="94px"
                     placeholder="Начните вводить город..."
                   />
-                  <input-component
+                  <input-text-component
                     v-model="point.value"
                     type="point"
                     :data="pointVariant"
@@ -51,7 +51,38 @@
         <template v-slot:tab-1>
           <div class="row justify-content-between">
             <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">{{ tabList[1] }}</div>
+              <div class="content model">
+                <ul class="model__options input-list">
+                  <li v-for="category in categoryList" :key="category.id">
+                    <input-switch-component
+                      type="radio"
+                      :label="category.text"
+                      name="category"
+                      :value="category.id"
+                      v-model="categoryActive"
+                    />
+                  </li>
+                </ul>
+                <ul class="model__list">
+                  <li v-for="(car, i) in carVariant" :key="i">
+                    <div
+                      class="model__card"
+                      :class="{ _active: carActive === car.id }"
+                      @click="isActiveCar(car.id)"
+                    >
+                      <h2 class="model__name">{{ car.name }}</h2>
+                      <span class="model__cost"
+                        >{{ car.priceMin }} - {{ car.priceMax }} ₽
+                      </span>
+                      <img
+                        :src="car.thumbnail"
+                        :alt="car.name"
+                        class="model__img"
+                      />
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
               <order-component>
@@ -113,7 +144,8 @@
 import HeaderComponent from "@/components/HeaderComponent.vue";
 import TabsComponent from "@/components/TabsComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
-import InputComponent from "@/components/InputComponent.vue";
+import InputTextComponent from "@/components/InputTextComponent.vue";
+import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
 import MapComponent from "@/components/MapComponent.vue";
 
 export default {
@@ -122,12 +154,15 @@ export default {
     HeaderComponent,
     TabsComponent,
     OrderComponent,
-    InputComponent,
+    InputTextComponent,
+    InputSwitchComponent,
     MapComponent,
   },
   data() {
     return {
       active: 0,
+      carActive: null,
+      categoryActive: 0,
       tabList: ["Местоположение", "Модель", "Дополнительно", "Итого"],
     };
   },
@@ -148,11 +183,25 @@ export default {
         this.$store.commit("setOrderPointValue", value);
       },
     },
+    model: {
+      get() {
+        return this.$store.getters.getOrderModel;
+      },
+      set(value) {
+        this.$store.commit("setCarValue", value);
+      },
+    },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
+    },
     cityVariant() {
       return this.$store.getters.getCityVariant;
     },
     pointVariant() {
       return this.$store.getters.getPointVariant;
+    },
+    carVariant() {
+      return this.$store.getters.getCarVariant(this.categoryActive);
     },
     tabs() {
       return this.tabList.map((item, i) => {
@@ -161,6 +210,8 @@ export default {
           result.disabled = false;
         } else if (i === 1) {
           result.disabled = !(this.city.value && this.point.value);
+        } else if (i === 2) {
+          result.disabled = !this.model.value;
         } else {
           result.disabled = true;
         }
@@ -171,6 +222,15 @@ export default {
   methods: {
     toTab(i) {
       if (!this.tabs[i].disabled) this.active = i;
+    },
+    isActiveCar(id) {
+      if (this.carActive === id) {
+        this.carActive = null;
+        this.model = null;
+      } else {
+        this.carActive = id;
+        this.model = id;
+      }
     },
   },
 };

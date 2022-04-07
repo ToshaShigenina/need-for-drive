@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-  name: "inpup-component",
+  name: "input-text-component",
   props: {
     value: {
       type: String,
@@ -45,6 +45,7 @@ export default {
     },
     label: {
       type: String,
+      default: "",
     },
     id: {
       type: String,

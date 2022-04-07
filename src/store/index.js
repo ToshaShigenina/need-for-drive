@@ -88,6 +88,19 @@ export default new Vuex.Store({
         value: "",
       },
     ],
+    categoryList: [{
+        id: 0,
+        text: 'Все модели'
+      },
+      {
+        id: 1,
+        text: 'Эконом'
+      },
+      {
+        id: 2,
+        text: 'Премиум'
+      }
+    ],
     cityVariant: [
       "Екатеринбург",
       "Ульяновск",
@@ -104,6 +117,43 @@ export default new Vuex.Store({
       "Санкт-Петербург",
       "Казань",
     ],
+    carVariant: [{
+        id: 0,
+        name: 'ELANTRA',
+        categoryId: 2,
+        description: '',
+        thumbnail: require('../assets/img/car.png'),
+        priceMin: 12000,
+        priceMax: 15000
+      },
+      {
+        id: 1,
+        name: 'i30 N',
+        categoryId: 1,
+        description: '',
+        thumbnail: require('../assets/img/car.png'),
+        priceMin: 10000,
+        priceMax: 32000
+      },
+      {
+        id: 2,
+        name: 'CRETA',
+        categoryId: 2,
+        description: '',
+        thumbnail: require('../assets/img/car.png'),
+        priceMin: 12000,
+        priceMax: 15000
+      },
+      {
+        id: 3,
+        name: 'SONATA',
+        categoryId: 1,
+        description: '',
+        thumbnail: require('../assets/img/car.png'),
+        priceMin: 10000,
+        priceMax: 32000
+      }
+    ]
   },
   mutations: {
     setOrderCityValue(state, value) {
@@ -111,6 +161,14 @@ export default new Vuex.Store({
     },
     setOrderPointValue(state, value) {
       state.order.find((item) => item.type === "point").value = value;
+    },
+    setCarValue(state, id) {
+      if (id !== null) {
+        const car = state.carVariant.find(item => item.id === id);
+        state.order.find((item) => item.type === "model").value = car.name;
+      } else {
+        state.order.find((item) => item.type === "model").value = '';
+      }
     }
   },
   actions: {},
@@ -121,7 +179,10 @@ export default new Vuex.Store({
     getOrder(state) {
       return state.order;
     },
-    getFilteredOrder (state) {
+    getCategoryList(state) {
+      return state.categoryList;
+    },
+    getFilteredOrder(state) {
       return state.order.filter(
         (item) => item.value && item.type !== "city" && item.type !== "point"
       );
@@ -132,11 +193,20 @@ export default new Vuex.Store({
     getOrderPoint(state) {
       return state.order.find((item) => item.type === "point");
     },
+    getOrderModel(state) {
+      return state.order.find((item) => item.type === "model");
+    },
     getCityVariant(state) {
       return state.cityVariant;
     },
     getPointVariant(state) {
       return state.pointVariant;
-    }
+    },
+    getCarVariant: (state) => (categoryId) => {
+      if (categoryId) {
+        return state.carVariant.filter(item => item.categoryId === categoryId);
+      }
+      return state.carVariant;
+    },
   }
 })

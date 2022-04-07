@@ -42,8 +42,7 @@ img {
 
 input {
 	appearance: none;
-	&:not([type="checkbox"]),
-	&:not([type="radio"]) {
+	&:not([type="checkbox"]):not([type="radio"]) {
 		display: block;
 		width: 100%;
 		padding: 4px 10px;
@@ -54,6 +53,49 @@ input {
 		color: $color-main-text-dark;
 		border-bottom: 1px solid $color-gray-dark;
 		background-color: transparent;
+	}
+
+	&[type="checkbox"],
+	&[type="radio"] {
+		$size: 12px;
+
+		position: relative;
+		display: inline-block;
+		width: $size;
+		height: $size;
+		border: 1px solid $color-gray-dark;
+		margin-right: 8px;
+	}
+
+	&[type="checkbox"] {
+		&::after {
+			content: '';
+			position: absolute;
+			top: -2px;
+			left: 4px;
+			width: 60%;
+			height: 100%;
+			border-bottom: 3px solid $color-main-text-dark;
+			border-right: 3px solid $color-main-text-dark;
+			transition: transform .5s;
+			transform: rotate(45deg) scale(0);
+		}
+
+		&:checked {
+			border-color: $color-main-accent;
+
+			&::after {
+				transform: rotate(45deg) scale(1);
+			}
+		}
+	}
+
+	&[type="radio"] {
+		border-radius: 50%;
+
+		&:checked {
+			border: 3px solid $color-main-accent;
+		}
 	}
 
 	&::placeholder {

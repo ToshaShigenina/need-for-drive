@@ -46,8 +46,34 @@
 				margin-top: 6px;
 			}
 		}
-
-
-
 	}
+
+	&-list {
+		display: flex;
+
+		li:not(:last-child) {
+			margin-right: 16px;
+		}
+	}
+}
+
+.radio,
+.checkbox {
+    cursor: pointer;
+
+    input {
+        +span {
+            color: $color-gray-dark;
+        }
+
+        &:checked {
+            +span {
+                color: $color-main-text-dark;
+            }
+        }
+    }
+
+    span {
+        transition: color .5s;
+    }
 }

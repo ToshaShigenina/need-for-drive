@@ -145,6 +145,10 @@ body {
 	width: 70%;
 }
 
+.p-0 {
+	padding: 0 !important;
+}
+
 .mw-100 {
 	max-width: 100% !important;
 }
@@ -197,12 +201,20 @@ body {
 }
 
 @media screen and (min-width: $bp-width-md) {
+	.content {
+		padding-right: 32px;
+	}
+
 	.col-md-70 {
 		width: 70%;
 	}
 
 	.col-md-60 {
 		width: 60%;
+	}
+
+	.col-md-50 {
+		width: 50%;
 	}
 
 	.col-md-40 {
@@ -217,6 +229,10 @@ body {
 @media screen and (min-width: $bp-width-lg) {
 	.container {
 		padding: 0 64px;
+	}
+
+	.content {
+		padding-right: 64px;
 	}
 
 	.row {
