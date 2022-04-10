@@ -50,9 +50,17 @@
 
 	&-list {
 		display: flex;
+		align-items: flex-start;
+		justify-content: flex-start;
+		flex-wrap: wrap;
 
-		li:not(:last-child) {
-			margin-right: 16px;
+		li {
+			max-width: 100%;
+
+			&:not(:last-child) {
+				margin-right: 16px;
+				margin-bottom: 6px;
+			}
 		}
 	}
 }
@@ -60,6 +68,7 @@
 .radio,
 .checkbox {
     cursor: pointer;
+	white-space: normal;
 
     input {
         +span {

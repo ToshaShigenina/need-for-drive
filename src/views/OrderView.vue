@@ -63,25 +63,7 @@
                     />
                   </li>
                 </ul>
-                <ul class="model__list">
-                  <li v-for="(car, i) in carVariant" :key="i">
-                    <div
-                      class="model__card"
-                      :class="{ _active: carActive === car.id }"
-                      @click="isActiveCar(car.id)"
-                    >
-                      <h2 class="model__name">{{ car.name }}</h2>
-                      <span class="model__cost"
-                        >{{ car.priceMin }} - {{ car.priceMax }} ₽
-                      </span>
-                      <img
-                        :src="car.thumbnail"
-                        :alt="car.name"
-                        class="model__img"
-                      />
-                    </div>
-                  </li>
-                </ul>
+                <model-list-component :category="categoryActive"/>
               </div>
             </div>
             <div class="col-md-30 col-sm-40 col-100">
@@ -147,6 +129,7 @@ import OrderComponent from "@/components/OrderComponent.vue";
 import InputTextComponent from "@/components/InputTextComponent.vue";
 import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
 import MapComponent from "@/components/MapComponent.vue";
+import ModelListComponent from "@/components/ModelListComponent.vue";
 
 export default {
   name: "OrderView",
@@ -157,11 +140,11 @@ export default {
     InputTextComponent,
     InputSwitchComponent,
     MapComponent,
+    ModelListComponent,
   },
   data() {
     return {
       active: 0,
-      carActive: null,
       categoryActive: 0,
       tabList: ["Местоположение", "Модель", "Дополнительно", "Итого"],
     };
@@ -183,13 +166,8 @@ export default {
         this.$store.commit("setOrderPointValue", value);
       },
     },
-    model: {
-      get() {
-        return this.$store.getters.getOrderModel;
-      },
-      set(value) {
-        this.$store.commit("setCarValue", value);
-      },
+    model() {
+      return this.$store.getters.getOrderModel;
     },
     categoryList() {
       return this.$store.getters.getCategoryList;
@@ -199,9 +177,6 @@ export default {
     },
     pointVariant() {
       return this.$store.getters.getPointVariant;
-    },
-    carVariant() {
-      return this.$store.getters.getCarVariant(this.categoryActive);
     },
     tabs() {
       return this.tabList.map((item, i) => {
@@ -222,15 +197,6 @@ export default {
   methods: {
     toTab(i) {
       if (!this.tabs[i].disabled) this.active = i;
-    },
-    isActiveCar(id) {
-      if (this.carActive === id) {
-        this.carActive = null;
-        this.model = null;
-      } else {
-        this.carActive = id;
-        this.model = id;
-      }
     },
   },
 };
