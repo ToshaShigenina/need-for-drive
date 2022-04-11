@@ -1,5 +1,5 @@
 <template>
-  <div class="form__group">
+  <div>
     <label :for="id" class="text-right" :style="{ width: width }">
       {{ label }}
     </label>
@@ -10,7 +10,8 @@
         :value="value"
         @input="changeValue($event.target.value)"
         autocomplete="off"
-        v-bind="$attrs"
+        :placeholder="placeholder"
+        :disabled="disabled"
       />
 
       <button
@@ -40,12 +41,19 @@ export default {
   name: "input-text-component",
   props: {
     value: {
-      type: String,
       default: "",
     },
     label: {
       type: String,
       default: "",
+    },    
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     id: {
       type: String,

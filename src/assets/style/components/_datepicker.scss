@@ -1,0 +1,8 @@
+@import '../abstracts/_variables.scss';
+
+$namespace: 'mx';
+
+$default-color: $color-main-text-dark;
+$primary-color: $color-main-accent;
+
+@import '~vue2-datepicker/scss/index.scss';

@@ -56,6 +56,7 @@ export default new Vuex.Store({
         type: "model",
         label: "Модель",
         value: "",
+        id: null,
       },
       {
         type: "color",
@@ -124,7 +125,12 @@ export default new Vuex.Store({
         description: '',
         thumbnail: require('../assets/img/car.png'),
         priceMin: 12000,
-        priceMax: 15000
+        priceMax: 15000,
+        colors: [
+          'Любой',
+          'Голубой',
+          'Красный'
+        ]
       },
       {
         id: 1,
@@ -133,7 +139,12 @@ export default new Vuex.Store({
         description: '',
         thumbnail: require('../assets/img/car.png'),
         priceMin: 10000,
-        priceMax: 32000
+        priceMax: 32000,
+        colors: [
+          'Любой',
+          'Голубой',
+          'Зеленый'
+        ]
       },
       {
         id: 2,
@@ -142,7 +153,12 @@ export default new Vuex.Store({
         description: '',
         thumbnail: require('../assets/img/car.png'),
         priceMin: 12000,
-        priceMax: 15000
+        priceMax: 15000,
+        colors: [
+          'Любой',
+          'Синий',
+          'Красный'
+        ]
       },
       {
         id: 3,
@@ -151,9 +167,14 @@ export default new Vuex.Store({
         description: '',
         thumbnail: require('../assets/img/car.png'),
         priceMin: 10000,
-        priceMax: 32000
+        priceMax: 32000,
+        colors: [
+          'Любой',
+          'Голубой',
+          'Красный'
+        ]
       }
-    ]
+    ],
   },
   mutations: {
     setOrderCityValue(state, value) {
@@ -163,12 +184,15 @@ export default new Vuex.Store({
       state.order.find((item) => item.type === "point").value = value;
     },
     setCarValue(state, id) {
+      const car = state.carVariant.find(item => item.id === id);
+      const order = state.order.find((item) => item.type === "model");
       if (id !== null) {
-        const car = state.carVariant.find(item => item.id === id);
-        state.order.find((item) => item.type === "model").value = car.name;
+        order.value = car.name;
       } else {
-        state.order.find((item) => item.type === "model").value = '';
+        order.value = '';
       }
+
+      order.id = car.id;
     }
   },
   actions: {},
@@ -208,5 +232,8 @@ export default new Vuex.Store({
       }
       return state.carVariant;
     },
+    getCar: (state) => (id) => {
+      return state.carVariant.find(item => item.id === id);
+    }
   }
 })
