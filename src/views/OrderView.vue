@@ -5,120 +5,6 @@
         <header-component />
       </div>
 
-      <tabs-component :list="tabs" :active="active" @to-tab="toTab">
-        <template v-slot:tab-0>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content point">
-                <div class="point__form form">
-                  <input-text-component
-                    v-model="city.value"
-                    type="city"
-                    :data="cityVariant"
-                    :label="city.label"
-                    width="94px"
-                    placeholder="Начните вводить город..."
-                  />
-                  <input-text-component
-                    v-model="point.value"
-                    type="point"
-                    :data="pointVariant"
-                    :label="point.label"
-                    width="94px"
-                    placeholder="Начните вводить пункт..."
-                  />
-                </div>
-
-                <map-component />
-              </div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[1].disabled"
-                    @click="toTab(1)"
-                  >
-                    Выбрать модель
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-1>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content model">
-                <ul class="model__options input-list">
-                  <li v-for="category in categoryList" :key="category.id">
-                    <input-switch-component
-                      type="radio"
-                      :label="category.text"
-                      name="category"
-                      :value="category.id"
-                      v-model="categoryActive"
-                    />
-                  </li>
-                </ul>
-                <model-list-component :category="categoryActive"/>
-              </div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[2].disabled"
-                    @click="toTab(2)"
-                  >
-                    Дополнительно
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-2>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">{{ tabList[2] }}</div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[3].disabled"
-                    @click="toTab(3)"
-                  >
-                    Итого
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-3>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">{{ tabList[3] }}</div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button type="button" class="btn mw-100">Заказать</button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-      </tabs-component>
-
       <tabs-nav-component :list="tabs" v-model="active"/>
 
       <div class="row justify-content-between">
@@ -200,7 +86,6 @@ export default {
   },
   data() {
     return {
-      categoryActive: 0,
       active: {
         index: 0,
         component: "point-component",
@@ -239,15 +124,6 @@ export default {
     model() {
       return this.$store.getters.getOrderModel;
     },
-    categoryList() {
-      return this.$store.getters.getCategoryList;
-    },
-    cityVariant() {
-      return this.$store.getters.getCityVariant;
-    },
-    pointVariant() {
-      return this.$store.getters.getPointVariant;
-    },
     disabledPoint() {
       return !(this.city.value.id && this.point.value.id)
     },
@@ -258,7 +134,7 @@ export default {
         } else if (i === 1) {
           item.disabled = this.disabledPoint;
         } else if (i === 2) {
-          item.disabled = !this.model.value;
+          item.disabled = !this.model.value.id;
         } else {
           item.disabled = true;
         }
@@ -277,6 +153,8 @@ export default {
   created() {
     this.$store.dispatch("loadCityVariant");
     this.$store.dispatch("loadPointVariant");
+    this.$store.dispatch("loadModelVariant");
+    this.$store.dispatch("loadCategoryList");
   },
 };
 </script>

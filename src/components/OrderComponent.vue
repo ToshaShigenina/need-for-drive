@@ -13,7 +13,8 @@
       <li v-if="model.value.id" key="order-model" class="order__item">
         <span>{{ model.label }}</span>
         <span>
-          {{ model.value.name }}
+          {{ model.value.name }},<br v-if="model.value.id">
+          {{ model.value.number }}
         </span>
       </li>
       <li v-if="color.value" key="order-color" class="order__item">

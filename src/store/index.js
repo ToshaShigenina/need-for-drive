@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import isBase64 from '@/plugins/isbase64'
+
 import api from '@/service/api'
 
 Vue.use(Vuex)
@@ -81,13 +83,8 @@ export default new Vuex.Store({
     setOrderPointValue(state, value) {
       state.orderList.find((item) => item.type === "point").value = value;
     },
-    setCarValue(state, id) {
-      if (id !== null) {
-        const car = state.carVariant.find(item => item.id === id);
-        state.order.find((item) => item.type === "model").value = car.name;
-      } else {
-        state.order.find((item) => item.type === "model").value = '';
-      }
+    setOrderModelValue(state, value) {
+      state.orderList.find((item) => item.type === "model").value = value;
     },
     setCityVariant(state, data) {
       state.cityVariant = data.data;
@@ -97,10 +94,16 @@ export default new Vuex.Store({
       state.pointVariant = data.data;
     },
     setModelVariant(state, data) {
-      state.modelVariant = data.data;
+      state.modelVariant = data.data.filter(item => {
+        return !!(item.number && item.thumbnail.path && isBase64(item.thumbnail.path))
+      });
     },
     setCategoryList(state, data) {
-      state.categoryList = data.data;
+      state.categoryList.push({
+        id: 0,
+        name: 'Все модели'
+      });
+      state.categoryList.push(...data.data);
     },
     setRateList(state, data) {
       state.rateList = data.data;
@@ -118,11 +121,23 @@ export default new Vuex.Store({
     }) {
       api.getPoints()
         .then(data => commit('setPointVariant', data))
+    },
+    loadModelVariant({
+      commit
+    }) {
+      api.getCars()
+        .then(data => commit('setModelVariant', data))
+    },
+    loadCategoryList({
+      commit
+    }) {
+      api.getCategorys()
+        .then(data => commit('setCategoryList', data))
     }
   },
   getters: {
     getOrder(state) {
-return state.orderList;
+      return state.orderList;
     },
     getCategoryList(state) {
       return state.categoryList;
@@ -160,12 +175,6 @@ return state.orderList;
     getPointVariant(state) {
       return state.pointVariant;
     },
-    getCarVariant: (state) => (categoryId) => {
-      if (categoryId) {
-        return state.carVariant.filter(item => item.categoryId === categoryId);
-      }
-      return state.carVariant;
-    },
     getFilteredPointVariant: (state) => (city) => {
       if (city && state.pointVariant.length) {
         return state.pointVariant.filter(item => {
@@ -175,6 +184,12 @@ return state.orderList;
         });
       }
       return state.pointVariant;
-    }
+    },
+    getModelVariant: (state) => (categoryId) => {
+      if (categoryId) {
+        return state.modelVariant.filter(item => item.categoryId.id === categoryId);
+      }
+      return state.modelVariant;
+    },
   }
 })
