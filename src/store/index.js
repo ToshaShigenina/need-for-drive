@@ -1,13 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import isBase64 from '@/plugins/isbase64'
-
-import api from '@/service/api'
+import city from './city'
+import point from './point'
+import model from './model'
+import category from './category'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    city,
+    point,
+    model,
+    category
+  },
   state: {
     orderList: [{
         type: "city",
@@ -70,10 +77,6 @@ export default new Vuex.Store({
         value: false,
       },
     ],
-    cityVariant: [],
-    pointVariant: [],
-    modelVariant: [],
-    categoryList: [],
     rateList: [],
   },
   mutations: {
@@ -86,61 +89,14 @@ export default new Vuex.Store({
     setOrderModelValue(state, value) {
       state.orderList.find((item) => item.type === "model").value = value;
     },
-    setCityVariant(state, data) {
-      state.cityVariant = data.data;
-      state.orderList.find((item) => item.type === "city").value = state.cityVariant[0];
-    },
-    setPointVariant(state, data) {
-      state.pointVariant = data.data;
-    },
-    setModelVariant(state, data) {
-      state.modelVariant = data.data.filter(item => {
-        return !!(item.number && item.thumbnail.path && isBase64(item.thumbnail.path))
-      });
-    },
-    setCategoryList(state, data) {
-      state.categoryList.push({
-        id: 0,
-        name: 'Все модели'
-      });
-      state.categoryList.push(...data.data);
-    },
     setRateList(state, data) {
       state.rateList = data.data;
     }
   },
-  actions: {
-    loadCityVariant({
-      commit
-    }) {
-      api.getCities()
-        .then(data => commit('setCityVariant', data))
-    },
-    loadPointVariant({
-      commit
-    }) {
-      api.getPoints()
-        .then(data => commit('setPointVariant', data))
-    },
-    loadModelVariant({
-      commit
-    }) {
-      api.getCars()
-        .then(data => commit('setModelVariant', data))
-    },
-    loadCategoryList({
-      commit
-    }) {
-      api.getCategorys()
-        .then(data => commit('setCategoryList', data))
-    }
-  },
+  actions: {},
   getters: {
     getOrder(state) {
       return state.orderList;
-    },
-    getCategoryList(state) {
-      return state.categoryList;
     },
     getOrderCity(state) {
       return state.orderList.find((item) => item.type === "city");
@@ -168,28 +124,6 @@ export default new Vuex.Store({
     },
     getOrderWheel(state) {
       return state.orderList.find((item) => item.type === "isRightWheel");
-    },
-    getCityVariant(state) {
-      return state.cityVariant;
-    },
-    getPointVariant(state) {
-      return state.pointVariant;
-    },
-    getFilteredPointVariant: (state) => (city) => {
-      if (city && state.pointVariant.length) {
-        return state.pointVariant.filter(item => {
-          if (item.cityId) {
-            return item.cityId.name === city;
-          }
-        });
-      }
-      return state.pointVariant;
-    },
-    getModelVariant: (state) => (categoryId) => {
-      if (categoryId) {
-        return state.modelVariant.filter(item => item.categoryId.id === categoryId);
-      }
-      return state.modelVariant;
     },
   }
 })

@@ -125,7 +125,10 @@ export default {
       return this.$store.getters.getOrderModel;
     },
     disabledPoint() {
-      return !(this.city.value.id && this.point.value.id)
+      return !(this.city.value.id && this.point.value.id);
+    },
+    disabledModel() {
+      return !this.model.value.id;
     },
     tabs() {
       return this.tabList.map((item, i) => {
@@ -134,7 +137,7 @@ export default {
         } else if (i === 1) {
           item.disabled = this.disabledPoint;
         } else if (i === 2) {
-          item.disabled = !this.model.value.id;
+          item.disabled = this.disabledModel;
         } else {
           item.disabled = true;
         }
