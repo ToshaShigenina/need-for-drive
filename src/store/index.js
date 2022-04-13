@@ -1,61 +1,40 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import slides from './slides'
+import api from './api'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    slides,
+    api
+  },
   state: {
-    slides: [{
-        title: "Бесплатная парковка",
-        description: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
-        class: "slide_parking",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Страховка",
-        description: "Полная страховка страховка автомобиля",
-        class: "slide_insurance",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Бензин",
-        description: "Полный бак на любой заправке города за наш счёт",
-        class: "slide_petrol",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Обслуживание",
-        description: "Автомобиль проходит еженедельное ТО",
-        class: "slide_service",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-    ],
-    order: [{
+    orderList: [{
         type: "city",
         label: "Город",
-        value: "Ульяновск",
+        value: {
+          id: null,
+          name: ""
+        },
       },
       {
         type: "point",
         label: "Пункт выдачи",
-        value: "",
+        value: {
+          id: null,
+          address: ''
+        },
       },
       {
         type: "model",
         label: "Модель",
-        value: "",
+        value: {
+          id: null,
+          name: ''
+        },
       },
       {
         type: "color",
@@ -65,102 +44,47 @@ export default new Vuex.Store({
       {
         type: "period",
         label: "Длительность аренды",
-        value: "",
+        value: {
+          dateFrom: null,
+          dateTo: null
+        },
       },
       {
         type: "rate",
         label: "Тариф",
-        value: "",
+        value: {
+          name: '',
+          id: null
+        },
       },
       {
-        type: "fuel",
+        type: "isFullTank",
         label: "Полный бак",
-        value: "",
+        value: false,
       },
       {
-        type: "child-seat",
+        type: "isNeedChildChair",
         label: "Детское кресло",
-        value: "",
+        value: false,
       },
       {
-        type: "right-hand-drive",
+        type: "isRightWheel",
         label: "Правый руль",
-        value: "",
+        value: false,
       },
     ],
-    categoryList: [{
-        id: 0,
-        text: 'Все модели'
-      },
-      {
-        id: 1,
-        text: 'Эконом'
-      },
-      {
-        id: 2,
-        text: 'Премиум'
-      }
-    ],
-    cityVariant: [
-      "Екатеринбург",
-      "Ульяновск",
-      "Уфа",
-      "Москва",
-      "Санкт-Петербург",
-      "Казань",
-    ],
-    pointVariant: [
-      "Екатеринбург",
-      "Ульяновск",
-      "Уфа",
-      "Москва",
-      "Санкт-Петербург",
-      "Казань",
-    ],
-    carVariant: [{
-        id: 0,
-        name: 'ELANTRA',
-        categoryId: 2,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 12000,
-        priceMax: 15000
-      },
-      {
-        id: 1,
-        name: 'i30 N',
-        categoryId: 1,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 10000,
-        priceMax: 32000
-      },
-      {
-        id: 2,
-        name: 'CRETA',
-        categoryId: 2,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 12000,
-        priceMax: 15000
-      },
-      {
-        id: 3,
-        name: 'SONATA',
-        categoryId: 1,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 10000,
-        priceMax: 32000
-      }
-    ]
+    cityVariant: [],
+    pointVariant: [],
+    modelVariant: [],
+    categoryList: [],
+    rateList: [],
   },
   mutations: {
     setOrderCityValue(state, value) {
-      state.order.find((item) => item.type === "city").value = value;
+      state.orderList.find((item) => item.type === "city").value = value;
     },
     setOrderPointValue(state, value) {
-      state.order.find((item) => item.type === "point").value = value;
+      state.orderList.find((item) => item.type === "point").value = value;
     },
     setCarValue(state, id) {
       if (id !== null) {
@@ -169,32 +93,75 @@ export default new Vuex.Store({
       } else {
         state.order.find((item) => item.type === "model").value = '';
       }
+    },
+    setCityVariant(state, data) {
+      state.cityVariant = data.data;
+      state.orderList.find((item) => item.type === "city").value = state.cityVariant[0];
+    },
+    setPointVariant(state, data) {
+      state.pointVariant = data.data;
+    },
+    setModelVariant(state, data) {
+      state.modelVariant = data.data;
+    },
+    setCategoryList(state, data) {
+      state.categoryList = data.data;
+    },
+    setRateList(state, data) {
+      state.rateList = data.data;
     }
   },
-  actions: {},
-  getters: {
-    getSlides(state) {
-      return state.slides;
+  actions: {
+    loadCityVariant({
+      dispatch
+    }) {
+      dispatch('loadData', {
+        table: 'city',
+        mutation: 'setCityVariant'
+      })
     },
+    loadPointVariant({
+      dispatch
+    }) {
+      dispatch('loadData', {
+        table: 'point',
+        mutation: 'setPointVariant'
+      })
+    }
+  },
+  getters: {
     getOrder(state) {
-      return state.order;
+return state.orderList;
     },
     getCategoryList(state) {
       return state.categoryList;
     },
-    getFilteredOrder(state) {
-      return state.order.filter(
-        (item) => item.value && item.type !== "city" && item.type !== "point"
-      );
-    },
     getOrderCity(state) {
-      return state.order.find((item) => item.type === "city");
+      return state.orderList.find((item) => item.type === "city");
     },
     getOrderPoint(state) {
-      return state.order.find((item) => item.type === "point");
+      return state.orderList.find((item) => item.type === "point");
     },
     getOrderModel(state) {
-      return state.order.find((item) => item.type === "model");
+      return state.orderList.find((item) => item.type === "model");
+    },
+    getOrderColor(state) {
+      return state.orderList.find((item) => item.type === "color");
+    },
+    getOrderPeriod(state) {
+      return state.orderList.find((item) => item.type === "period");
+    },
+    getOrderRate(state) {
+      return state.orderList.find((item) => item.type === "rate");
+    },
+    getOrderTank(state) {
+      return state.orderList.find((item) => item.type === "isFullTank");
+    },
+    getOrderChair(state) {
+      return state.orderList.find((item) => item.type === "isNeedChildChair");
+    },
+    getOrderWheel(state) {
+      return state.orderList.find((item) => item.type === "isRightWheel");
     },
     getCityVariant(state) {
       return state.cityVariant;
@@ -208,5 +175,15 @@ export default new Vuex.Store({
       }
       return state.carVariant;
     },
+    getFilteredPointVariant: (state) => (city) => {
+      if (city && state.pointVariant.length) {
+        return state.pointVariant.filter(item => {
+          if (item.cityId) {
+            return item.cityId.name === city;
+          }
+        });
+      }
+      return state.pointVariant;
+    }
   }
 })

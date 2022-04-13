@@ -118,53 +118,123 @@
           </div>
         </template>
       </tabs-component>
+
+      <tabs-nav-component :list="tabs" v-model="active"/>
+
+      <div class="row justify-content-between">
+        <div class="col-md-70 col-sm-60 col-100">
+          <component :is="active.component"/>
+        </div>
+        <div class="col-md-30 col-sm-40 col-100">
+          <order-component>
+            <template #btn>
+              <button
+                v-if="active.component === 'point-component'"
+                key="to-model-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[1].disabled"
+                @click="toTab(1)"
+              >
+                Выбрать модель
+              </button>
+              <button
+                v-if="active.component === 'model-component'"
+                key="to-additional-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[2].disabled"
+                @click="toTab(2)"
+              >
+                Дополнительно
+              </button>
+              <button
+                v-if="active.component === 'additional-component'"
+                key="to-summary-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[3].disabled"
+                @click="toTab(3)"
+              >
+                Итого
+              </button>
+              <button
+                v-if="active.component === 'summary-component'"
+                key="to-confirm"
+                type="button"
+                class="btn mw-100"
+              >
+                Заказать
+              </button>
+            </template>
+          </order-component>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import TabsComponent from "@/components/TabsComponent.vue";
+import TabsNavComponent from "@/components/TabsNavComponent.vue";
+import PointComponent from "@/components/PointComponent.vue";
+import ModelComponent from "@/components/ModelComponent.vue";
+import AdditionalComponent from "@/components/AdditionalComponent.vue";
+import SummaryComponent from "@/components/SummaryComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
-import InputTextComponent from "@/components/InputTextComponent.vue";
 import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
-import MapComponent from "@/components/MapComponent.vue";
 import ModelListComponent from "@/components/ModelListComponent.vue";
 
 export default {
   name: "OrderView",
   components: {
     HeaderComponent,
-    TabsComponent,
+    TabsNavComponent,
+    PointComponent,
+    ModelComponent,
+    AdditionalComponent,
+    SummaryComponent,
     OrderComponent,
-    InputTextComponent,
     InputSwitchComponent,
-    MapComponent,
     ModelListComponent,
   },
   data() {
     return {
-      active: 0,
       categoryActive: 0,
-      tabList: ["Местоположение", "Модель", "Дополнительно", "Итого"],
+      active: {
+        index: 0,
+        component: "point-component",
+      },
+      tabList: [
+        {
+          text: "Местоположение",
+          disabled: false,
+          component: "point-component",
+        },
+        {
+          text: "Модель",
+          disabled: true,
+          component: "model-component",
+        },
+        {
+          text: "Дополнительно",
+          disabled: true,
+          component: "additional-component",
+        },
+        {
+          text: "Итого",
+          disabled: true,
+          component: "summary-component",
+        },
+      ],
     };
   },
   computed: {
-    city: {
-      get() {
-        return this.$store.getters.getOrderCity;
-      },
-      set(value) {
-        this.$store.commit("setOrderCityValue", value);
-      },
+    city() {
+      return this.$store.getters.getOrderCity;
     },
-    point: {
-      get() {
-        return this.$store.getters.getOrderPoint;
-      },
-      set(value) {
-        this.$store.commit("setOrderPointValue", value);
-      },
+    point() {
+      return this.$store.getters.getOrderPoint;
     },
     model() {
       return this.$store.getters.getOrderModel;
@@ -178,26 +248,35 @@ export default {
     pointVariant() {
       return this.$store.getters.getPointVariant;
     },
+    disabledPoint() {
+      return !(this.city.value.id && this.point.value.id)
+    },
     tabs() {
       return this.tabList.map((item, i) => {
-        const result = { text: item };
-        if (this.active === i || i === 0) {
-          result.disabled = false;
+        if (this.active.index === i || i === 0) {
+          item.disabled = false;
         } else if (i === 1) {
-          result.disabled = !(this.city.value && this.point.value);
+          item.disabled = this.disabledPoint;
         } else if (i === 2) {
-          result.disabled = !this.model.value;
+          item.disabled = !this.model.value;
         } else {
-          result.disabled = true;
+          item.disabled = true;
         }
-        return result;
+        return item;
       });
     },
   },
   methods: {
     toTab(i) {
-      if (!this.tabs[i].disabled) this.active = i;
+      if (!this.tabs[i].disabled) {
+        this.active.index = i;
+        this.active.component = this.tabs[i].component;
+      }
     },
+  },
+  created() {
+    this.$store.dispatch("loadCityVariant");
+    this.$store.dispatch("loadPointVariant");
   },
 };
 </script>
