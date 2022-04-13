@@ -1,6 +1,11 @@
 <template>
   <ul class="slider__pagination pagination">
-    <li class="pagination__dot" v-for="i in count" :key="'dot' + i" :class="{ _active: i === active + 1 }">
+    <li
+      v-for="i in count" 
+      :key="'dot' + i" 
+      class="pagination__dot"
+      :class="{ _active: i === active + 1 }"
+    >
       <button type="button" @click="toSlide(i - 1)"></button>
     </li>
   </ul>
@@ -8,15 +13,15 @@
 
 <script>
 export default {
-  name: "pagination-component",
+  name: "slider-pagination-component",
   props: {
     active: {
       type: Number,
-      require: true,
+      required: true,
     },
     count: {
       type: Number,
-      require: true,
+      required: true,
     },
   },
   methods: {

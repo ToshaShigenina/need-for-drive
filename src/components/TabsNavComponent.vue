@@ -1,15 +1,15 @@
 <template>
   <ul class="heading-bordered tabs-nav">
     <li
-      class="tabs-nav__item"
       v-for="(item, i) in list"
       :key="'nav-tabs-' + i"
-      :class="{ _active: active === i }"
+      class="tabs-nav__item"
+      :class="{ _active: active.index === i }"
     >
       <button
         type="button"
-        :disabled="active !== i && item.disabled"
-        @click="toTab(i)"
+        :disabled="active.index !== i && item.disabled"
+        @click="toTab(i, item.component)"
       >
         {{ item.text }}
       </button>
@@ -19,18 +19,27 @@
 <script>
 export default {
   name: "tabs-nav-component",
+  model: {
+    prop: "active",
+    event: "change",
+  },
   props: {
     list: {
       type: Array,
-      require: true,
+      required: true,
     },
     active: {
-      type: Number,
+      type: Object,
     },
   },
   methods: {
-    toTab(i) {
-      if (this.active !== i) this.$emit("to-tab", i);
+    toTab(index, component) {
+      if (this.active !== index) {
+        this.$emit("change", {
+          index,
+          component,
+        });
+      }
     },
   },
 };

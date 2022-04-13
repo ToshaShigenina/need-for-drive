@@ -11,19 +11,19 @@
 </template>
 <script>
 export default {
-  name: "slide-component",
+  name: "slider-item-component",
   props: {
     title: {
       type: String,
-      require: true,
+      required: true,
     },
     description: {
       type: String,
-      require: true,
+      required: true,
     },
     link: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
 };

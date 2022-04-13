@@ -11,6 +11,7 @@
 		left: 16px;
 
 		@media screen and (min-width: $bp-width-xs) {
+			position: fixed;
 			top: 29px;
 			left: 22px;
 		}
@@ -78,6 +79,7 @@
 		left: 16px;
 
 		@media screen and (min-width: $bp-width-xs) {
+			position: fixed;
 			display: flex !important;
 			bottom: 29px;
 			left: 18px;
