@@ -1,16 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import slides from './slides'
-import api from './api'
+import api from '@/service/api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    slides,
-    api
-  },
   state: {
     orderList: [{
         type: "city",
@@ -113,20 +108,16 @@ export default new Vuex.Store({
   },
   actions: {
     loadCityVariant({
-      dispatch
+      commit
     }) {
-      dispatch('loadData', {
-        table: 'city',
-        mutation: 'setCityVariant'
-      })
+      api.getCities()
+        .then(data => commit('setCityVariant', data))
     },
     loadPointVariant({
-      dispatch
+      commit
     }) {
-      dispatch('loadData', {
-        table: 'point',
-        mutation: 'setPointVariant'
-      })
+      api.getPoints()
+        .then(data => commit('setPointVariant', data))
     }
   },
   getters: {
