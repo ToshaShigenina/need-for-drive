@@ -11,7 +11,8 @@
           width="94px"
           placeholder="Начните вводить город..."
           class="form-group"
-          @clear="clearPointValue"
+          @clear="clearValue"
+          @input="setCoords(city.value.coords)"
         />
         <input-text-component
           v-model="point.value"
@@ -22,6 +23,8 @@
           width="94px"
           placeholder="Начните вводить пункт..."
           class="form-group"
+          @clear="setCoords(city.value.coords)"
+          @input="setCoords(point.value.coords)"
         />
       </div>
       <map-component :coords="coords" @set-coords="setCoords" />
@@ -70,17 +73,22 @@ export default {
     },
   },
   methods: {
-    clearPointValue() {
+    clearValue() {
       this.point = {
         id: null,
         address: "",
       };
+      this.setCoords();
     },
-    setCoords(value) {
-      console.log(value);
-      if (value) this.coords = value;
-      // console.log(this.coords);
+    setCoords(coords) {
+      if (coords) this.coords = coords;
+      else this.coords = [57.43016, 46.947032];
     },
+  },
+  created() {
+    if (this.city.value.id || this.point.value.id) {
+      this.coords = this.point.value.coords || this.city.value.coords;
+    }
   },
 };
 </script>

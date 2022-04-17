@@ -19,7 +19,9 @@ export default {
   },
   getters: {
     getPointVariant(state) {
-      return state.pointVariant;
+      return state.pointVariant.filter(item => {
+        if (item.cityId) return item;
+      });
     },
     getFilteredPointVariant: (state) => (city) => {
       if (city && state.pointVariant.length) {
@@ -29,7 +31,9 @@ export default {
           }
         });
       }
-      return state.pointVariant;
+      return state.pointVariant.filter(item => {
+        if (item.cityId) return item;
+      });
     },
   }
 }

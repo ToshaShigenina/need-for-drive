@@ -5,11 +5,11 @@
         <header-component />
       </div>
 
-      <tabs-nav-component :list="tabs" v-model="active"/>
+      <tabs-nav-component :list="tabs" v-model="active" />
 
       <div class="row justify-content-between">
         <div class="col-md-70 col-sm-60 col-100">
-          <component :is="active.component"/>
+          <component :is="active.component" />
         </div>
         <div class="col-md-30 col-sm-40 col-100">
           <order-component>
@@ -137,7 +137,7 @@ export default {
         } else if (i === 1) {
           item.disabled = this.disabledPoint;
         } else if (i === 2) {
-          item.disabled = this.disabledModel;
+          item.disabled = this.disabledPoint || this.disabledModel;
         } else {
           item.disabled = true;
         }
