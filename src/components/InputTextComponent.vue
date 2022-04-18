@@ -3,34 +3,35 @@
     <label :for="id" class="text-right" :style="{ width: width }">
       {{ label }}
     </label>
-    <div class="input">
+    <div class="input" ref="inputText">
       <input
         type="text"
-        :id="id"
-        :value="value"
-        @input="changeValue($event.target.value)"
         autocomplete="off"
-        :placeholder="placeholder"
+        :id="id"
+        :value="value[dataField]"
         :disabled="disabled"
+        :placeholder="placeholder"
+        @input="changeValue($event.target.value)"
+        @click="open = true"
       />
 
       <button
+        v-if="value"
         type="button"
         class="input__close"
         @click="changeValue('')"
-        v-if="value"
       ></button>
 
       <ul
+        v-if="data && filteredData.length && open"
         class="input__result"
-        v-if="value && data && filteredData.length && open"
       >
         <li
-          v-for="(item, i) in filteredData"
-          :key="`${id}-${i}`"
+          v-for="item in filteredData"
+          :key="item.id"
           @click="selectValue(item)"
         >
-          {{ item }}
+          {{ item[dataField] }}
         </li>
       </ul>
     </div>
@@ -41,19 +42,11 @@ export default {
   name: "input-text-component",
   props: {
     value: {
-      default: "",
+      type: Object,
+      required: true,
     },
     label: {
       type: String,
-      default: "",
-    },    
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
     },
     id: {
       type: String,
@@ -62,9 +55,21 @@ export default {
       type: String,
       default: "auto",
     },
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     data: {
       type: Array,
-      default: null,
+      default: () => [],
+    },
+    dataField: {
+      type: String,
+      default: "name",
     },
   },
   data() {
@@ -74,20 +79,42 @@ export default {
   },
   computed: {
     filteredData() {
-      return this.data.filter((item) =>
-        item.toLowerCase().includes(this.value.toLowerCase())
-      );
+      if (this.data.length) {
+        return this.data.filter((item) =>
+          item[this.dataField]
+            .toLowerCase()
+            .includes(this.value[this.dataField].toLowerCase())
+        );
+      }
+      return [];
     },
   },
   methods: {
     changeValue(value) {
-      this.open = true;
-      this.$emit("input", value);
+      const item =
+        this.data.find((elem) => elem[this.dataField] === value) || {};
+      if (!Object.keys(item).lenght) {
+        item[this.dataField] = value;
+        item.id = null;
+        this.$emit("clear");
+      }
+      this.createEvent(item);
     },
     selectValue(value) {
       this.open = false;
-      this.$emit("input", value);
+      this.createEvent(value);
     },
+    createEvent(item) {
+      this.$emit("input", item);
+      this.$emit("to-order", item);
+    },
+    closeResultList(e) {
+      const target = e.target.closest(".input");
+      if (!target || target !== this.$refs.inputText) this.open = false;
+    },
+  },
+  mounted() {
+    document.addEventListener("click", this.closeResultList.bind(this));
   },
 };
 </script>

@@ -113,6 +113,7 @@ body {
 }
 
 [class*="col-"] {
+	position: relative;
 	flex-shrink: 0;
 	flex-grow: 0;
 	padding-left: 16px;

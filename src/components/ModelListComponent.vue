@@ -1,18 +1,18 @@
 <template>
   <ul class="model__list">
-    <li v-for="(car, i) in carVariant" :key="i">
+    <li v-for="model in modelVariant" :key="model.id">
       <div
         class="model__card"
-        :class="{ _active: active === car.id }"
-        @click="isActiveCar(car.id)"
+        :class="{ _active: active === model.id }"
+        @click="selectModel(model)"
       >
-        <h2 class="model__name">{{ car.name }}</h2>
+        <h2 class="model__name">{{ model.name }}</h2>
         <span class="model__cost">
-          {{ car.priceMin }} - {{ car.priceMax }} ₽
+          {{ model.priceMin }} - {{ model.priceMax }} ₽
         </span>
         <img
-          :src="car.thumbnail"
-          :alt="car.name"
+          :src="model.thumbnail.path"
+          :alt="model.name"
           class="model__img"
         />
       </div>
@@ -24,13 +24,13 @@ export default {
   name: "model-list-component",
   props: {
     category: {
-      type: Number,
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      active: null
-    }
+      active: null,
+    };
   },
   computed: {
     model: {
@@ -38,23 +38,29 @@ export default {
         return this.$store.getters.getOrderModel;
       },
       set(value) {
-        this.$store.commit("setCarValue", value);
+        this.$store.commit("setOrderModelValue", value);
       },
     },
-    carVariant() {
-      return this.$store.getters.getCarVariant(this.category);
+    modelVariant() {
+      return this.$store.getters.getModelVariant(this.category);
     },
   },
   methods: {
-    isActiveCar(id) {
-      if (this.active === id) {
+    selectModel(model) {
+      if (this.active === model.id) {
         this.active = null;
-        this.model = null;
+        this.model = {
+          id: null,
+          name: "",
+        };
       } else {
-        this.active = id;
-        this.model = id;
+        this.active = model.id;
+        this.model = model;
       }
     },
+  },
+  created() {
+    this.active = this.model.value.id;
   }
 };
 </script>

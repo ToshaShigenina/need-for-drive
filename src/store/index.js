@@ -1,62 +1,44 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import city from './city'
+import point from './point'
+import model from './model'
+import category from './category'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    city,
+    point,
+    model,
+    category
+  },
   state: {
-    slides: [{
-        title: "Бесплатная парковка",
-        description: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
-        class: "slide_parking",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Страховка",
-        description: "Полная страховка страховка автомобиля",
-        class: "slide_insurance",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Бензин",
-        description: "Полный бак на любой заправке города за наш счёт",
-        class: "slide_petrol",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-      {
-        title: "Обслуживание",
-        description: "Автомобиль проходит еженедельное ТО",
-        class: "slide_service",
-        link: {
-          url: "#",
-          text: "Подробнее",
-        },
-      },
-    ],
-    order: [{
+    orderList: [{
         type: "city",
         label: "Город",
-        value: "Ульяновск",
+        value: {
+          id: null,
+          name: ""
+        },
       },
       {
         type: "point",
         label: "Пункт выдачи",
-        value: "",
+        value: {
+          id: null,
+          address: ''
+        },
       },
       {
         type: "model",
         label: "Модель",
-        value: "",
-        id: null,
+        value: {
+          id: null,
+          name: ''
+        },
       },
       {
         type: "color",
@@ -66,171 +48,81 @@ export default new Vuex.Store({
       {
         type: "period",
         label: "Длительность аренды",
-        value: "",
+        value: {
+          dateFrom: null,
+          dateTo: null
+        },
       },
       {
         type: "rate",
         label: "Тариф",
-        value: "",
+        value: {
+          name: '',
+          id: null
+        },
       },
       {
-        type: "fuel",
+        type: "isFullTank",
         label: "Полный бак",
-        value: "",
+        value: false,
       },
       {
-        type: "child-seat",
+        type: "isNeedChildChair",
         label: "Детское кресло",
-        value: "",
+        value: false,
       },
       {
-        type: "right-hand-drive",
+        type: "isRightWheel",
         label: "Правый руль",
-        value: "",
+        value: false,
       },
-    ],
-    categoryList: [{
-        id: 0,
-        text: 'Все модели'
-      },
-      {
-        id: 1,
-        text: 'Эконом'
-      },
-      {
-        id: 2,
-        text: 'Премиум'
-      }
-    ],
-    cityVariant: [
-      "Екатеринбург",
-      "Ульяновск",
-      "Уфа",
-      "Москва",
-      "Санкт-Петербург",
-      "Казань",
-    ],
-    pointVariant: [
-      "Екатеринбург",
-      "Ульяновск",
-      "Уфа",
-      "Москва",
-      "Санкт-Петербург",
-      "Казань",
-    ],
-    carVariant: [{
-        id: 0,
-        name: 'ELANTRA',
-        categoryId: 2,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 12000,
-        priceMax: 15000,
-        colors: [
-          'Любой',
-          'Голубой',
-          'Красный'
-        ]
-      },
-      {
-        id: 1,
-        name: 'i30 N',
-        categoryId: 1,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 10000,
-        priceMax: 32000,
-        colors: [
-          'Любой',
-          'Голубой',
-          'Зеленый'
-        ]
-      },
-      {
-        id: 2,
-        name: 'CRETA',
-        categoryId: 2,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 12000,
-        priceMax: 15000,
-        colors: [
-          'Любой',
-          'Синий',
-          'Красный'
-        ]
-      },
-      {
-        id: 3,
-        name: 'SONATA',
-        categoryId: 1,
-        description: '',
-        thumbnail: require('../assets/img/car.png'),
-        priceMin: 10000,
-        priceMax: 32000,
-        colors: [
-          'Любой',
-          'Голубой',
-          'Красный'
-        ]
-      }
     ],
   },
   mutations: {
     setOrderCityValue(state, value) {
-      state.order.find((item) => item.type === "city").value = value;
+      state.orderList.find((item) => item.type === "city").value = value;
     },
     setOrderPointValue(state, value) {
-      state.order.find((item) => item.type === "point").value = value;
+      state.orderList.find((item) => item.type === "point").value = value;
     },
-    setCarValue(state, id) {
-      const car = state.carVariant.find(item => item.id === id);
-      const order = state.order.find((item) => item.type === "model");
-      if (id !== null) {
-        order.value = car.name;
-      } else {
-        order.value = '';
-      }
-
-      order.id = car.id;
+    setOrderModelValue(state, value) {
+      state.orderList.find((item) => item.type === "model").value = value;
+    },
+    setRateList(state, data) {
+      state.rateList = data.data;
     }
   },
   actions: {},
   getters: {
-    getSlides(state) {
-      return state.slides;
-    },
     getOrder(state) {
-      return state.order;
-    },
-    getCategoryList(state) {
-      return state.categoryList;
-    },
-    getFilteredOrder(state) {
-      return state.order.filter(
-        (item) => item.value && item.type !== "city" && item.type !== "point"
-      );
+      return state.orderList;
     },
     getOrderCity(state) {
-      return state.order.find((item) => item.type === "city");
+      return state.orderList.find((item) => item.type === "city");
     },
     getOrderPoint(state) {
-      return state.order.find((item) => item.type === "point");
+      return state.orderList.find((item) => item.type === "point");
     },
     getOrderModel(state) {
-      return state.order.find((item) => item.type === "model");
+      return state.orderList.find((item) => item.type === "model");
     },
-    getCityVariant(state) {
-      return state.cityVariant;
+    getOrderColor(state) {
+      return state.orderList.find((item) => item.type === "color");
     },
-    getPointVariant(state) {
-      return state.pointVariant;
+    getOrderPeriod(state) {
+      return state.orderList.find((item) => item.type === "period");
     },
-    getCarVariant: (state) => (categoryId) => {
-      if (categoryId) {
-        return state.carVariant.filter(item => item.categoryId === categoryId);
-      }
-      return state.carVariant;
+    getOrderRate(state) {
+      return state.orderList.find((item) => item.type === "rate");
+    },
+    getOrderTank(state) {
+      return state.orderList.find((item) => item.type === "isFullTank");
+    },
+    getOrderChair(state) {
+      return state.orderList.find((item) => item.type === "isNeedChildChair");
+    },
+    getOrderWheel(state) {
+      return state.orderList.find((item) => item.type === "isRightWheel");
     },
     getCar: (state) => (id) => {
       return state.carVariant.find(item => item.id === id);

@@ -5,200 +5,70 @@
         <header-component />
       </div>
 
-      <tabs-component :list="tabs" :active="active" @to-tab="toTab">
-        <template v-slot:tab-0>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content point">
-                <div class="point__form form">
-                  <input-text-component
-                    v-model="city.value"
-                    type="city"
-                    :data="cityVariant"
-                    :label="city.label"
-                    width="94px"
-                    placeholder="Начните вводить город..."
-                    class="form__group"
-                  />
-                  <input-text-component
-                    v-model="point.value"
-                    type="point"
-                    :data="pointVariant"
-                    :label="point.label"
-                    width="94px"
-                    placeholder="Начните вводить пункт..."
-                    class="form__group"
-                  />
-                </div>
+      <tabs-nav-component :list="tabs" v-model="active" />
 
-                <map-component />
-              </div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[1].disabled"
-                    @click="toTab(1)"
-                  >
-                    Выбрать модель
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-1>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content model">
-                <ul class="model__options input-list">
-                  <li v-for="category in categoryList" :key="category.id">
-                    <input-switch-component
-                      type="radio"
-                      :label="category.text"
-                      name="category"
-                      :value="category.id"
-                      v-model="categoryActive"
-                    />
-                  </li>
-                </ul>
-                <model-list-component :category="categoryActive"/>
-              </div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[2].disabled"
-                    @click="toTab(2)"
-                  >
-                    Дополнительно
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-2>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content option">
-                <div class="option__item color">
-                  <ul class="model__options input-list">
-                    <li v-for="(color, i) in colors" :key="i">
-                      <input-switch-component
-                        type="radio"
-                        :label="color"
-                        name="color"
-                        :value="color"
-                        v-model="colorActive"
-                      />
-                    </li>
-                  </ul>
-                </div>
-                <div class="option__item period">
-                  <date-picker-component 
-                    v-model="dateStart" 
-                    type="datetime" 
-                    value-type="format" 
-                    format="DD.MM.YYYY HH:mm" 
-                    :lang="lang" 
-                    :editable="false" 
-                    :confirm="true" 
-                    time-title-format="DD.MM.YYYY" 
-                    :default-value="new Date()" 
-                    :minute-step="5" 
-                    :show-second="false" 
-                    :clearable="true"
-                    :disabled-date="notBeforeToday"
-                  >
-                    <template v-slot:input>
-                      <input-text-component
-                        v-model="dateStart"
-                        type="date_start"
-                        label="C"
-                        width="20px"
-                        placeholder="Введите дату и время"
-                      />
-                    </template>
-                  </date-picker-component>
-                  <date-picker-component 
-                    v-model="dateEnd" 
-                    type="datetime" 
-                    value-type="format" 
-                    format="DD.MM.YYYY HH:mm" 
-                    :lang="lang" 
-                    :editable="false" 
-                    :confirm="true" 
-                    time-title-format="DD.MM.YYYY" 
-                    :default-value="new Date(parse(dateStart))" 
-                    :minute-step="5" 
-                    :show-second="false" 
-                    :clearable="true"
-                    :disabled-date="notBeforeDateStart"
-                    :disabled="!dateStart"
-                  >
-                    <template v-slot:input>
-                      <input-text-component
-                        v-model="dateEnd"
-                        type="date_end"
-                        label="C"
-                        width="20px"
-                        :disabled="!dateStart"
-                        placeholder="Введите дату и время"
-                      />
-                    </template>
-                  </date-picker-component>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button
-                    type="button"
-                    class="btn mw-100"
-                    :disabled="tabs[3].disabled"
-                    @click="toTab(3)"
-                  >
-                    Итого
-                  </button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-        <template v-slot:tab-3>
-          <div class="row justify-content-between">
-            <div class="col-md-70 col-sm-60 col-100">
-              <div class="content">{{ tabList[3] }}</div>
-            </div>
-            <div class="col-md-30 col-sm-40 col-100">
-              <order-component>
-                <template v-slot:btn>
-                  <button type="button" class="btn mw-100">Заказать</button>
-                </template>
-              </order-component>
-            </div>
-          </div>
-        </template>
-      </tabs-component>
+      <div class="row justify-content-between">
+        <div class="col-md-70 col-sm-60 col-100">
+          <component :is="active.component" />
+        </div>
+        <div class="col-md-30 col-sm-40 col-100">
+          <order-component>
+            <template #btn>
+              <button
+                v-if="active.component === 'point-component'"
+                key="to-model-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[1].disabled"
+                @click="toTab(1)"
+              >
+                Выбрать модель
+              </button>
+              <button
+                v-if="active.component === 'model-component'"
+                key="to-additional-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[2].disabled"
+                @click="toTab(2)"
+              >
+                Дополнительно
+              </button>
+              <button
+                v-if="active.component === 'additional-component'"
+                key="to-summary-component"
+                type="button"
+                class="btn mw-100"
+                :disabled="tabs[3].disabled"
+                @click="toTab(3)"
+              >
+                Итого
+              </button>
+              <button
+                v-if="active.component === 'summary-component'"
+                key="to-confirm"
+                type="button"
+                class="btn mw-100"
+              >
+                Заказать
+              </button>
+            </template>
+          </order-component>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/HeaderComponent.vue";
-import TabsComponent from "@/components/TabsComponent.vue";
+import TabsNavComponent from "@/components/TabsNavComponent.vue";
+import PointComponent from "@/components/PointComponent.vue";
+import ModelComponent from "@/components/ModelComponent.vue";
+import AdditionalComponent from "@/components/AdditionalComponent.vue";
+import SummaryComponent from "@/components/SummaryComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
-import InputTextComponent from "@/components/InputTextComponent.vue";
 import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
-import MapComponent from "@/components/MapComponent.vue";
 import ModelListComponent from "@/components/ModelListComponent.vue";
 import DatePickerComponent from "@/components/DatePickerComponent.vue";
 
@@ -206,46 +76,55 @@ export default {
   name: "OrderView",
   components: {
     HeaderComponent,
-    TabsComponent,
+    TabsNavComponent,
+    PointComponent,
+    ModelComponent,
+    AdditionalComponent,
+    SummaryComponent,
     OrderComponent,
-    InputTextComponent,
     InputSwitchComponent,
-    MapComponent,
     ModelListComponent,
     DatePickerComponent,
   },
   data() {
     return {
-      active: 0,
-      categoryActive: 0,
       colorActive: "Любой",
-      tabList: ["Местоположение", "Модель", "Дополнительно", "Итого"],
       dateStart: this.formatter(new Date()),
       dateEnd: null,
-      lang: {
-        formatLocale: {
-          firstDayOfWeek: 1,
-        },
-        monthBeforeYear: false,
+      active: {
+        index: 0,
+        component: "point-component",
       },
+      tabList: [
+        {
+          text: "Местоположение",
+          disabled: false,
+          component: "point-component",
+        },
+        {
+          text: "Модель",
+          disabled: true,
+          component: "model-component",
+        },
+        {
+          text: "Дополнительно",
+          disabled: true,
+          component: "additional-component",
+        },
+        {
+          text: "Итого",
+          disabled: true,
+          component: "summary-component",
+        },
+      ],
     };
   },
   computed: {
-    city: {
-      get() {
-        return this.$store.getters.getOrderCity;
-      },
-      set(value) {
-        this.$store.commit("setOrderCityValue", value);
-      },
+    city() {
+      return this.$store.getters.getOrderCity;
     },
-    point: {
-      get() {
-        return this.$store.getters.getOrderPoint;
-      },
-      set(value) {
-        this.$store.commit("setOrderPointValue", value);
-      },
+    point() {
+      return this.$store.getters.getOrderPoint;
     },
     model() {
       return this.$store.getters.getOrderModel;
@@ -258,31 +137,33 @@ export default {
     categoryList() {
       return this.$store.getters.getCategoryList;
     },
-    cityVariant() {
-      return this.$store.getters.getCityVariant;
+    disabledPoint() {
+      return !(this.city.value.id && this.point.value.id);
     },
-    pointVariant() {
-      return this.$store.getters.getPointVariant;
+    disabledModel() {
+      return !this.model.value.id;
     },
     tabs() {
       return this.tabList.map((item, i) => {
-        const result = { text: item };
-        if (this.active === i || i === 0) {
-          result.disabled = false;
+        if (this.active.index === i || i === 0) {
+          item.disabled = false;
         } else if (i === 1) {
-          result.disabled = !(this.city.value && this.point.value);
+          item.disabled = this.disabledPoint;
         } else if (i === 2) {
-          result.disabled = !this.model.value;
+          item.disabled = this.disabledPoint || this.disabledModel;
         } else {
-          result.disabled = true;
+          item.disabled = true;
         }
-        return result;
+        return item;
       });
     },
   },
   methods: {
     toTab(i) {
-      if (!this.tabs[i].disabled) this.active = i;
+      if (!this.tabs[i].disabled) {
+        this.active.index = i;
+        this.active.component = this.tabs[i].component;
+      }
     },
     notBeforeToday(date) {
       const beforeToday = date < new Date(new Date().setHours(0, 0, 0, 0));
@@ -309,6 +190,12 @@ export default {
       }
       return dateString;
     },
+  },
+  created() {
+    this.$store.dispatch("loadCityVariant");
+    this.$store.dispatch("loadPointVariant");
+    this.$store.dispatch("loadModelVariant");
+    this.$store.dispatch("loadCategoryList");
   },
 };
 </script>
