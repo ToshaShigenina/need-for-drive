@@ -6,7 +6,7 @@
       <li class="order__item">
         <span>{{ point.label }}</span>
         <span>
-          {{ city.value.name }}<br v-if="city.value.id && point.value.id">
+          {{ city.value.name }}<br v-if="city.value.id && point.value.id" />
           {{ point.value.address }}
         </span>
       </li>
@@ -23,7 +23,11 @@
           {{ color.value }}
         </span>
       </li>
-      <li v-if="period.value.dateFrom && period.value.detaTo" key="order-period" class="order__item">
+      <li
+        v-if="period.value.dateFrom && period.value.detaTo"
+        key="order-period"
+        class="order__item"
+      >
         <span>{{ period.label }}</span>
         <span>
           {{ period.dateFrom }}
@@ -37,21 +41,15 @@
       </li>
       <li v-if="tank.value" key="order-tank" class="order__item">
         <span>{{ tank.label }}</span>
-        <span>
-          Да
-        </span>
+        <span> Да </span>
       </li>
       <li v-if="chair.value" key="order-chair" class="order__item">
         <span>{{ chair.label }}</span>
-        <span>
-          Да
-        </span>
+        <span> Да </span>
       </li>
       <li v-if="wheel.value" key="order-wheel" class="order__item">
         <span>{{ wheel.label }}</span>
-        <span>
-          Да
-        </span>
+        <span> Да </span>
       </li>
     </ul>
 

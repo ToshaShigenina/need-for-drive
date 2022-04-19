@@ -4,12 +4,12 @@
       v-for="(item, i) in list"
       :key="'nav-tabs-' + i"
       class="tabs-nav__item"
-      :class="{ _active: active.index === i }"
+      :class="{ _active: active === item.component }"
     >
       <button
         type="button"
-        :disabled="active.index !== i && item.disabled"
-        @click="toTab(i, item.component)"
+        :disabled="active !== item.component && item.disabled"
+        @click="toTab(item.component)"
       >
         {{ item.text }}
       </button>
@@ -29,16 +29,14 @@ export default {
       required: true,
     },
     active: {
-      type: Object,
+      type: String,
+      required: true,
     },
   },
   methods: {
-    toTab(index, component) {
-      if (this.active !== index) {
-        this.$emit("change", {
-          index,
-          component,
-        });
+    toTab(component) {
+      if (this.active !== component) {
+        this.$emit("change", component);
       }
     },
   },

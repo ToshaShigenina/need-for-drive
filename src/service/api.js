@@ -97,8 +97,8 @@ const pointCoords = [{
 ];
 
 export default {
-  getCities(query) {
-    return sendRequest(url.CITY, query)
+  getCities() {
+    return sendRequest(url.CITY)
       .then(data => {
         data.data = data.data.map(item => {
           const city = cityCoords.find(elem => elem.id === item.id)
@@ -108,8 +108,8 @@ export default {
         return data;
       });
   },
-  getPoints(query) {
-    return sendRequest(url.POINT, query)
+  getPoints() {
+    return sendRequest(url.POINT)
       .then(data => {
         data.data = data.data.map(item => {
           const point = pointCoords.find(elem => elem.id === item.id)
@@ -122,7 +122,7 @@ export default {
   getCars(query) {
     return sendRequest(url.CAR, query);
   },
-  getCategorys(query) {
-    return sendRequest(url.CATEGORY, query);
-  }
+  getCategorys() {
+    return sendRequest(url.CATEGORY);
+  },
 }
