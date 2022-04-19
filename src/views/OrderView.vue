@@ -19,8 +19,8 @@
                 key="to-model-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[1].disabled"
-                @click="toTab(1)"
+                :disabled="disabledPoint"
+                @click="toTab('model-component')"
               >
                 Выбрать модель
               </button>
@@ -29,8 +29,8 @@
                 key="to-additional-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[2].disabled"
-                @click="toTab(2)"
+                :disabled="disabledModel"
+                @click="toTab('additional-component')"
               >
                 Дополнительно
               </button>
@@ -39,8 +39,8 @@
                 key="to-summary-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[3].disabled"
-                @click="toTab(3)"
+                :disabled="disabledAdditional"
+                @click="toTab('summary-component')"
               >
                 Итого
               </button>
@@ -117,11 +117,17 @@ export default {
     disabledPoint() {
       return !(this.city.value.id && this.point.value.id);
     },
+    disabledModel() {
+      return true;
+    },
+    disabledAdditional() {
+      return true;
+    },
     tabs() {
       return this.tabList.map((item, i) => {
         if (this.activeTab === item.component || i === 0) {
           item.disabled = false;
-        } else if (i === 1) {
+        } else if (item.component === "model-component") {
           item.disabled = this.disabledPoint;
         } else {
           item.disabled = true;
@@ -131,9 +137,10 @@ export default {
     },
   },
   methods: {
-    toTab(i) {
-      if (!this.tabs[i].disabled) {
-        this.activeTab = this.tabs[i].component;
+    toTab(component) {
+      const item = this.tabs.find(elem => elem.component === component)
+      if (item && !item.disabled) {
+        this.activeTab = item.component;
       }
     },
   },
