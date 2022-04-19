@@ -5,17 +5,17 @@
         <header-component />
       </div>
 
-      <tabs-nav-component :list="tabs" v-model="active"/>
+      <tabs-nav-component :list="tabs" v-model="activeTab" />
 
       <div class="row justify-content-between">
-        <div class="col-md-70 col-sm-60 col-100">
-          <component :is="active.component"/>
+        <div class="col-md-64 col-sm-60 col-100">
+          <component :is="activeTab" />
         </div>
-        <div class="col-md-30 col-sm-40 col-100">
+        <div class="col-md-36 col-sm-40 col-100">
           <order-component>
             <template #btn>
               <button
-                v-if="active.component === 'point-component'"
+                v-if="activeTab === 'point-component'"
                 key="to-model-component"
                 type="button"
                 class="btn mw-100"
@@ -25,7 +25,7 @@
                 Выбрать модель
               </button>
               <button
-                v-if="active.component === 'model-component'"
+                v-if="activeTab === 'model-component'"
                 key="to-additional-component"
                 type="button"
                 class="btn mw-100"
@@ -35,7 +35,7 @@
                 Дополнительно
               </button>
               <button
-                v-if="active.component === 'additional-component'"
+                v-if="activeTab === 'additional-component'"
                 key="to-summary-component"
                 type="button"
                 class="btn mw-100"
@@ -45,7 +45,7 @@
                 Итого
               </button>
               <button
-                v-if="active.component === 'summary-component'"
+                v-if="activeTab === 'summary-component'"
                 key="to-confirm"
                 type="button"
                 class="btn mw-100"
@@ -82,10 +82,7 @@ export default {
   },
   data() {
     return {
-      active: {
-        index: 0,
-        component: "point-component",
-      },
+      activeTab: "point-component",
       tabList: [
         {
           text: "Местоположение",
@@ -118,11 +115,11 @@ export default {
       return this.$store.getters.getOrderPoint;
     },
     disabledPoint() {
-      return !(this.city.value.id && this.point.value.id)
+      return !(this.city.value.id && this.point.value.id);
     },
     tabs() {
       return this.tabList.map((item, i) => {
-        if (this.active.index === i || i === 0) {
+        if (this.activeTab === item.component || i === 0) {
           item.disabled = false;
         } else if (i === 1) {
           item.disabled = this.disabledPoint;
@@ -136,8 +133,7 @@ export default {
   methods: {
     toTab(i) {
       if (!this.tabs[i].disabled) {
-        this.active.index = i;
-        this.active.component = this.tabs[i].component;
+        this.activeTab = this.tabs[i].component;
       }
     },
   },

@@ -6,7 +6,9 @@
         :key="'main-menu' + i"
         class="main-menu__item"
       >
-        <router-link :to="link.url" class="main-menu__link">{{ link.text }}</router-link>
+        <router-link :to="link.url" class="main-menu__link">
+          {{ link.text }}
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -38,8 +40,8 @@ export default {
           active: false,
           text: "ОБСЛУЖИВАНИЕ",
         },
-      ]
-    }
-  }
+      ],
+    };
+  },
 };
 </script>

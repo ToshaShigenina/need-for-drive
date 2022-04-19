@@ -1,8 +1,8 @@
 <template>
   <ul class="slider__pagination pagination">
     <li
-      v-for="i in count" 
-      :key="'dot' + i" 
+      v-for="i in count"
+      :key="'dot' + i"
       class="pagination__dot"
       :class="{ _active: i === active + 1 }"
     >

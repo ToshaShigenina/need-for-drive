@@ -1,6 +1,10 @@
 <template>
   <div class="form__group">
-    <label :for="id" class="text-right" :style="{ width: width }">
+    <label 
+      :for="id" 
+      class="text-right" 
+      :style="{ width: width }"
+    >
       {{ label }}
     </label>
     <div class="input" ref="inputText">
@@ -91,8 +95,8 @@ export default {
   },
   methods: {
     changeValue(value) {
-      const item =
-        this.data.find((elem) => elem[this.dataField] === value) || {};
+      const item = this.data
+        .find((elem) => elem[this.dataField] === value) || {};
       if (!Object.keys(item).lenght) {
         item[this.dataField] = value;
         item.id = null;
