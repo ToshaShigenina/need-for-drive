@@ -5,47 +5,47 @@
         <header-component />
       </div>
 
-      <tabs-nav-component :list="tabs" v-model="active" />
+      <tabs-nav-component :list="tabs" v-model="activeTab" />
 
       <div class="row justify-content-between">
-        <div class="col-md-70 col-sm-60 col-100">
-          <component :is="active.component" />
+        <div class="col-md-64 col-sm-60 col-100">
+          <component :is="activeTab" />
         </div>
-        <div class="col-md-30 col-sm-40 col-100">
+        <div class="col-md-36 col-sm-40 col-100">
           <order-component>
             <template #btn>
               <button
-                v-if="active.component === 'point-component'"
+                v-if="activeTab === 'point-component'"
                 key="to-model-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[1].disabled"
-                @click="toTab(1)"
+                :disabled="disabledPoint"
+                @click="toTab('model-component')"
               >
                 Выбрать модель
               </button>
               <button
-                v-if="active.component === 'model-component'"
+                v-if="activeTab === 'model-component'"
                 key="to-additional-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[2].disabled"
-                @click="toTab(2)"
+                :disabled="disabledModel"
+                @click="toTab('additional-component')"
               >
                 Дополнительно
               </button>
               <button
-                v-if="active.component === 'additional-component'"
+                v-if="activeTab === 'additional-component'"
                 key="to-summary-component"
                 type="button"
                 class="btn mw-100"
-                :disabled="tabs[3].disabled"
-                @click="toTab(3)"
+                :disabled="disabledAdditional"
+                @click="toTab('summary-component')"
               >
                 Итого
               </button>
               <button
-                v-if="active.component === 'summary-component'"
+                v-if="activeTab === 'summary-component'"
                 key="to-confirm"
                 type="button"
                 class="btn mw-100"
@@ -88,13 +88,7 @@ export default {
   },
   data() {
     return {
-      colorActive: "Любой",
-      dateStart: this.formatter(new Date()),
-      dateEnd: null,
-      active: {
-        index: 0,
-        component: "point-component",
-      },
+      activeTab: "point-component",
       tabList: [
         {
           text: "Местоположение",
@@ -143,11 +137,14 @@ export default {
     disabledModel() {
       return !this.model.value.id;
     },
+    disabledAdditional() {
+      return true;
+    },
     tabs() {
       return this.tabList.map((item, i) => {
-        if (this.active.index === i || i === 0) {
+        if (this.activeTab === item.component || i === 0) {
           item.disabled = false;
-        } else if (i === 1) {
+        } else if (item.component === "model-component") {
           item.disabled = this.disabledPoint;
         } else if (i === 2) {
           item.disabled = this.disabledPoint || this.disabledModel;
@@ -159,10 +156,10 @@ export default {
     },
   },
   methods: {
-    toTab(i) {
-      if (!this.tabs[i].disabled) {
-        this.active.index = i;
-        this.active.component = this.tabs[i].component;
+    toTab(component) {
+      const item = this.tabs.find(elem => elem.component === component)
+      if (item && !item.disabled) {
+        this.activeTab = item.component;
       }
     },
     notBeforeToday(date) {

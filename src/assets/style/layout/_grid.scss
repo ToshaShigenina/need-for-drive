@@ -50,7 +50,7 @@ body {
 .container {
 	padding: 0 16px;
 	width: 100%;
-	max-width: 1248px;
+	max-width: 1376px;
 	margin: 0 auto;
 }
 
@@ -210,6 +210,10 @@ body {
 		width: 70%;
 	}
 
+	.col-md-64 {
+		width: 64%;
+	}
+
 	.col-md-60 {
 		width: 60%;
 	}
@@ -220,6 +224,10 @@ body {
 
 	.col-md-40 {
 		width: 40%;
+	}
+
+	.col-md-36 {
+		width: 36%;
 	}
 
 	.col-md-30 {
