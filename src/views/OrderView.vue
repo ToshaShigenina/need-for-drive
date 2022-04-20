@@ -121,6 +121,9 @@ export default {
     model() {
       return this.$store.getters.getOrderModel;
     },
+    category() {
+      return this.$store.getters.getCategoryActive;
+    },
     disabledPoint() {
       return !(this.city.value.id && this.point.value.id);
     },
@@ -156,7 +159,7 @@ export default {
   created() {
     this.$store.dispatch("loadCityVariant");
     this.$store.dispatch("loadPointVariant");
-    this.$store.dispatch("loadModelVariant");
+    // this.$store.dispatch("loadModelVariant", this.queryModel);
     this.$store.dispatch("loadCategoryList");
   },
 };

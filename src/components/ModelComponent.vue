@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <loader-component v-if="!modelVariant.length"/>
+    <loader-component v-if="!modelVariant.length" />
     <div v-else class="content model">
       <ul class="model__options input-list">
         <li v-for="category in categoryList" :key="category.id">
@@ -9,11 +9,16 @@
             :label="category.name"
             name="category"
             :value="category.id"
-            v-model="active"
+            v-model="categoryActive"
+            @input="load()"
           />
         </li>
       </ul>
-      <model-list-component :category="active"/>
+
+      <transition name="fade">
+        <loader-component v-if="!modelVariant.length" />
+        <model-list-component v-else :category="categoryActive" />
+      </transition>
     </div>
   </transition>
 </template>
@@ -31,16 +36,41 @@ export default {
   },
   data() {
     return {
-      active: 0,
+      page: 1,
+      limit: 6,
     };
   },
   computed: {
     categoryList() {
       return this.$store.getters.getCategoryList;
     },
+    categoryActive: {
+      get() {
+        return this.$store.getters.getCategoryActive;
+      },
+      set(id) {
+        this.$store.commit("setCategoryActive", id);
+      },
+    },
     modelVariant() {
       return this.$store.getters.getModelVariant(this.active);
     },
+    query() {
+      console.log(this.categoryActive);
+      if (this.categoryActive) {
+        return `limit=${this.limit}&page=${this.page}&categoryId=${this.categoryActive}`;
+      }
+      return `limit=${this.limit}&page=${this.page}`;
+    },
+  },
+  methods: {
+    load(e) {
+      console.log(e);
+      this.$store.dispatch("loadModelVariant", this.query);
+    },
+  },
+  created() {
+    this.load();
   },
 };
 </script>
