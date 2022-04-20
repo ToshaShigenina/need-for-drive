@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import {
+  parse,
+  format
+} from '@/plugins/datetime'
+
 import city from './city'
 import point from './point'
 import model from './model'
 import category from './category'
+import rate from './rate'
+import services from './services'
 
 Vue.use(Vuex)
 
@@ -13,7 +20,9 @@ export default new Vuex.Store({
     city,
     point,
     model,
-    category
+    category,
+    rate,
+    services
   },
   state: {
     orderList: [{
@@ -49,33 +58,21 @@ export default new Vuex.Store({
         type: "period",
         label: "Длительность аренды",
         value: {
-          dateFrom: null,
-          dateTo: null
+          dateFrom: format(new Date()),
+          dateTo: ''
         },
       },
       {
         type: "rate",
         label: "Тариф",
         value: {
-          name: '',
           id: null
         },
       },
       {
-        type: "isFullTank",
-        label: "Полный бак",
-        value: false,
-      },
-      {
-        type: "isNeedChildChair",
-        label: "Детское кресло",
-        value: false,
-      },
-      {
-        type: "isRightWheel",
-        label: "Правый руль",
-        value: false,
-      },
+        type: 'service',
+        value: []
+      }
     ],
   },
   mutations: {
@@ -87,10 +84,29 @@ export default new Vuex.Store({
     },
     setOrderModelValue(state, value) {
       state.orderList.find((item) => item.type === "model").value = value;
+      state.orderList.find((item) => item.type === "color").value = '';
     },
-    setRateList(state, data) {
-      state.rateList = data.data;
-    }
+    setOrderColorValue(state, value) {
+      state.orderList.find((item) => item.type === "color").value = value;
+    },
+    setOrderDateFromValue(state, value) {
+      state.orderList.find((item) => item.type === "period").value.dateFrom = value;
+    },
+    setOrderDateToValue(state, value) {
+      state.orderList.find((item) => item.type === "period").value.dateTo = value;
+    },
+    setOrderRateValue(state, value) {
+      state.orderList.find((item) => item.type === "rate").value = value;
+    },
+    setOrderRateValueById(state, id) {
+      if (id) {
+        const value = state.rate.rateList.find(item => item.id === id)
+        state.orderList.find((item) => item.type === "rate").value = value;
+      }
+    },
+    setOrderServiceValue(state, value) {
+      state.orderList.find((item) => item.type === "service").value = value;
+    },
   },
   actions: {},
   getters: {
@@ -112,20 +128,42 @@ export default new Vuex.Store({
     getOrderPeriod(state) {
       return state.orderList.find((item) => item.type === "period");
     },
+    getPeriod(state) {
+      const dateFrom = state.orderList.find((item) => item.type === "period").value.dateFrom;
+      const dateTo = state.orderList.find((item) => item.type === "period").value.dateTo;
+      const generateStr = (value, param) => {
+        return value ? ` ${value}${param}` : '';
+      }
+      if (dateFrom && dateTo) {
+        let period = (new Date(parse(dateTo)).getTime() - new Date(parse(dateFrom)).getTime()) / 1000;
+        const years = Math.trunc(period / (60 * 60 * 24 * 365));
+        period -= (years * 60 * 60 * 24 * 365);
+        const months = Math.trunc(period / (60 * 60 * 24 * 30));
+        period -= months * 60 * 60 * 24 * 30;
+        const weeks = Math.trunc(period / (60 * 60 * 24 * 7));
+        period -= weeks * 60 * 60 * 24 * 7;
+        const days = Math.trunc(period / (60 * 60 * 24));
+        period -= days * 60 * 60 * 24;
+        const hours = Math.trunc(period / (60 * 60));
+        period -= hours * 60 * 60;
+        const minutes = Math.trunc(period / 60);
+        return generateStr(years, 'г') + generateStr(months, 'м') +
+          generateStr(weeks, 'н') + generateStr(days, 'д') +
+          generateStr(hours, 'ч') + generateStr(minutes, 'м');
+      }
+      return '';
+    },
+    getOrderDateFrom(state) {
+      return state.orderList.find((item) => item.type === "period").value.dateFrom;
+    },
+    getOrderDateTo(state) {
+      return state.orderList.find((item) => item.type === "period").value.dateTo;
+    },
     getOrderRate(state) {
       return state.orderList.find((item) => item.type === "rate");
     },
-    getOrderTank(state) {
-      return state.orderList.find((item) => item.type === "isFullTank");
+    getOrderServiceList(state) {
+      return state.orderList.find((item) => item.type === "service").value;
     },
-    getOrderChair(state) {
-      return state.orderList.find((item) => item.type === "isNeedChildChair");
-    },
-    getOrderWheel(state) {
-      return state.orderList.find((item) => item.type === "isRightWheel");
-    },
-    getCar: (state) => (id) => {
-      return state.carVariant.find(item => item.id === id);
-    }
   }
 })

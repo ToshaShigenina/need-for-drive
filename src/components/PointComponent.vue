@@ -3,7 +3,7 @@
     <loader-component v-if="!cityVariant.length" />
     <div v-else class="content point">
       <div class="point__form">
-        <input-text-component
+        <input-search-component
           v-model="city.value"
           id="city"
           :data="cityVariant"
@@ -14,7 +14,7 @@
           @clear="clearValue"
           @input="setCoords(city.value.coords)"
         />
-        <input-text-component
+        <input-search-component
           v-model="point.value"
           id="point"
           :data="pointVariant"
@@ -33,14 +33,14 @@
 </template>
 <script>
 import LoaderComponent from "@/components/LoaderComponent.vue";
-import InputTextComponent from "@/components/InputTextComponent.vue";
+import InputSearchComponent from "@/components/InputSearchComponent.vue";
 import MapComponent from "@/components/MapComponent.vue";
 
 export default {
   name: "point-component",
   components: {
     LoaderComponent,
-    InputTextComponent,
+    InputSearchComponent,
     MapComponent,
   },
   data() {

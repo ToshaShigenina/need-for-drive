@@ -1,0 +1,17 @@
+.option {
+	&__item {
+		&:not(:last-child) {
+			margin-bottom: 32px;
+		}
+	}
+
+	&__type {
+		margin-bottom: 16px;
+	}
+
+	&__list {
+		li+li {
+			margin-top: 8px;
+		}
+	}
+}

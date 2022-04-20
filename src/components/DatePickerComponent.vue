@@ -8,10 +8,12 @@
     :editable="false"
     :confirm="true"
     time-title-format="DD.MM.YYYY"
-    :default-value="new Date()"
+    :default-value="defaultValue"
     :minute-step="5"
     :show-second="false"
-    :disabled-date="notBeforeToday"
+    :disabled-date="disabledDate"
+    :disabled="disabled"
+    @input="inputValue($event)"
   >
     <template v-slot:icon-calendar>
       <span></span>
@@ -21,16 +23,21 @@
     </template>
     <template v-slot:input>
       <input-text-component
-        v-model="value"
-        type="date_start"
-        label="C"
-        width="20px"
-        placeholder="Введите дату и время"
+        :value="value"
+        :id="id"
+        :label="label"
+        :width="width"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        class="form-group"
+        @input="inputValue($event)"
+        @clear="$emit('clear')"
       />
     </template>
   </date-picker>
 </template>
 <script>
+import InputTextComponent from "@/components/InputTextComponent.vue";
 import DatePicker from "vue2-datepicker";
 import "../assets/style/components/_datepicker.scss";
 import "vue2-datepicker/locale/ru";
@@ -39,11 +46,19 @@ export default {
   name: "dete-time-picker-component",
   props: {
     value: {
-      default: null,
+      default: "",
     },
     label: {
       type: String,
       default: "",
+    },
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     id: {
       type: String,
@@ -52,8 +67,15 @@ export default {
       type: String,
       default: "auto",
     },
+    defaultValue: {
+      default: () => new Date(),
+    },
+    disabledDate: {
+      default: false,
+    },
   },
   components: {
+    InputTextComponent,
     DatePicker,
   },
   data() {
@@ -67,6 +89,10 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    inputValue(value) {
+      this.$emit("input", value);
+    },
+  },
 };
 </script>

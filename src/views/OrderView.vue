@@ -68,9 +68,6 @@ import ModelComponent from "@/components/ModelComponent.vue";
 import AdditionalComponent from "@/components/AdditionalComponent.vue";
 import SummaryComponent from "@/components/SummaryComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
-import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
-import ModelListComponent from "@/components/ModelListComponent.vue";
-import DatePickerComponent from "@/components/DatePickerComponent.vue";
 
 export default {
   name: "OrderView",
@@ -82,9 +79,6 @@ export default {
     AdditionalComponent,
     SummaryComponent,
     OrderComponent,
-    InputSwitchComponent,
-    ModelListComponent,
-    DatePickerComponent,
   },
   data() {
     return {
@@ -115,30 +109,36 @@ export default {
   },
   computed: {
     city() {
-      return this.$store.getters.getOrderCity;
+      return this.$store.getters.getOrderCity.value;
     },
     point() {
-      return this.$store.getters.getOrderPoint;
+      return this.$store.getters.getOrderPoint.value;
     },
     model() {
-      return this.$store.getters.getOrderModel;
+      return this.$store.getters.getOrderModel.value;
     },
-    colors() {
-      const car = this.$store.getters.getCar(this.model.id);
-      if (car) return car.colors;
-      return [];
+    color() {
+      return this.$store.getters.getOrderColor.value;
     },
-    categoryList() {
-      return this.$store.getters.getCategoryList;
+    rate() {
+      return this.$store.getters.getOrderRate.value;
+    },
+    period() {
+      return this.$store.getters.getOrderPeriod.value;
     },
     disabledPoint() {
-      return !(this.city.value.id && this.point.value.id);
+      return !(this.city.id && this.point.id);
     },
     disabledModel() {
-      return !this.model.value.id;
+      return !this.model.id;
     },
     disabledAdditional() {
-      return true;
+      return !(
+        this.color &&
+        this.rate.id &&
+        this.period.dateFrom &&
+        this.period.dateTo
+      );
     },
     tabs() {
       return this.tabList.map((item, i) => {
@@ -146,8 +146,10 @@ export default {
           item.disabled = false;
         } else if (item.component === "model-component") {
           item.disabled = this.disabledPoint;
-        } else if (i === 2) {
+        } else if (item.component === "additional-component") {
           item.disabled = this.disabledPoint || this.disabledModel;
+        } else if (item.component === "summary-component") {
+          item.disabled = this.disabledModel || this.disabledAdditional;
         } else {
           item.disabled = true;
         }
@@ -162,37 +164,13 @@ export default {
         this.activeTab = item.component;
       }
     },
-    notBeforeToday(date) {
-      const beforeToday = date < new Date(new Date().setHours(0, 0, 0, 0));
-      const afterEnd = this.dateEnd ? date > new Date(new Date(this.parse(this.dateEnd)).setHours(0, 0, 0, 0)) : null;
-      return afterEnd !== null ? (beforeToday || afterEnd) : beforeToday;
-    },
-    notBeforeDateStart(date) {
-      const dateStart = this.dateStart ? new Date(this.parse(this.dateStart)) : null;
-      return dateStart !== null ? date < new Date(dateStart.setDate(dateStart.getDate() - 1)) : false;
-    },
-    formatter(date) {
-      if(typeof date === 'object') {
-        const fullNumber = num => num < 10 ? '0'+num : num;
-        return `${fullNumber(date.getDate())}.${fullNumber(date.getMonth()+1)}.${date.getFullYear()} ${fullNumber(date.getHours())}:${fullNumber(
-          (Math.trunc(date.getMinutes() / 5) * 5) + 10
-        )}`;
-      }
-      return date;
-    },
-    parse (dateString) {
-      if(dateString) {
-        const str = dateString.split('.');
-        return `${str[1]}.${str[0]}.${str[2]}`;
-      }
-      return dateString;
-    },
   },
   created() {
     this.$store.dispatch("loadCityVariant");
     this.$store.dispatch("loadPointVariant");
     this.$store.dispatch("loadModelVariant");
     this.$store.dispatch("loadCategoryList");
+    this.$store.dispatch("loadRateList");
   },
 };
 </script>

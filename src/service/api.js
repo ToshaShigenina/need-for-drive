@@ -5,6 +5,7 @@ const url = {
   POINT: 'db/point',
   CAR: 'db/car',
   CATEGORY: 'db/category',
+  RATE: 'db/rate',
 }
 
 const cityCoords = [{
@@ -124,5 +125,8 @@ export default {
   },
   getCategorys(query) {
     return sendRequest(url.CATEGORY, query);
+  },
+  getRates(query) {
+    return sendRequest(url.RATE, query);
   }
 }

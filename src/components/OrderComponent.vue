@@ -13,7 +13,7 @@
       <li v-if="model.value.id" key="order-model" class="order__item">
         <span>{{ model.label }}</span>
         <span>
-          {{ model.value.name }},<br v-if="model.value.id">
+          {{ model.value.name }},<br v-if="model.value.id" />
           {{ model.value.number }}
         </span>
       </li>
@@ -24,32 +24,33 @@
         </span>
       </li>
       <li
-        v-if="period.value.dateFrom && period.value.detaTo"
+        v-if="period.value.dateFrom && period.value.dateTo"
         key="order-period"
         class="order__item"
       >
         <span>{{ period.label }}</span>
         <span>
-          {{ period.dateFrom }}
+          {{ periodValue }}
         </span>
       </li>
       <li v-if="rate.value.id" key="order-rate" class="order__item">
         <span>{{ rate.label }}</span>
         <span>
-          {{ rate.value.name }}
+          {{ rate.value.rateTypeId.name }}
         </span>
       </li>
-      <li v-if="tank.value" key="order-tank" class="order__item">
-        <span>{{ tank.label }}</span>
-        <span> Да </span>
+
+      <li v-if="fullTank" key="full-tank" class="order__item">
+        <span>{{ fullTank.label }}</span>
+        <span>Да</span>
       </li>
-      <li v-if="chair.value" key="order-chair" class="order__item">
-        <span>{{ chair.label }}</span>
-        <span> Да </span>
+      <li v-if="childChair" key="child-chair" class="order__item">
+        <span>{{ childChair.label }}</span>
+        <span>Да</span>
       </li>
-      <li v-if="wheel.value" key="order-wheel" class="order__item">
-        <span>{{ wheel.label }}</span>
-        <span> Да </span>
+      <li v-if="rightWheel" key="right-wheel" class="order__item">
+        <span>{{ rightWheel.label }}</span>
+        <span>Да</span>
       </li>
     </ul>
 
@@ -79,17 +80,30 @@ export default {
     period() {
       return this.$store.getters.getOrderPeriod;
     },
+    periodValue() {
+      return this.$store.getters.getPeriod;
+    },
     rate() {
       return this.$store.getters.getOrderRate;
     },
-    tank() {
-      return this.$store.getters.getOrderTank;
+    serviceList() {
+      return this.$store.getters.getOrderServiceList;
     },
-    chair() {
-      return this.$store.getters.getOrderChair;
+    fullTank() {
+      return this.serviceItem("isFullTank");
     },
-    wheel() {
-      return this.$store.getters.getOrderWheel;
+    childChair() {
+      return this.serviceItem("isNeedChildChair");
+    },
+    rightWheel() {
+      return this.serviceItem("isRightWheel");
+    },
+  },
+  methods: {
+    serviceItem(name) {
+      const find = this.serviceList.find((item) => item === name);
+      if (find) return this.$store.getters.getServiceItem(find);
+      return false;
     },
   },
 };
