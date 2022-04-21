@@ -2,6 +2,7 @@
 	display: inline-block;
 	width: 100%;
 	padding: 16px 20px 12px;
+	border-radius: 8px;
 	text-align: center;
 	color: $color-main-light;
 	background-image: $linear-gradient-base;
@@ -25,6 +26,5 @@
 
 	@media screen and (min-width: $bp-width-xs) {
 		max-width: 250px;
-		border-radius: 8px;
 	}
 }

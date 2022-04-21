@@ -1,0 +1,14 @@
+.form {
+	&__group {
+		display: flex;
+		align-items: center;
+
+		&:not(:first-child) {
+			margin-top: 16px;
+		}
+
+		label {
+			margin-right: 6px;
+		}
+	}
+}

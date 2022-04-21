@@ -4,7 +4,6 @@
 	align-items: stretch;
 	justify-content: flex-start;
 	width: 100%;
-	padding-top: 16px;
 
 	&__header,
 	&__footer {
@@ -21,10 +20,6 @@
 
 	&__footer {
 		margin-top: auto;
-	}
-
-	@media screen and (min-width: $bp-width-xs) {
-		padding-top: 32px;
 	}
 
 	@media (min-width: $bp-width-md) {

@@ -1,7 +1,10 @@
 <template>
   <div class="slider" ref="slider">
-    <div class="slider__wrapper" :style="{ transform: `translateX(${translate})` }">
-      <slide-component
+    <div
+      class="slider__wrapper"
+      :style="{ transform: `translateX(${translate})` }"
+    >
+      <slider-item-component
         v-for="(slide, i) in slides"
         :key="'slide' + i"
         :title="slide.title"
@@ -9,10 +12,10 @@
         :link="slide.link"
         :class="[{ _active: active === i }, slide.class]"
         :style="{ width: `${width}px` }"
-      ></slide-component>
+      />
     </div>
 
-    <pagination-component
+    <slider-pagination-component
       :active="active"
       :count="slides.length"
       @to-slide="toSlide"
@@ -33,31 +36,31 @@
   </div>
 </template>
 <script>
-import PaginationComponent from "./PaginationComponent.vue";
-import SlideComponent from "./SlideComponent.vue";
+import SliderPaginationComponent from "./SliderPaginationComponent.vue";
+import SliderItemComponent from "./SliderItemComponent.vue";
 
 export default {
   name: "slider-component",
   components: {
-    SlideComponent,
-    PaginationComponent,
+    SliderItemComponent,
+    SliderPaginationComponent,
   },
   props: {
     slides: {
       type: Array,
-      require: true,
+      required: true,
     },
   },
   data() {
     return {
       active: 0,
-      width: 0
+      width: 0,
     };
   },
   computed: {
-    translate () {
-      return (this.width * this.active * -1) + 'px';
-    }
+    translate() {
+      return this.width * this.active * -1 + "px";
+    },
   },
   methods: {
     prevSlide() {
@@ -70,12 +73,12 @@ export default {
       this.active = i;
     },
     getWidth() {
-      this.width = this.$refs.slider.clientWidth;
-    }
+      if (this.$refs.slider) this.width = this.$refs.slider.clientWidth;
+    },
   },
   mounted() {
     this.getWidth();
-    window.addEventListener('resize', this.getWidth.bind(this))
+    window.addEventListener("resize", this.getWidth.bind(this));
   },
 };
 </script>

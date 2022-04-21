@@ -2,12 +2,13 @@
   <nav class="main-sidebar__menu">
     <ul class="main-menu">
       <li
-        class="main-menu__item"
         v-for="(link, i) in links"
         :key="'main-menu' + i"
-        :class="{ _active: link.active }"
+        class="main-menu__item"
       >
-        <a :href="link.url" class="main-menu__link">{{ link.text }}</a>
+        <router-link :to="link.url" class="main-menu__link">
+          {{ link.text }}
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -39,8 +40,8 @@ export default {
           active: false,
           text: "ОБСЛУЖИВАНИЕ",
         },
-      ]
-    }
-  }
+      ],
+    };
+  },
 };
 </script>
