@@ -35,7 +35,7 @@ export default {
   computed: {
     model: {
       get() {
-        return this.$store.getters.getOrderModel;
+        return this.$store.getters.getOrderModel.value;
       },
       set(value) {
         this.$store.commit("setOrderModelValue", value);
@@ -60,7 +60,7 @@ export default {
     },
   },
   created() {
-    this.active = this.model.value.id;
+    this.active = this.model.id;
   }
 };
 </script>

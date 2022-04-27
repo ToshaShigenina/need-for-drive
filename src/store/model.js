@@ -4,13 +4,14 @@ import api from '@/service/api'
 export default {
   state: () => ({
     modelVariant: [],
+    loadModels: false,
     count: 0,
   }),
   mutations: {
     setModelVariant(state, data) {
-      console.log(data)
       state.modelVariant = data.data;
       state.count = data.count;
+      state.loadModels = true;
       /* state.modelVariant = data.data.filter(item => {
         return !!(item.number && item.thumbnail.path && isBase64(item.thumbnail.path))
       }); */
@@ -31,5 +32,11 @@ export default {
       }
       return state.modelVariant;
     },
+    getModelsCount(state) {
+      return state.count;
+    },
+    getLoadModels(state) {
+      return state.loadModels;
+    }
   }
 }

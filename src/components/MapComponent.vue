@@ -40,7 +40,6 @@ export default {
   },
   data() {
     return {
-      // coords: [57.43016, 46.947032],
       map: null,
       zoom: 4,
       showAllMarkers: true,
@@ -79,25 +78,25 @@ export default {
   watch: {
     coords(value) {
       const point = this.pointVariant.find((item) => {
-        if (item.coords[0] === value[0] && item.coords[1] === value[1])
+        if (item.coords && item.coords[0] === value[0] && item.coords[1] === value[1])
           return item;
       });
       const city = this.cityVariant.find((item) => {
         if (point) {
           if (item.id === point.cityId.id) return item;
         } else {
-          if (item.coords[0] === value[0] && item.coords[1] === value[1])
+          if (item.coords && item.coords[0] === value[0] && item.coords[1] === value[1])
             return item;
         }
       });
 
       if (city && !point) {
         this.zoom = 6;
-        if (!this.city.value.id) this.city = city;
+        this.city = city;
       } else if (city && point) {
         this.zoom = 16;
-        if (!this.city.value.id) this.city = city;
-        if (!this.point.value.id) this.point = point;
+        this.city = city;
+        this.point = point;
       } else {
         this.zoom = 4;
       }

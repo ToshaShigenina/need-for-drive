@@ -10,7 +10,7 @@
             name="category"
             :value="category.id"
             v-model="categoryActive"
-            @input="load()"
+            @input="load"
           />
         </li>
       </ul>
@@ -19,6 +19,13 @@
         <loader-component v-if="!modelVariant.length" />
         <model-list-component v-else :category="categoryActive" />
       </transition>
+
+      <pagination-component
+        :limit="limit"
+        :page="page"
+        :count="count"
+        @to-page="changePage"
+      />
     </div>
   </transition>
 </template>
@@ -26,6 +33,7 @@
 import LoaderComponent from "@/components/LoaderComponent.vue";
 import InputSwitchComponent from "@/components/InputSwitchComponent.vue";
 import ModelListComponent from "@/components/ModelListComponent.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
 
 export default {
   name: "model-component",
@@ -33,10 +41,11 @@ export default {
     LoaderComponent,
     InputSwitchComponent,
     ModelListComponent,
+    PaginationComponent,
   },
   data() {
     return {
-      page: 1,
+      page: 0,
       limit: 6,
     };
   },
@@ -52,21 +61,31 @@ export default {
         this.$store.commit("setCategoryActive", id);
       },
     },
+    count() {
+      return this.$store.getters.getModelsCount;
+    },
     modelVariant() {
       return this.$store.getters.getModelVariant(this.active);
     },
     query() {
-      console.log(this.categoryActive);
       if (this.categoryActive) {
         return `limit=${this.limit}&page=${this.page}&categoryId=${this.categoryActive}`;
       }
       return `limit=${this.limit}&page=${this.page}`;
     },
   },
+  watch: {
+    categoryActive() {
+      this.changePage(0)
+    }
+  },
   methods: {
-    load(e) {
-      console.log(e);
+    load() {
       this.$store.dispatch("loadModelVariant", this.query);
+    },
+    changePage(i) {
+      this.page = i;
+      this.load();
     },
   },
   created() {
