@@ -12,7 +12,7 @@
         type="text"
         autocomplete="off"
         :id="id"
-        :value="value[dataField]"
+        :value="value"
         :disabled="disabled"
         :placeholder="placeholder"
         @input="changeValue($event.target.value)"

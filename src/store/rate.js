@@ -6,7 +6,7 @@ export default {
   }),
   mutations: {
     setRateList(state, data) {
-      state.rateList = data.data;
+      state.rateList = data.data.filter(item => item.rateTypeId);
     },
   },
   actions: {

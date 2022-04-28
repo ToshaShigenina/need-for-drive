@@ -32,3 +32,8 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_option.scss';
+</style>
