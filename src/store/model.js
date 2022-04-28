@@ -19,17 +19,16 @@ export default {
   },
   actions: {
     loadModelVariant({
-      commit
+      commit,
+      state
     }, query) {
+      state.loadModels = false;
       api.getCars(query)
         .then(data => commit('setModelVariant', data))
     },
   },
   getters: {
-    getModelVariant: (state) => (categoryId) => {
-      if (categoryId) {
-        return state.modelVariant.filter(item => item.categoryId.id === categoryId);
-      }
+    getModelVariant (state) {
       return state.modelVariant;
     },
     getModelsCount(state) {

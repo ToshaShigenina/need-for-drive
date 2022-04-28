@@ -7,11 +7,11 @@ export default {
   }),
   mutations: {
     setCategoryList(state, data) {
-      state.categoryList.push({
+      const defaultVal = {
         id: 0,
         name: 'Все модели'
-      });
-      state.categoryList.push(...data.data);
+      };
+      state.categoryList = [defaultVal].concat(data.data);
     },
     setCategoryActive(state, id) {
       state.categoryActive = id;

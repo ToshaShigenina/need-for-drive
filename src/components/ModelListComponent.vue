@@ -42,7 +42,7 @@ export default {
       },
     },
     modelVariant() {
-      return this.$store.getters.getModelVariant(this.category);
+      return this.$store.getters.getModelVariant;
     },
   },
   methods: {
@@ -64,3 +64,8 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_model.scss';
+</style>

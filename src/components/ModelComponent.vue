@@ -10,17 +10,18 @@
             name="category"
             :value="category.id"
             v-model="categoryActive"
-            @input="load"
+            @input="changePage(1)"
           />
         </li>
       </ul>
 
       <transition name="fade">
-        <loader-component v-if="!modelVariant.length" />
-        <model-list-component v-else :category="categoryActive" />
+        <loader-component v-if="!loadModels" />
+        <model-list-component v-else />
       </transition>
 
       <pagination-component
+        v-if="(count > limit) && loadModels"
         :limit="limit"
         :page="page"
         :count="count"
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      page: 0,
+      page: 1,
       limit: 6,
     };
   },
@@ -64,20 +65,20 @@ export default {
     count() {
       return this.$store.getters.getModelsCount;
     },
+    loadModels () {
+      return this.$store.getters.getLoadModels;
+    },
     modelVariant() {
-      return this.$store.getters.getModelVariant(this.active);
+      return this.$store.getters.getModelVariant;
     },
     query() {
       if (this.categoryActive) {
-        return `limit=${this.limit}&page=${this.page}&categoryId=${this.categoryActive}`;
+        return `limit=${this.limit}&page=${this.page - 1}&categoryId=${
+          this.categoryActive
+        }`;
       }
-      return `limit=${this.limit}&page=${this.page}`;
+      return `limit=${this.limit}&page=${this.page - 1}`;
     },
-  },
-  watch: {
-    categoryActive() {
-      this.changePage(0)
-    }
   },
   methods: {
     load() {
@@ -93,3 +94,8 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_model.scss';
+</style>

@@ -74,6 +74,11 @@
 			&:hover {
 				background-color: $color-gray-light;
 			}
+
+			&:disabled {
+				opacity: .5;
+				cursor: not-allowed;
+			}
 		}
 	}
 }

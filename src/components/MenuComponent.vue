@@ -45,3 +45,8 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_menu.scss';
+</style>
