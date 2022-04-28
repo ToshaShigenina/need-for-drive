@@ -19,7 +19,7 @@ export default {
   },
   getters: {
     getRateList(state) {
-      return state.rateList;
+      return state.rateList.filter(item => item.rateTypeId);
     },
   }
 }

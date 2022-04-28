@@ -13,8 +13,7 @@
       <li v-if="model.value.id" key="order-model" class="order__item">
         <span>{{ model.label }}</span>
         <span>
-          {{ model.value.name }},<br v-if="model.value.id" />
-          {{ model.value.number }}
+          {{ model.value.name }}
         </span>
       </li>
       <li v-if="color.value" key="order-color" class="order__item">
@@ -90,20 +89,13 @@ export default {
       return this.$store.getters.getOrderServiceList;
     },
     fullTank() {
-      return this.serviceItem("isFullTank");
+      return this.$store.getters.getOrderService("isFullTank");
     },
     childChair() {
-      return this.serviceItem("isNeedChildChair");
+      return this.$store.getters.getOrderService("isNeedChildChair");
     },
     rightWheel() {
-      return this.serviceItem("isRightWheel");
-    },
-  },
-  methods: {
-    serviceItem(name) {
-      const find = this.serviceList.find((item) => item === name);
-      if (find) return this.$store.getters.getServiceItem(find);
-      return false;
+      return this.$store.getters.getOrderService("isRightWheel");
     },
   },
 };

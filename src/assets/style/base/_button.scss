@@ -4,6 +4,7 @@
 	padding: 16px 20px 12px;
 	border-radius: 8px;
 	text-align: center;
+	line-height: 1;
 	color: $color-main-light;
 	background-image: $linear-gradient-base;
 	
@@ -22,6 +23,19 @@
 		cursor: not-allowed;
 		background-image: none;
 		background-color: $color-gray-light;
+	}
+
+	&_cancel {
+		background-image: $gradient-slider-btn-petrol;
+
+		&:hover,
+		&:focus {
+			background-image: $gradient-slider-btn-petrol-hover;
+		}
+
+		&:active {
+			background-image: $gradient-slider-btn-petrol-active;
+		}
 	}
 
 	@media screen and (min-width: $bp-width-xs) {

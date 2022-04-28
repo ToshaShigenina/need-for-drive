@@ -34,8 +34,5 @@ export default {
       }
       return state.services.find(item => item.type === filter);
     },
-    getServiceItem: (state) => (name) => {
-      return state.services.find(item => item.type === name);
-    },
   }
 }

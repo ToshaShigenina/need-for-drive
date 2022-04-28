@@ -49,6 +49,7 @@
                 key="to-confirm"
                 type="button"
                 class="btn mw-100"
+                @click="togglePopup(true)"
               >
                 Заказать
               </button>
@@ -57,6 +58,7 @@
         </div>
       </div>
     </div>
+    <popup-component :open="popupOpen" @close-popup="togglePopup"/>
   </div>
 </template>
 
@@ -68,6 +70,7 @@ import ModelComponent from "@/components/ModelComponent.vue";
 import AdditionalComponent from "@/components/AdditionalComponent.vue";
 import SummaryComponent from "@/components/SummaryComponent.vue";
 import OrderComponent from "@/components/OrderComponent.vue";
+import PopupComponent from "@/components/PopupComponent.vue";
 
 export default {
   name: "OrderView",
@@ -79,10 +82,12 @@ export default {
     AdditionalComponent,
     SummaryComponent,
     OrderComponent,
+    PopupComponent,
   },
   data() {
     return {
       activeTab: "point-component",
+      popupOpen: false,
       tabList: [
         {
           text: "Местоположение",
@@ -152,7 +157,7 @@ export default {
         } else if (item.component === "additional-component") {
           item.disabled = this.disabledPoint || this.disabledModel;
         } else if (item.component === "summary-component") {
-          item.disabled = this.disabledModel || this.disabledAdditional;
+          item.disabled = this.disabledPoint || this.disabledModel || this.disabledAdditional;
         } else {
           item.disabled = true;
         }
@@ -162,10 +167,13 @@ export default {
   },
   methods: {
     toTab(component) {
-      const item = this.tabs.find(elem => elem.component === component)
+      const item = this.tabs.find((elem) => elem.component === component);
       if (item && !item.disabled) {
         this.activeTab = item.component;
       }
+    },
+    togglePopup(isOpen) {
+      this.popupOpen = isOpen;
     },
   },
   created() {

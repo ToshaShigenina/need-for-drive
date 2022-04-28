@@ -165,5 +165,12 @@ export default new Vuex.Store({
     getOrderServiceList(state) {
       return state.orderList.find((item) => item.type === "service").value;
     },
+    getOrderService: (state) => (name) => {
+      const services = state.services.services;
+      const servicesOrder = state.orderList.find((item) => item.type === "service").value;
+      const find = servicesOrder.find((item) => item === name);
+      if (find) return services.find(item => item.type === find);
+      return false;
+    }
   }
 })
