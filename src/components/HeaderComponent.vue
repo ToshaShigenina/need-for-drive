@@ -26,3 +26,10 @@ export default {
   name: "header-component",
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_header.scss';
+@import '@/assets/style/components/_brand.scss';
+@import '@/assets/style/components/_location.scss';
+</style>

@@ -44,3 +44,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_sidebar.scss';
+@import '@/assets/style/components/_toggler.scss';
+</style>

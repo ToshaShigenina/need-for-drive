@@ -126,6 +126,9 @@ export default {
     period() {
       return this.$store.getters.getOrderPeriod.value;
     },
+    category() {
+      return this.$store.getters.getCategoryActive;
+    },
     disabledPoint() {
       return !(this.city.id && this.point.id);
     },
@@ -168,9 +171,14 @@ export default {
   created() {
     this.$store.dispatch("loadCityVariant");
     this.$store.dispatch("loadPointVariant");
-    this.$store.dispatch("loadModelVariant");
+    // this.$store.dispatch("loadModelVariant", this.queryModel);
     this.$store.dispatch("loadCategoryList");
     this.$store.dispatch("loadRateList");
   },
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_main.scss';
+</style>

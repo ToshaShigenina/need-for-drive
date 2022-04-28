@@ -109,8 +109,8 @@ export default {
         return data;
       });
   },
-  getPoints(query) {
-    return sendRequest(url.POINT, query)
+  getPoints() {
+    return sendRequest(url.POINT)
       .then(data => {
         data.data = data.data.map(item => {
           const point = pointCoords.find(elem => elem.id === item.id)

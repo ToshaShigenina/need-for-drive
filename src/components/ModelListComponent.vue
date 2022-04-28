@@ -35,14 +35,14 @@ export default {
   computed: {
     model: {
       get() {
-        return this.$store.getters.getOrderModel;
+        return this.$store.getters.getOrderModel.value;
       },
       set(value) {
         this.$store.commit("setOrderModelValue", value);
       },
     },
     modelVariant() {
-      return this.$store.getters.getModelVariant(this.category);
+      return this.$store.getters.getModelVariant;
     },
   },
   methods: {
@@ -60,7 +60,12 @@ export default {
     },
   },
   created() {
-    this.active = this.model.value.id;
+    this.active = this.model.id;
   }
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_model.scss';
+</style>

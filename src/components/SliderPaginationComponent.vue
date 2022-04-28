@@ -31,3 +31,8 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/style/abstracts/_variables.scss';
+@import '@/assets/style/components/_pagination.scss';
+</style>

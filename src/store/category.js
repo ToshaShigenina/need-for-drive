@@ -2,7 +2,8 @@ import api from '@/service/api'
 
 export default {
   state: () => ({
-    categoryList: []
+    categoryList: [],
+    categoryActive: 0,
   }),
   mutations: {
     setCategoryList(state, data) {
@@ -12,6 +13,9 @@ export default {
       };
       state.categoryList = [defaultCategory].concat(data.data);
     },
+    setCategoryActive(state, id) {
+      state.categoryActive = id;
+    }
   },
   actions: {
     loadCategoryList({
@@ -25,5 +29,8 @@ export default {
     getCategoryList(state) {
       return state.categoryList;
     },
+    getCategoryActive(state) {
+      return state.categoryActive;
+    }
   }
 }

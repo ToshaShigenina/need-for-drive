@@ -4,6 +4,7 @@ const options = {
     'X-Api-Factory-Application-Id': process.env.VUE_APP_APPLICATION_ID,
   },
 }
+
 const sendRequest = (url, query) => {
   if (query) query = '?' + query;
   else query = '';
