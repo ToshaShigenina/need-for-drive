@@ -1,21 +1,28 @@
 import api from '@/service/api'
-// import isBase64 from '@/plugins/isbase64'
+import isBase64 from '@/plugins/isbase64'
 
 export default {
   state: () => ({
     modelVariant: [],
     loadModels: false,
     count: 0,
+    page: 1,
+    limit: 6
   }),
   mutations: {
     setModelVariant(state, data) {
-      state.modelVariant = data.data;
+      state.modelVariant = data.data.map(item => {
+        if (!item.thumbnail.path || !isBase64(item.thumbnail.path)) {
+          item.thumbnail.path = require('../assets/img/car-placeholder.png');
+        }
+        return item
+      });
       state.count = data.count;
       state.loadModels = true;
-      /* state.modelVariant = data.data.filter(item => {
-        return !!(item.number && item.thumbnail.path && isBase64(item.thumbnail.path))
-      }); */
     },
+    setPage(state, page) {
+      state.page = page;
+    }
   },
   actions: {
     loadModelVariant({
@@ -28,11 +35,17 @@ export default {
     },
   },
   getters: {
-    getModelVariant (state) {
+    getModelVariant(state) {
       return state.modelVariant;
     },
     getModelsCount(state) {
       return state.count;
+    },
+    getLimit(state) {
+      return state.limit;
+    },
+    getPage(state) {
+      return state.page;
     },
     getLoadModels(state) {
       return state.loadModels;

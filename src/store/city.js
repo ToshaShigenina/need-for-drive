@@ -20,7 +20,7 @@ export default {
   },
   getters: {
     getCityVariant(state) {
-      return state.cityVariant;
+      return state.cityVariant.filter(item => !!item.coords);
     }
   }
 }

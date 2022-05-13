@@ -4,8 +4,7 @@ import IndexView from '../views/IndexView.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'index',
     component: IndexView
@@ -14,6 +13,16 @@ const routes = [
     path: '/order',
     name: 'order',
     component: () => import('../views/OrderView.vue')
+  },
+  {
+    path: '/result',
+    name: 'result',
+    component: () => import('../views/ResultView.vue')
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/ErrorView.vue')
   }
 ]
 

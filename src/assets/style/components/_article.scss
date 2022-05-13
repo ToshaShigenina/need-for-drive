@@ -17,6 +17,10 @@
 		}
 	}
 
+	&__content {
+		margin-bottom: 32px;
+	}
+
 	&__btn.btn {
 		@media screen and (max-width: calc($bp-width-xs - 1px)) {
 			width: calc(100% + 32px);

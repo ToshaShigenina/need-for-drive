@@ -3,14 +3,11 @@
     <div v-if="open" class="popup" @click.self="closePopup">
       <div class="popup__content">
         <h2 class="popup__title text-center">
-          Подтвердить заказ
+          <slot name="title">Подтвердить заказ</slot>
         </h2>
-        <router-link class="btn popup__btn" to="/">
-          Подтвердить
-        </router-link>
-        
-        <button class="btn btn_cancel popup__btn" @click="closePopup">
-          Вернуться
+        <slot name="success"></slot>
+        <button v-if="cancel" class="btn btn_cancel popup__btn" @click="closePopup">
+          <slot name="cancel">Вернуться</slot>
         </button>
       </div>
     </div>
@@ -25,6 +22,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    cancel: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     closePopup() {
@@ -34,7 +35,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/style/abstracts/_variables.scss";
 @import "@/assets/style/components/_popup.scss";
 </style>

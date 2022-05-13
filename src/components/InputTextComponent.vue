@@ -22,7 +22,7 @@
         v-if="value"
         type="button"
         class="input__close"
-        @click="changeValue('')"
+        @click="clearValue"
       ></button>
     </div>
   </div>
@@ -58,9 +58,9 @@ export default {
     changeValue(value) {
       this.$emit("input", value);
     },
-    clearValue(value) {
+    clearValue() {
       this.$emit("clear");
-      this.changeValue(value);
+      this.changeValue("");
     },
   },
 };

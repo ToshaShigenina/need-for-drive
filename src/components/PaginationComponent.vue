@@ -74,7 +74,7 @@ export default {
     },
     page: {
       type: Number,
-      default: 0,
+      default: 1,
     },
   },
   computed: {
@@ -91,6 +91,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/style/abstracts/_variables.scss';
-@import '@/assets/style/components/_pagination.scss';
+@import "@/assets/style/abstracts/_variables.scss";
+@import "@/assets/style/components/_pagination.scss";
 </style>

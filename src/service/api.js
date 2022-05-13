@@ -1,4 +1,4 @@
-import sendRequest from "./http";
+import http from "./http";
 
 const url = {
   CITY: 'db/city',
@@ -6,6 +6,8 @@ const url = {
   CAR: 'db/car',
   CATEGORY: 'db/category',
   RATE: 'db/rate',
+  ORDER_STATUS: 'db/orderStatus',
+  ORDER: 'db/order',
 }
 
 const cityCoords = [{
@@ -14,7 +16,32 @@ const cityCoords = [{
     coords: [54.735152, 55.958736],
   },
   {
+    id: '625f21f873b6110018102d63',
+    name: 'Москва',
+    coords: [55.755819, 37.617644]
+  },
+  {
+    id: '627116602fcd4e0010a04b47',
+    name: 'Воронеж',
+    coords: [51.660786, 39.200269]
+  },
+  {
+    id: '6271166b2fcd4e0010a04b49',
+    name: 'Анапа',
+    coords: [44.894818, 37.316367]
+  },
+  {
+    id: '62718a059093d200112246c0',
+    name: 'Казань',
+    coords: [55.796127, 49.106414]
+  },
+  {
     id: "60d6e4d32aed9a0b9b84fa82",
+    name: "Краснодар",
+    coords: [45.03547, 38.975313],
+  },
+  {
+    id: "627116772fcd4e0010a04b4a",
     name: "Краснодар",
     coords: [45.03547, 38.975313],
   },
@@ -95,11 +122,31 @@ const pointCoords = [{
     name: "Мариинская гимназия",
     coords: [54.31228, 48.395406],
   },
+  {
+    id: "61ae2822bb7a006c05c54b77",
+    name: "Психоневрологический диспансер",
+    coords: [55.747059, 37.598402],
+  },
+  {
+    id: "627593dc55c2b50010d50bd3",
+    name: "Детская библиотека",
+    coords: [54.185784, 45.182986],
+  },
+  {
+    id: "6275942c55c2b50010d50bd4",
+    name: "Музей искусства",
+    coords: [54.987394, 73.391281],
+  },
+  {
+    id: "627594a355c2b50010d50bd6",
+    name: "Больница",
+    coords: [51.656948, 39.177317],
+  },
 ];
 
 export default {
   getCities(query) {
-    return sendRequest(url.CITY, query)
+    return http.sendGet(url.CITY, query)
       .then(data => {
         data.data = data.data.map(item => {
           const city = cityCoords.find(elem => elem.id === item.id)
@@ -110,7 +157,7 @@ export default {
       });
   },
   getPoints() {
-    return sendRequest(url.POINT)
+    return http.sendGet(url.POINT)
       .then(data => {
         data.data = data.data.map(item => {
           const point = pointCoords.find(elem => elem.id === item.id)
@@ -121,12 +168,21 @@ export default {
       });
   },
   getCars(query) {
-    return sendRequest(url.CAR, query);
+    return http.sendGet(url.CAR, query);
   },
   getCategorys(query) {
-    return sendRequest(url.CATEGORY, query);
+    return http.sendGet(url.CATEGORY, query);
   },
   getRates(query) {
-    return sendRequest(url.RATE, query);
+    return http.sendGet(url.RATE, query);
+  },
+  getOrderStatuses(query) {
+    return http.sendGet(url.ORDER_STATUS, query);
+  },
+  getOrder(query, id) {
+    return http.sendGet(url.ORDER, query, id);
+  },
+  postOrder(body) {
+    return http.sendPost(url.ORDER, body);
   }
 }

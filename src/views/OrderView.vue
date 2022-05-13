@@ -58,7 +58,13 @@
         </div>
       </div>
     </div>
-    <popup-component :open="popupOpen" @close-popup="togglePopup"/>
+    <popup-component :open="popupOpen" @close-popup="togglePopup">
+      <template #success>
+        <button class="btn popup__btn" @click="confirmOrder">
+          Подтвердить
+        </button>
+      </template>
+    </popup-component>
   </div>
 </template>
 
@@ -122,6 +128,12 @@ export default {
     model() {
       return this.$store.getters.getOrderModel.value;
     },
+    limit() {
+      return this.$store.getters.getLimit;
+    },
+    page() {
+      return this.$store.getters.getPage;
+    },
     color() {
       return this.$store.getters.getOrderColor.value;
     },
@@ -157,7 +169,8 @@ export default {
         } else if (item.component === "additional-component") {
           item.disabled = this.disabledPoint || this.disabledModel;
         } else if (item.component === "summary-component") {
-          item.disabled = this.disabledPoint || this.disabledModel || this.disabledAdditional;
+          item.disabled =
+            this.disabledPoint || this.disabledModel || this.disabledAdditional;
         } else {
           item.disabled = true;
         }
@@ -175,18 +188,34 @@ export default {
     togglePopup(isOpen) {
       this.popupOpen = isOpen;
     },
+    confirmOrder() {
+      this.$store.dispatch("confirmOrder").then(() => {
+        if (this.$store.state.order.id) {
+          this.$router.push({
+            path: "result",
+            query: { id: this.$store.state.order.id },
+          });
+        } else {
+          this.$router.push("404");
+        }
+      });
+    },
   },
   created() {
     this.$store.dispatch("loadCityVariant");
     this.$store.dispatch("loadPointVariant");
-    // this.$store.dispatch("loadModelVariant", this.queryModel);
+    this.$store.dispatch(
+      "loadModelVariant",
+      `limit=${this.limit}&page=${this.page - 1}`
+    );
     this.$store.dispatch("loadCategoryList");
     this.$store.dispatch("loadRateList");
+    this.$store.dispatch("loadOrderStatuses");
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/style/abstracts/_variables.scss';
-@import '@/assets/style/components/_main.scss';
+@import "@/assets/style/abstracts/_variables.scss";
+@import "@/assets/style/components/_main.scss";
 </style>

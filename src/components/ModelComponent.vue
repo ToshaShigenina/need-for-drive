@@ -44,12 +44,6 @@ export default {
     ModelListComponent,
     PaginationComponent,
   },
-  data() {
-    return {
-      page: 1,
-      limit: 6,
-    };
-  },
   computed: {
     categoryList() {
       return this.$store.getters.getCategoryList;
@@ -65,11 +59,22 @@ export default {
     count() {
       return this.$store.getters.getModelsCount;
     },
-    loadModels () {
+    loadModels() {
       return this.$store.getters.getLoadModels;
     },
     modelVariant() {
       return this.$store.getters.getModelVariant;
+    },
+    limit() {
+      return this.$store.getters.getLimit;
+    },
+    page: {
+      get() {
+        return this.$store.getters.getPage;
+      },
+      set(page) {
+        this.$store.commit("setPage", page);
+      },
     },
     query() {
       if (this.categoryActive) {
@@ -90,12 +95,12 @@ export default {
     },
   },
   created() {
-    this.load();
+    if (!this.loadModels && !this.modelVariant.length) this.load();
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/style/abstracts/_variables.scss';
-@import '@/assets/style/components/_model.scss';
+@import "@/assets/style/abstracts/_variables.scss";
+@import "@/assets/style/components/_model.scss";
 </style>
