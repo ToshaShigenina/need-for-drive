@@ -92,6 +92,7 @@ export default {
   },
   data() {
     return {
+      redirect: false,
       activeTab: "point-component",
       popupOpen: false,
       tabList: [
@@ -214,7 +215,8 @@ export default {
   },
   watch: {
     errorCount() {
-      if (this.errorCount) {
+      if (this.errorCount && !this.redirect) {
+        this.redirect = true;
         this.$router.replace({
           name: "error",
           params: {
