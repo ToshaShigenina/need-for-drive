@@ -20,8 +20,9 @@ const routes = [{
     component: () => import('../views/ResultView.vue')
   },
   {
-    path: '/404',
-    name: '404',
+    path: '/error',
+    name: 'error',
+    props: true,
     component: () => import('../views/ErrorView.vue')
   }
 ]

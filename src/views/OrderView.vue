@@ -177,6 +177,17 @@ export default {
         return item;
       });
     },
+    errorCount() {
+      const error = [
+        this.$store.getters.getCityLoadError,
+        this.$store.getters.getPointLoadError,
+        this.$store.getters.getModelLoadError,
+        this.$store.getters.getCategoryLoadError,
+        this.$store.getters.getRateLoadError,
+        this.$store.getters.getStatusesLoadError,
+      ];
+      return error.filter((item) => item).length;
+    },
   },
   methods: {
     toTab(component) {
@@ -196,9 +207,23 @@ export default {
             query: { id: this.$store.state.order.id },
           });
         } else {
-          this.$router.push("404");
+          this.$router.replace("error");
         }
       });
+    },
+  },
+  watch: {
+    errorCount() {
+      if (this.errorCount) {
+        this.$router.replace({
+          name: "error",
+          params: {
+            type: "Ошибка загрузки данных",
+            message:
+              "Что-то пошло не так, сервер недоступен. Попробуйте позже.",
+          },
+        });
+      }
     },
   },
   created() {

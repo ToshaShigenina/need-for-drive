@@ -1,21 +1,21 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 import {
   parse,
   format
-} from '@/plugins/datetime'
+} from '@/plugins/datetime';
 
-import city from './city'
-import point from './point'
-import model from './model'
-import category from './category'
-import rate from './rate'
-import services from './services'
-import statuses from './statuses'
-import api from '@/service/api'
+import city from './city';
+import point from './point';
+import model from './model';
+import category from './category';
+import rate from './rate';
+import services from './services';
+import statuses from './statuses';
+import api from '@/service/api';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
@@ -73,40 +73,40 @@ export default new Vuex.Store({
     orderPrice: 0
   },
   mutations: {
-    setOrderCityValue(state, value) {
+    setOrderCityValue (state, value) {
       state.orderList.cityId.value = value;
     },
-    setOrderPointValue(state, value) {
+    setOrderPointValue (state, value) {
       state.orderList.pointId.value = value;
     },
-    setOrderModelValue(state, value) {
+    setOrderModelValue (state, value) {
       state.orderList.carId.value = value;
     },
-    setOrderColorValue(state, value) {
+    setOrderColorValue (state, value) {
       state.orderList.color.value = value;
     },
-    setOrderDateFromValue(state, value) {
+    setOrderDateFromValue (state, value) {
       state.orderList.period.value.dateFrom = value;
     },
-    setOrderDateToValue(state, value) {
+    setOrderDateToValue (state, value) {
       state.orderList.period.value.dateTo = value;
     },
-    setOrderRateValue(state, value) {
+    setOrderRateValue (state, value) {
       state.orderList.rateId.value = value;
     },
-    setOrderRateValueById(state, id) {
+    setOrderRateValueById (state, id) {
       if (id) {
-        const value = state.rate.rateList.find(item => item.id === id)
+        const value = state.rate.rateList.find(item => item.id === id);
         state.orderList.rateId.value = value;
       }
     },
-    setOrderServiceValue(state, value) {
+    setOrderServiceValue (state, value) {
       state.orderList.service = value;
     },
-    setOrderPrice(state, price) {
+    setOrderPrice (state, price) {
       state.orderPrice = price;
     },
-    setOrderList(state) {
+    setOrderList (state) {
       if (state.order.id) {
         state.orderList.cityId.value = state.order.cityId;
         state.orderList.pointId.value = state.order.pointId;
@@ -123,11 +123,11 @@ export default new Vuex.Store({
         state.orderPrice = state.order.price;
       }
     },
-    setOrder(state, data) {
+    setOrder (state, data) {
       if (data) state.order = data.data;
       else state.order = {};
     },
-    createOrder(state) {
+    createOrder (state) {
       const orderStatusId = this.getters.getConfirmStatus;
       const cityId = state.orderList.cityId.value;
       const pointId = state.orderList.pointId.value;
@@ -153,11 +153,11 @@ export default new Vuex.Store({
         isFullTank: !!isFullTank,
         isNeedChildChair: !!isNeedChildChair,
         isRightWheel: !!isRightWheel,
-      }
+      };
     }
   },
   actions: {
-    loadOrder({
+    loadOrder ({
       commit
     }, id) {
       return api.getOrder(null, id)
@@ -166,7 +166,7 @@ export default new Vuex.Store({
           commit('setOrderList');
         });
     },
-    confirmOrder({
+    confirmOrder ({
       state,
       commit,
     }) {
@@ -177,7 +177,7 @@ export default new Vuex.Store({
           return data;
         });
     },
-    cancelOrder({
+    cancelOrder ({
       state,
       commit,
       getters
@@ -190,25 +190,25 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getOrderList(state) {
+    getOrderList (state) {
       return state.orderList;
     },
-    getOrderCity(state) {
+    getOrderCity (state) {
       return state.orderList.cityId;
     },
-    getOrderPoint(state) {
+    getOrderPoint (state) {
       return state.orderList.pointId;
     },
-    getOrderModel(state) {
+    getOrderModel (state) {
       return state.orderList.carId;
     },
-    getOrderColor(state) {
+    getOrderColor (state) {
       return state.orderList.color;
     },
-    getOrderPeriod(state) {
+    getOrderPeriod (state) {
       return state.orderList.period;
     },
-    getPeriod(state) {
+    getPeriod (state) {
       const dateFrom = state.orderList.period.value.dateFrom;
       const dateTo = state.orderList.period.value.dateTo;
       const generateStr = (value, param) => value ? ` ${value}${param}` : '';
@@ -233,16 +233,16 @@ export default new Vuex.Store({
       }
       return '';
     },
-    getOrderDateFrom(state) {
+    getOrderDateFrom (state) {
       return state.orderList.period.value.dateFrom;
     },
-    getOrderDateTo(state) {
+    getOrderDateTo (state) {
       return state.orderList.period.value.dateTo;
     },
-    getOrderRate(state) {
+    getOrderRate (state) {
       return state.orderList.rateId;
     },
-    getOrderServiceList(state) {
+    getOrderServiceList (state) {
       return state.orderList.service;
     },
     getOrderService: (state) => (name) => {
@@ -252,11 +252,11 @@ export default new Vuex.Store({
       if (find) return services.find(item => item.type === find);
       return false;
     },
-    getOrderPrice(state) {
+    getOrderPrice (state) {
       return state.orderPrice;
     },
-    getOrder(state) {
+    getOrder (state) {
       return state.order;
     }
   }
-})
+});

@@ -113,7 +113,7 @@ export default {
     if (this.$route.query.id) {
       this.$store.dispatch("loadOrder", this.$route.query.id);
     } else {
-      this.$router.push("404");
+      this.$router.replace("error");
     }
   },
 };

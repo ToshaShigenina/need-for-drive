@@ -1,24 +1,32 @@
-import api from '@/service/api'
+import api from '@/service/api';
 
 export default {
   state: () => ({
-    pointVariant: []
+    pointVariant: [],
+    pointLoadError: null
   }),
   mutations: {
-    setPointVariant(state, data) {
+    setPointVariant (state, data) {
       state.pointVariant = data.data;
     },
+    setPointLoadError (state, error) {
+      state.pointLoadError = error;
+    }
   },
   actions: {
-    loadPointVariant({
+    loadPointVariant ({
       commit
     }) {
+      commit('setPointLoadError', null);
       api.getPoints()
         .then(data => commit('setPointVariant', data))
+        .catch(error => {
+          commit('setPointLoadError', error.message);
+        });
     },
   },
   getters: {
-    getPointVariant(state) {
+    getPointVariant (state) {
       return state.pointVariant.filter(item => !!item.cityId && !!item.coords);
     },
     getFilteredPointVariant: (state) => (city) => {
@@ -33,5 +41,8 @@ export default {
         if (item.cityId) return item;
       });
     },
+    getPointLoadError (state) {
+      return state.pointLoadError;
+    }
   }
-}
+};

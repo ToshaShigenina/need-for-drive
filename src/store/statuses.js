@@ -1,34 +1,45 @@
-import api from '@/service/api'
+import api from '@/service/api';
 
 export default {
   state: () => ({
-    orderStatuses: []
+    orderStatuses: [],
+    statusesLoadError: null
   }),
   mutations: {
-    setOrderStatuses(state, data) {
+    setOrderStatuses (state, data) {
       state.orderStatuses = data.data;
     },
+    setStetusesLoadError (state, error) {
+      state.statusesLoadError = error;
+    }
   },
   actions: {
-    loadOrderStatuses({
+    loadOrderStatuses ({
       commit
     }) {
+      commit('setStetusesLoadError', null);
       api.getOrderStatuses()
         .then(data => commit('setOrderStatuses', data))
+        .catch(error => {
+          commit('setStetusesLoadError', error.message);
+        });
     },
   },
   getters: {
-    getOrderStatuses(state) {
+    getOrderStatuses (state) {
       return state.orderStatuses;
     },
-    getNewStatus(state) {
-      return state.orderStatuses[3];
+    getNewStatus (state) {
+      return state.orderStatuses[ 3 ];
     },
-    getConfirmStatus(state) {
-      return state.orderStatuses[0];
+    getConfirmStatus (state) {
+      return state.orderStatuses[ 0 ];
     },
-    getCancelStatus(state) {
-      return state.orderStatuses[1];
+    getCancelStatus (state) {
+      return state.orderStatuses[ 1 ];
+    },
+    getStatusesLoadError (state) {
+      return state.statusesLoadError;
     }
   }
-}
+};

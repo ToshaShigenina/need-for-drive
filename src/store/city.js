@@ -1,26 +1,36 @@
-import api from '@/service/api'
+import api from '@/service/api';
 
 export default {
   state: () => ({
-    cityVariant: []
+    cityVariant: [],
+    loadCityError: null
   }),
   mutations: {
-    setCityVariant(state, data) {
+    setCityVariant (state, data) {
       state.cityVariant = data.data;
-      // state.orderList.find((item) => item.type === "city").value = state.cityVariant[0];
+    },
+    setLoadCityError (state, error) {
+      state.loadCityError = error;
     }
   },
   actions: {
-    loadCityVariant({
+    loadCityVariant ({
       commit
     }) {
+      commit('setLoadCityError', null);
       api.getCities()
         .then(data => commit('setCityVariant', data))
+        .catch(error => {
+          commit('setLoadCityError', error.message);
+        });
     }
   },
   getters: {
-    getCityVariant(state) {
+    getCityVariant (state) {
       return state.cityVariant.filter(item => !!item.coords);
+    },
+    getLoadCityError (state) {
+      return state.loadCityError;
     }
   }
-}
+};

@@ -5,11 +5,11 @@
       <article class="main-content__article main-article">
         <div class="container">
           <h2 class="heading main-article__heading">
-            404
+            {{ type }}
           </h2>
           <div class="main-article__content">
             <p>
-              Страница не найдена!
+              {{ message }}
             </p>
           </div>
           <router-link class="main-article__btn btn" to="/">
@@ -32,6 +32,16 @@ export default {
     HeaderComponent,
     FooterComponent,
   },
+  props: {
+    type: {
+      type: String,
+      default: '404'
+    },
+    message: {
+      type: String,
+      default: 'Страница не найдена!'
+    }
+  }
 };
 </script>
 
